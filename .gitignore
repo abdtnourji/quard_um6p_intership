@@ -1,0 +1,24 @@
+# 1. Ignore downloaded dependencies (you re-download these via scripts)
+dependencies/
+ros2_ws/src/px4_msgs/
+
+# 2. Ignore ROS 2 compilation and build files
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+# 3. Ignore heavy AI model weights (they exceed GitHub limits)
+*.pt
+models/yolo/*.pt
+perception/yolo/*.pt
+
+# 4. Ignore log files and heavy recorded data
+logs/
+student_logs/
+data/rosbags/
+
+# 5. Ignore Python cache and system hidden files
+__pycache__/
+*.pyc
+.DS_Store
+.vscode/

@@ -1,0 +1,506 @@
+pkill -9 px4
+pkill -9 gzserver
+pkill -9 gzclient
+pkill -9 ignition
+pkill -9 ruby
+pkill -9 gazeboPX4 + ROS 2 Humble + YOLO Python Environment Setup
+====================================================
+Target system
+-------------
+- Ubuntu 22.04
+- System Python 3.10
+- ROS 2 Humble installed under /opt/ros/humble
+- NVIDIA GeForce RTX 4080 SUPER
+- Workspace: /home/tnourji/dev/ws_sensor_combined
+- Virtual environment required by the launch file: /home/tnourji/px4-venv
+
+IMPORTANT DESIGN
+----------------
+Do not reinstall ROS 2 with pip inside the virtual environment.
+ROS 2 packages such as rclpy, cv_bridge, sensor_msgs and launch must come from
+/opt/ros/humble. The virtual environment is only for YOLO, PyTorch, OpenCV and
+other project-specific Python libraries.
+
+The attached bringup_px4_yolo.launch.py uses this default executable:
+
+    /home/tnourji/px4-venv/bin/python
+
+Therefore, use the exact directory name "px4-venv" with a hyphen, not
+"px4_venv" with an underscore.
+
+
+1. Install system prerequisites
+-------------------------------
+Open a clean terminal and run:
+
+    sudo apt update
+    sudo apt install -y python3-venv python3-pip python3-dev \
+        ros-humble-cv-bridge ros-humble-rclpy \
+        ros-humble-sensor-msgs ros-humble-image-transport
+
+Do not run sudo pip install.
+
+
+2. Remove only an incorrect or incomplete old environment
+----------------------------------------------------------
+This removes only the Python virtual environment. It does not remove ROS 2,
+PX4, Gazebo, source code, or the ROS workspace.
+
+    deactivate 2>/dev/null || true
+    rm -rf /home/tnourji/px4-venv
+
+
+3. Create the virtual environment using Ubuntu system Python
+------------------------------------------------------------
+The --system-site-packages option is important because the YOLO node must be
+able to import ROS 2 Python packages installed under /opt/ros/humble.
+
+    /usr/bin/python3 -m venv --system-site-packages /home/tnourji/px4-venv
+    source /home/tnourji/px4-venv/bin/activate
+
+Confirm that the correct interpreter is active:
+
+    which python
+    python --version
+
+Expected:
+
+    /home/tnourji/px4-venv/bin/python
+    Python 3.10.x
+
+Upgrade Python packaging tools inside the environment:
+
+    python -m pip install --upgrade pip setuptools wheel
+
+
+4. Install the project-specific Python packages
+-----------------------------------------------
+Use the key versions from the previous working environment. Do not install the
+full old pip-freeze list because it mixes Ubuntu/ROS packages, generated ROS
+packages, editable workspace paths, and machine-specific packages.
+
+    python -m pip install \
+        "numpy==1.26.4" \
+        "opencv-python==4.11.0.86" \
+        "torch==2.9.1" \
+        "torchvision==0.24.1" \
+        "ultralytics==8.3.237" \
+        "pillow==12.0.0" \
+        "PyYAML==6.0.3"
+
+
+---
+
+Perfect. This confirms you are working inside the intended environment:
+
+/home/tnourji/px4-venv
+
+
+Now check exactly which packages survived the interrupted installation. Run this safe command, which does not import OpenCV or PyTorch:
+
+python - <<'PY'
+from importlib.metadata import version, PackageNotFoundError
+
+packages = [
+    "numpy",
+    "opencv-python",
+    "opencv-python-headless",
+    "torch",
+    "torchvision",
+    "ultralytics",
+    "pillow",
+    "PyYAML",
+]
+
+for package in packages:
+    try:
+        print(f"{package:25s} {version(package)}")
+    except PackageNotFoundError:
+        print(f"{package:25s} NOT INSTALLED")
+PY
+
+
+Based on your earlier errors, it will probably show NumPy 2.2.6 and PyTorch as NOT INSTALLED.
+
+Then repair the environment in separate stages.
+
+Stage 1: repair NumPy and OpenCV
+python -m pip uninstall -y \
+  numpy \
+  opencv-python \
+  opencv-python-headless \
+  opencv-contrib-python \
+  opencv-contrib-python-headless
+
+
+Install the intended versions:
+
+python -m pip install --no-cache-dir \
+  "numpy==1.26.4" \
+  "opencv-python==4.11.0.86"
+
+
+Verify:
+
+python -c "import numpy, cv2; print('NumPy:', numpy.__version__); print('OpenCV:', cv2.__version__)"
+
+
+Expected:
+
+NumPy: 1.26.4
+OpenCV: 4.11.0
+
+Stage 2: install PyTorch
+
+Before installing, check whether the NVIDIA driver works:
+
+nvidia-smi
+
+
+If your GPU is detected, run:
+
+python -m pip install --no-cache-dir \
+  "torch==2.9.1" \
+  "torchvision==0.24.1"
+
+
+Do not run Gazebo while this installation is in progress. It is a large installation and needs significant RAM, disk space, and temporary storage.
+
+Verify:
+
+python -c "import torch, torchvision; print('PyTorch:', torch.__version__); print('Torchvision:', torchvision.__version__); print('CUDA:', torch.cuda.is_available()); print('GPU:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'NONE')"
+
+
+Expected package versions:
+
+PyTorch: 2.9.1
+Torchvision: 0.24.1
+
+Stage 3: install Ultralytics and the remaining packages
+python -m pip install --no-cache-dir \
+  "ultralytics==8.3.237" \
+  "pillow==12.0.0" \
+  "PyYAML==6.0.3"
+
+
+Reapply the NumPy pin afterward:
+
+python -m pip install --no-cache-dir --force-reinstall \
+  "numpy==1.26.4"
+
+
+Check package consistency:
+
+python -m pip install --force-reinstall "setuptools==79.0.1"
+python -m pip check
+
+
+Expected:
+
+No broken requirements found.
+
+Avoid commands such as:
+python -m pip install --upgrade setuptools
+Instead, when upgrading packaging tools, keep the constraint:
+python -m pip install --upgrade \
+  pip \
+  wheel \
+  "setuptools<80"
+
+
+
+
+  
+
+Stage 4: source ROS and perform the final test
+source /opt/ros/humble/setup.bash
+source /home/tnourji/dev/ws_offboard_control/install/local_setup.bash
+
+
+Confirm that sourcing ROS did not change the Python executable:
+
+which python
+echo "$VIRTUAL_ENV"
+
+
+Expected:
+
+/home/tnourji/px4-venv/bin/python
+/home/tnourji/px4-venv
+
+
+Finally, test everything:
+
+python - <<'PY'
+import sys
+import numpy
+import cv2
+import torch
+import torchvision
+import ultralytics
+import PIL
+import yaml
+import rclpy
+
+print("Python       :", sys.executable)
+print("NumPy        :", numpy.__version__)
+print("OpenCV       :", cv2.__version__)
+print("PyTorch      :", torch.__version__)
+print("Torchvision  :", torchvision.__version__)
+print("Ultralytics  :", ultralytics.__version__)
+print("Pillow       :", PIL.__version__)
+print("PyYAML       :", yaml.__version__)
+print("rclpy        : OK")
+print("CUDA runtime :", torch.version.cuda)
+print("CUDA usable  :", torch.cuda.is_available())
+print(
+    "GPU          :",
+    torch.cuda.get_device_name(0)
+    if torch.cuda.is_available()
+    else "NONE"
+)
+PY
+
+
+Do the package inventory command first. It will show whether any part of Torch or Ultralytics was installed before the computer shut down.
+
+--
+
+Optional packages, install these only if other project modules import them:
+
+    python -m pip install \
+        "pandas==2.3.3" \
+        "scipy==1.15.3" \
+        "mavsdk==3.10.2" \
+        "pymavlink==2.4.49" \
+        "pyserial==3.5"
+
+A separate CUDA Toolkit installation with nvcc is not required for PyTorch
+inference when the PyTorch wheel already includes its CUDA runtime. A working
+NVIDIA driver is still required.
+
+
+5. Test Python, ROS 2 and NVIDIA CUDA together
+---------------------------------------------
+Keep the environment active, then source ROS 2:
+
+    source /opt/ros/humble/setup.bash
+
+Run the import test:
+
+    python -c "import rclpy, cv2, torch, ultralytics; print('rclpy: OK'); print('OpenCV:', cv2.__version__); print('PyTorch:', torch.__version__); print('Ultralytics:', ultralytics.__version__); print('CUDA available:', torch.cuda.is_available()); print('GPU:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'NONE')"
+
+Expected key results:
+
+    rclpy: OK
+    CUDA available: True
+    GPU: NVIDIA GeForce RTX 4080 SUPER
+
+Also check the driver:
+
+    nvidia-smi
+
+If CUDA available is False, first verify that nvidia-smi works. Do not install
+a random CUDA Toolkit before checking the PyTorch installation and NVIDIA
+driver.
+
+
+6. Prevent colcon from scanning the virtual environment
+-------------------------------------------------------
+The environment is outside the workspace, so colcon normally will not scan it.
+Creating this marker is still safe:
+
+    touch /home/tnourji/px4-venv/COLCON_IGNORE
+
+
+7. Build the ROS 2 package
+--------------------------
+Use a clean terminal environment to avoid mixing old workspaces:
+
+    deactivate 2>/dev/null || true
+    unset AMENT_PREFIX_PATH
+    unset COLCON_PREFIX_PATH
+    unset PYTHONPATH
+
+Activate the environment, source ROS 2, and build:
+
+    source /home/tnourji/px4-venv/bin/activate
+    source /opt/ros/humble/setup.bash
+
+    cd /home/tnourji/dev/ws_sensor_combined
+
+    export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+
+    rm -rf build/uav_camera_det_pkg install/uav_camera_det_pkg
+
+    colcon build --symlink-install --packages-select uav_camera_det_pkg
+
+    source install/setup.bash
+
+Verify that ROS 2 can locate the package:
+
+    ros2 pkg prefix uav_camera_det_pkg
+
+Verify that the installed launch file uses px4-venv:
+
+    grep -RIn "px4-venv\|yolo_venv_python" \
+        install/uav_camera_det_pkg/share/uav_camera_det_pkg/launch
+
+
+8. Run the launch file
+----------------------
+Every time a new terminal is opened, use this order:
+
+    source /home/tnourji/px4-venv/bin/activate
+    source /opt/ros/humble/setup.bash
+    export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+    source /home/tnourji/dev/ws_sensor_combined/install/setup.bash
+
+Then launch:
+
+    ros2 launch uav_camera_det_pkg bringup_px4_yolo.launch.py
+
+The attached launch file already defaults to:
+
+    yolo_venv_python:=/home/tnourji/px4-venv/bin/python
+    camera_topic:=/camera
+    model_path:=yolov8m.pt
+    yolo_device:=0
+    yolo_half:=true
+    yolo_imgsz:=960
+
+To explicitly pass the interpreter path:
+
+    ros2 launch uav_camera_det_pkg bringup_px4_yolo.launch.py \
+        yolo_venv_python:=/home/tnourji/px4-venv/bin/python
+
+Example with explicit camera topic and model:
+
+    ros2 launch uav_camera_det_pkg bringup_px4_yolo.launch.py \
+        yolo_venv_python:=/home/tnourji/px4-venv/bin/python \
+        camera_topic:=/camera \
+        model_path:=yolov8m.pt \
+        yolo_device:=0 \
+        yolo_half:=true
+
+Check the actual ROS camera topic before launching:
+
+    ros2 topic list | grep -Ei "camera|image"
+
+If the actual image topic is different, replace /camera. For example:
+
+    ros2 launch uav_camera_det_pkg bringup_px4_yolo.launch.py \
+        camera_topic:=/camera/image_raw
+
+
+9. Quick diagnosis for the previous error
+-----------------------------------------
+Previous error:
+
+    /home/tnourji/px4-venv/bin/python: No such file or directory
+
+Check the exact file:
+
+    test -x /home/tnourji/px4-venv/bin/python \
+        && echo "YOLO Python exists" \
+        || echo "YOLO Python is missing"
+
+Check all important imports with the exact interpreter used by the launch file:
+
+    /home/tnourji/px4-venv/bin/python -c \
+        "import rclpy, cv2, torch, ultralytics; print('All imports OK')"
+
+Check that the package module is visible after sourcing the workspace:
+
+    cd /home/tnourji/dev/ws_sensor_combined
+    source /home/tnourji/px4-venv/bin/activate
+    source /opt/ros/humble/setup.bash
+    source install/setup.bash
+
+    python -c "import uav_camera_det_pkg; print(uav_camera_det_pkg.__file__)"
+
+
+10. The old command you likely used
+-----------------------------------
+To export the packages from a working virtual environment:
+
+    source /home/tnourji/px4-venv/bin/activate
+    python -m pip freeze > requirements-px4-yolo.txt
+
+To recreate that environment on another PC:
+
+    /usr/bin/python3 -m venv --system-site-packages /home/tnourji/px4-venv
+    source /home/tnourji/px4-venv/bin/activate
+    python -m pip install --upgrade pip setuptools wheel
+    python -m pip install -r requirements-px4-yolo.txt
+
+However, a raw pip freeze from a ROS workstation may include machine-specific
+editable entries such as:
+
+    -e /home/old-user/.../build/uav_camera_det_pkg
+
+Remove all such "-e /old/path/..." lines before using the file on another PC.
+ROS packages installed through apt should remain system-managed rather than
+being duplicated into the virtual environment with pip.
+
+
+11. Save a clean requirements file for future PCs
+--------------------------------------------------
+After the environment works, create a compact reproducible file:
+
+    cat > /home/tnourji/requirements-px4-yolo.txt <<'EOF'
+    numpy==1.26.4
+    opencv-python==4.11.0.86
+    torch==2.9.1
+    torchvision==0.24.1
+    ultralytics==8.3.237
+    pillow==12.0.0
+    PyYAML==6.0.3
+    EOF
+
+To recreate it later:
+
+    /usr/bin/python3 -m venv --system-site-packages /home/tnourji/px4-venv
+    source /home/tnourji/px4-venv/bin/activate
+    python -m pip install --upgrade pip setuptools wheel
+    python -m pip install -r /home/tnourji/requirements-px4-yolo.txt
+
+
+12. Optional convenience command
+--------------------------------
+Create an activation helper:
+
+    cat > /home/tnourji/activate_px4_yolo.sh <<'EOF'
+    #!/usr/bin/env bash
+    source /home/tnourji/px4-venv/bin/activate
+    source /opt/ros/humble/setup.bash
+    export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+    source /home/tnourji/dev/ws_sensor_combined/install/setup.bash
+    echo "PX4 YOLO environment ready"
+    echo "Python: $(which python)"
+    echo "ROS_DISTRO: ${ROS_DISTRO}"
+    echo "RMW_IMPLEMENTATION: ${RMW_IMPLEMENTATION}"
+    EOF
+
+    chmod +x /home/tnourji/activate_px4_yolo.sh
+
+Then, in each new terminal:
+
+    source /home/tnourji/activate_px4_yolo.sh
+    ros2 launch uav_camera_det_pkg bringup_px4_yolo.launch.py
+
+
+13. Final validation checklist
+------------------------------
+Run these commands after activation and workspace sourcing:
+
+    which python
+    test -x /home/tnourji/px4-venv/bin/python && echo OK
+    python -c "import rclpy, cv2, torch, ultralytics; print('Imports OK')"
+    python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'No CUDA GPU')"
+    ros2 pkg prefix uav_camera_det_pkg
+    ros2 topic list | grep -Ei "camera|image"
+
+If all checks pass, run:
+
+    ros2 launch uav_camera_det_pkg bringup_px4_yolo.launch.py
