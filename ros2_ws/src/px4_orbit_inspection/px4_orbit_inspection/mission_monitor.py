@@ -1,4 +1,18 @@
-"""Small terminal monitor. It makes the classroom demo easier to follow."""
+"""
+=============================================================================
+Project   : Quadcopter Autonomous Inspection (UM6P Internship)
+File      : mission_monitor.py
+Author    : Dr. Abdellah TNOURJI
+Website   : https://www.abdellahtnourji.com/
+Date      : [Date, 25, Aug 2026]
+
+Description:
+    Small terminal monitor. It makes the classroom demo easier to follow.
+
+License   : UM6P
+=============================================================================
+
+"""
 
 # Python mathematics is used to combine the three velocity components into one
 # easy-to-read speed value.

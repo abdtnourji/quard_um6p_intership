@@ -1,3 +1,20 @@
+"""
+=============================================================================
+Project   : Quadcopter Autonomous Inspection (UM6P Internship)
+File      : orbit_demo.launch.py
+Author    : Dr. Abdellah TNOURJI
+Website   : https://www.abdellahtnourji.com/
+Date      : [Date, 20, Aug 2026]
+
+Description:
+     Launch file for the orbit demo. It starts the orbit controller and the
+     mission monitor.
+
+License   : UM6P
+=============================================================================
+
+"""
+
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory

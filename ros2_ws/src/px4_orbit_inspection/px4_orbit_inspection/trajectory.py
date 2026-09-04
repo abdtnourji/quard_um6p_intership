@@ -1,4 +1,18 @@
-"""Pure mathematical functions used by the mission node and unit tests."""
+"""
+=============================================================================
+Project   : Quadcopter Autonomous Inspection (UM6P Internship)
+File      : trajectory.py
+Author    : Dr. Abdellah TNOURJI
+Website   : https://www.abdellahtnourji.com/
+Date      : [Date, 20, Aug 2026]
+
+Description:
+    Mathematical functions for trajectory generation.
+
+License   : UM6P
+=============================================================================
+
+"""
 
 # [MEMORY REFRESH] A module is one Python file that groups related tools.
 # This module contains only mathematics. Keeping mathematics separate makes it

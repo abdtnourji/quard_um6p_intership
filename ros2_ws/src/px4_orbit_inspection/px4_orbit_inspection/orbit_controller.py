@@ -1,8 +1,22 @@
-"""PX4 offboard mission: climb, approach, inspect by orbiting, hold, and land.
-The code is split into a state machine so beginner students can map each block
-of software to one visible phase in Gazebo. It sends PX4 NED position setpoints.
-Run in SITL first. Real flight requires a separate safety review and operator.
 """
+=============================================================================
+Project   : Quadcopter Autonomous Inspection (UM6P Internship)
+File      : orbit_controller.py
+Author    : Dr. Abdellah TNOURJI
+Website   : https://www.abdellahtnourji.com/
+Date      : [Date, 20, Aug 2026]
+
+Description:
+    PX4 offboard mission: climb, approach, inspect by orbiting, hold, and land.
+    The code is split into a state machine so each block of software maps to one
+    visible phase in Gazebo. It sends PX4 NED position setpoints.
+    Run in SITL first. Real flight requires a separate safety review and operator.
+
+License   : UM6P
+=============================================================================
+
+"""
+
 
 # Standard mathematics supplies pi and NaN values used by the trajectory.
 import math
