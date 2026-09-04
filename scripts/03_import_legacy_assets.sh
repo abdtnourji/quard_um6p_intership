@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+
+# =============================================================================
+# Project   : Quadcopter Autonomous Inspection (UM6P Internship)
+# Author    : Dr. Abdellah TNOURJI
+# Website   : https://www.abdellahtnourji.com/
+# Date      : [Date, Aug 2026]
+
+# License   : UM6P
+# =============================================================================
+
+
 set -euo pipefail
 
 

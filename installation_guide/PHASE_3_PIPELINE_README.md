@@ -1,3 +1,6 @@
+# UM6P Autonomous Drone Internship
+
+
 # Phase 3 - Run the Autonomous AI Drone Inspection Pipeline
 
 This guide explains how to run the complete internship demonstration in separate Terminator terminals:
@@ -629,7 +632,7 @@ Stop recording with `Ctrl+C` and confirm that the bag closes successfully.
 
 ---
 
-## Terminal 7 -  Manual keyboard flight before autonomous flight
+## Terminal 8 -  Manual keyboard flight before autonomous flight
 
 Keyboard flight is useful for camera exploration, 
 First inspect available executables:
@@ -659,7 +662,7 @@ python -u keyboard_mavsdk_control.py
 ---
 
 
-# 10. Clean shutdown
+# Clean shutdown
 
 Preferred shutdown:
 
