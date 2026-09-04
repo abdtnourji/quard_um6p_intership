@@ -276,7 +276,7 @@ ros2 topic hz /camera/image_raw
 ros2 topic info /camera/image_raw
 ```
 
-## Terminal 5: start the orbit
+## Terminal 5: start the orbit data aquisition
 
 ```bash
 cd ~/quard_um6p_intership
@@ -287,33 +287,32 @@ source "${ROS2_WS}/install/setup.bash"
 ros2 launch px4_orbit_inspection orbit_demo.launch.py
 ```
 
+## Terminal 6: start the orbit
 Start the mission explicitly:
 
 ```bash
 ros2 service call /orbit/start std_srvs/srv/Trigger "{}"
 ```
 
-Abort and request landing:
+
+
+## Terminal 7: start camera bridge
 
 ```bash
-ros2 service call /orbit/abort std_srvs/srv/Trigger "{}"
+ros2 run ros_gz_image image_bridge /camera --ros-args -p qos:=sensor_data
 ```
 
-## Terminal 6: start YOLO and the report
+## Terminal 7: start YOLO
 
 ```bash
-
-ros2 run ros_gz_image image_bridge /camera --ros-args -p qos:=sensor_data
 source ~/px4-venv/bin/activate
 python uav_camera_det.py
 ```
 
-Display the annotated image:
+Abort and request landing:
 
 ```bash
-ros2 run ros_gz_image image_bridge /camera --ros-args -p qos:=sensor_data
-
-ros2 run rqt_image_view rqt_image_view /inspection/debug_image
+ros2 service call /orbit/abort std_srvs/srv/Trigger "{}"
 ```
 
 ---

@@ -36,7 +36,7 @@ The matching PX4 and `px4_msgs` branches are important because ROS 2 application
 
 ## 2. Project layout
 
-The important project structure is:
+The project structure OJECTIVE is:
 
 ```text
 quard_um6p_intership/
@@ -67,110 +67,57 @@ quard_um6p_intership/
 └── student_logs/
 ```
 
-The scripts are for initial setup only. Students run the actual simulation and experiments with normal PX4, Gazebo and ROS 2 commands.
+# 3. Install and Verify the Project Dependencies
 
----
+This phase prepares a coherent PX4 v1.15, ROS 2 Humble and Gazebo development environment for the internship.
 
-Source and test ROS 2:
-
-```bash
-source /opt/ros/humble/setup.bash
-ros2 doctor --report
-```
-
-Open `~/.bashrc` and add:
-
-```bash
-export INTERNSHIP_ROOT="$HOME/quard_um6p_intership"
-export GZ_SIM_RESOURCE_PATH="$HOME/quard_um6p_intership/gazebo/models:$HOME/.gz/models${GZ_SIM_RESOURCE_PATH:+:$GZ_SIM_RESOURCE_PATH}"
-```
-
-# 3. Download the source stack
-
-The project uses:
+## 3.1 Required source stack
 
 ```text
-PX4-Autopilot release/1.15
-px4_msgs       release/1.15
+PX4-Autopilot:         release/1.15
+px4_msgs:              release/1.15
+Micro-XRCE-DDS-Agent:  2.4.2 pinned revision
+Ubuntu:                 22.04
+ROS 2:                  Humble
+Python:                 3.10
 ```
 
-Run once:
+PX4 and `px4_msgs` must use matching release branches because the ROS 2 message definitions must match those used to build the PX4 uXRCE-DDS client.
+
+The repositories are stored inside the project:
+
+```text
+${HOME}/quard_um6p_intership/
+├── config/
+│   ├── project.env
+│   ├── PX4_COMMIT.txt
+│   ├── PX4_MSGS_COMMIT.txt
+│   └── DDS_AGENT_COMMIT.txt
+├── dependencies/
+│   ├── PX4-Autopilot/
+│   └── Micro-XRCE-DDS-Agent/
+└── ros2_ws/
+    └── src/
+        └── px4_msgs/
+```
+
+## 3.2 Download and verify the source stack
+
+Run:
 
 ```bash
 cd ~/quard_um6p_intership
 chmod +x scripts/02_download_sources.sh
 ./scripts/02_download_sources.sh
 ```
-
----
-
-## 4. Shell environment
-
-Open a new terminal and inspect the project environment:
-
-```bash
-cd ~/quard_um6p_intership
-source config/project.env
-
-printf "INTERNSHIP_ROOT=%s\n" "${INTERNSHIP_ROOT}"
-printf "PX4_DIR=%s\n" "${PX4_DIR}"
-printf "ROS2_WS=%s\n" "${ROS2_WS}"
-printf "DDS_AGENT_DIR=%s\n" "${DDS_AGENT_DIR}"
-```
-
-ROS 2 must be sourced in every terminal that runs a ROS 2 command:
-
-```bash
-source /opt/ros/humble/setup.bash
-```
-
-Activate the Python environment in terminals that run Python or the educational ROS 2 Python packages:
-
-```bash
-source /home/<user_name>/px4-venv/bin/activate
-```
-
-Verify it:
-
-```bash
-python -c "import sys, numpy; print(sys.executable); print(numpy.__version__)"
-```
-
-Expected:
+Expected final output:
 
 ```text
-/home/<user_name>/px4-venv/bin/python
-1.26.4
+Compatibility result: PASS
+PX4 release/1.15 matches px4_msgs release/1.15.
 ```
 
-### Optional `.bashrc` convenience
-
-These lines may be added once to `~/.bashrc`:
-
-```bash
-# ROS 2 base environment
-source /opt/ros/humble/setup.bash
-
-# Internship project root
-export INTERNSHIP_ROOT="$HOME/quard_um6p_intership"
-
-# Custom Gazebo models. Keep any existing resource path.
-export GZ_SIM_RESOURCE_PATH="$HOME/.gz/models${GZ_SIM_RESOURCE_PATH:+:$GZ_SIM_RESOURCE_PATH}"
-```
-
-Use the same uppercase variable name, `INTERNSHIP_ROOT`, everywhere. Linux environment-variable names are case-sensitive.
-
-Reload the shell only after editing:
-
-```bash
-source ~/.bashrc
-```
-
----
-
-## 5. Verify the downloaded branches
-
-Because scripts 00, 01 and 02 have already run, verify instead of restarting from zero:
+Verify manually:
 
 ```bash
 cd ~/quard_um6p_intership
@@ -178,7 +125,7 @@ source config/project.env
 
 git -C "${PX4_DIR}" branch --show-current
 git -C "${ROS2_WS}/src/px4_msgs" branch --show-current
-git -C "${DDS_AGENT_DIR}" branch --show-current
+git -C "${DDS_AGENT_DIR}" describe --tags --always
 ```
 
 Expected:
@@ -186,82 +133,198 @@ Expected:
 ```text
 release/1.15
 release/1.15
-master
+2.4.2
 ```
 
-Record exact commits for reproducibility:
+Verify recorded commits:
 
 ```bash
-git -C "${PX4_DIR}" rev-parse HEAD
-git -C "${ROS2_WS}/src/px4_msgs" rev-parse HEAD
-git -C "${DDS_AGENT_DIR}" rev-parse HEAD
+test "$(git -C "${PX4_DIR}" rev-parse HEAD)" = "$(cat config/PX4_COMMIT.txt)" \
+  && echo "PX4 commit: MATCH"
+
+test "$(git -C "${ROS2_WS}/src/px4_msgs" rev-parse HEAD)" = "$(cat config/PX4_MSGS_COMMIT.txt)" \
+  && echo "px4_msgs commit: MATCH"
+
+test "$(git -C "${DDS_AGENT_DIR}" rev-parse HEAD)" = "$(cat config/DDS_AGENT_COMMIT.txt)" \
+  && echo "DDS Agent commit: MATCH"
 ```
 
-Compare them with the commit files under `config/`.
+Do not continue if one comparison does not print `MATCH`.
 
----
+## 3.3 Install the PX4 and Gazebo development toolchain
 
-## 6. Verify Python, ROS 2, YOLO and CUDA
-
-Activate both ROS 2 and the Python environment:
+Run the setup tool from the checked-out PX4 v1.15 source:
 
 ```bash
-source /opt/ros/humble/setup.bash
-source /home/<user_name>/px4-venv/bin/activate
+cd ~/quard_um6p_intership
+source config/project.env
+cd "${PX4_DIR}"
+
+bash Tools/setup/ubuntu.sh
 ```
 
-Run:
+Restart Ubuntu after installation:
 
 ```bash
-python -c "import rclpy; print('rclpy OK')"
-python -c "from sensor_msgs.msg import Image; print('sensor_msgs OK')"
-python -c "from cv_bridge import CvBridge; print('cv_bridge OK')"
-python -c "from ultralytics import YOLO; print('Ultralytics YOLO OK')"
-python -c "import torch; print('CUDA available:', torch.cuda.is_available()); print('Device:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU')"
+sudo reboot
 ```
 
-CUDA is optional. If it is unavailable, use CPU inference and reduce the model or image size.
+Build PX4 SITL:
 
----
+```bash
+cd ~/quard_um6p_intership
+source config/project.env
+cd "${PX4_DIR}"
 
-## 7. Build only the educational ROS 2 packages
+make px4_sitl
+```
 
-Do this when a package was added or its Python/launch/configuration files changed:
+Verify:
+
+```bash
+test -x "${PX4_DIR}/build/px4_sitl_default/bin/px4" \
+  && echo "PX4 SITL: READY"
+```
+
+## 3.4 Build and install the DDS Agent
+
+```bash
+cd ~/quard_um6p_intership
+source config/project.env
+cd "${DDS_AGENT_DIR}"
+
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+sudo ldconfig /usr/local/lib/
+```
+
+Verify:
+
+```bash
+command -v MicroXRCEAgent
+MicroXRCEAgent --help | head
+```
+
+## 3.5 Build the ROS 2 workspace
 
 ```bash
 cd ~/quard_um6p_intership
 source config/project.env
 source /opt/ros/humble/setup.bash
-source /home/<user_name>/px4-venv/bin/activate
 cd "${ROS2_WS}"
 
-colcon build \
-  --symlink-install \
-  --packages-select px4_orbit_inspection
+rosdep install \
+  --from-paths src \
+  --ignore-src \
+  --rosdistro humble \
+  -r -y
 
+colcon build --symlink-install
 source install/setup.bash
 ```
 
-If `inspection_yolo` is present as a ROS 2 package, build both:
+Verify `px4_msgs`:
 
 ```bash
-colcon build \
-  --symlink-install \
-  --packages-select px4_orbit_inspection inspection_yolo
-
-source install/setup.bash
+ros2 pkg prefix px4_msgs
+ros2 interface show px4_msgs/msg/VehicleOdometry | head -n 20
 ```
 
-Verify package discovery:
+## 7. Configure `.bashrc`
+
+Run this command once.
 
 ```bash
-ros2 pkg executables px4_orbit_inspection
-ros2 pkg executables inspection_yolo 2>/dev/null || true
+python3 - <<'PY'
+from pathlib import Path
+
+bashrc = Path.home() / ".bashrc"
+start = "# >>> UM6P DRONE INTERNSHIP >>>"
+end = "# <<< UM6P DRONE INTERNSHIP <<<"
+
+block = r'''# >>> UM6P DRONE INTERNSHIP >>>
+# ROS 2 Humble base environment
+if [ -f /opt/ros/humble/setup.bash ]; then
+    source /opt/ros/humble/setup.bash
+fi
+
+# Project root and fixed dependency paths
+export INTERNSHIP_ROOT="$HOME/quard_um6p_intership"
+
+if [ -f "$INTERNSHIP_ROOT/config/project.env" ]; then
+    source "$INTERNSHIP_ROOT/config/project.env"
+fi
+
+# Project-owned Gazebo worlds and models, plus the user model cache
+export GZ_SIM_RESOURCE_PATH="$INTERNSHIP_ROOT/gazebo/worlds:$INTERNSHIP_ROOT/gazebo/models:$HOME/.gz/models${GZ_SIM_RESOURCE_PATH:+:$GZ_SIM_RESOURCE_PATH}"
+
+# Project ROS 2 overlay, loaded only after it has been built
+if [ -f "$INTERNSHIP_ROOT/ros2_ws/install/setup.bash" ]; then
+    source "$INTERNSHIP_ROOT/ros2_ws/install/setup.bash"
+fi
+# <<< UM6P DRONE INTERNSHIP <<<'''
+
+text = bashrc.read_text() if bashrc.exists() else ""
+if start in text and end in text:
+    before = text.split(start, 1)[0].rstrip()
+    after = text.split(end, 1)[1].lstrip()
+    text = before + "\n\n" + block + "\n\n" + after
+else:
+    text = text.rstrip() + "\n\n" + block + "\n"
+
+bashrc.write_text(text)
+print(f"Updated {bashrc}")
+PY
 ```
 
----
+Reload:
 
-# 8. Run the full pipeline in Terminator
+```bash
+source ~/.bashrc
+```
+
+## 3.5 Verify paths after opening a new terminal
+
+Close the current terminal, open a new one and run:
+
+```bash
+printf "INTERNSHIP_ROOT=%s\n" "${INTERNSHIP_ROOT}"
+printf "PX4_DIR=%s\n" "${PX4_DIR}"
+printf "ROS2_WS=%s\n" "${ROS2_WS}"
+printf "DDS_AGENT_DIR=%s\n" "${DDS_AGENT_DIR}"
+printf "GZ_SIM_RESOURCE_PATH=%s\n" "${GZ_SIM_RESOURCE_PATH}"
+```
+
+Verify ROS 2 and Gazebo resources:
+
+```bash
+ros2 pkg prefix px4_msgs
+
+test -d "${INTERNSHIP_ROOT}/gazebo/models" \
+  && echo "Project Gazebo models: READY"
+
+test -d "${INTERNSHIP_ROOT}/gazebo/worlds" \
+  && echo "Project Gazebo worlds: READY"
+```
+
+A project-owned world can now be referenced directly by path:
+
+```bash
+gz sim "${INTERNSHIP_ROOT}/gazebo/worlds/default.sdf"
+```
+
+A model can be referenced directly by path:
+
+```bash
+MODEL_SDF="${INTERNSHIP_ROOT}/gazebo/models/inspection_car/model.sdf"
+test -f "${MODEL_SDF}" && echo "Inspection model: READY"
+```
+
+
+# 4. Run the full pipeline in Terminator
 
 Open a Terminator window and split it into at least six terminals. Run the terminals in the order below.
 
@@ -295,18 +358,24 @@ PX4_GZ_MODEL=x500_depth \
 
 The empty world is expected. It confirms that PX4 and the `x500_depth` model started before the inspection objects are added.
 
-### Optional custom Gazebo spawn pose
 
-Use this only if the matching object coordinates and orbit center were designed around that pose:
+## Open VsCode - Camera orientation: Down
 
-```bash
-PX4_SYS_AUTOSTART=4002 \
-PX4_GZ_MODEL_POSE="283.08,-136.22,3.86,0.00,0,-0.7" \
-PX4_GZ_MODEL=x500_depth \
-./build/px4_sitl_default/bin/px4
+Change the angle of Drone's camera; The PX4 v1.15 `x500_depth` model is documented as having a front-facing depth camera. 
+
+# Go to PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf then change <pose> tag in line 9 from:
+
+The suggested change:
+
+```xml
+<pose>.12 .03 .242 0 0 0</pose>
 ```
 
-For the first student demonstration, spawning near the Gazebo origin is easier because Gazebo global coordinates and PX4 local coordinates are less confusing.
+to:
+
+```xml
+<pose>.15 .029 .21 0 0.7854 0</pose>
+```
 
 ### Verify the ROS 2 connection
 
@@ -352,8 +421,6 @@ The local demonstration layout is:
           (-5, 2.5)             (0, 0)              (8, 0)
                ●                   ✈                   ●
 ```
-
-The comments above are a conceptual plan. Use the Gazebo axis indicator to verify the actual world axes.
 
 Set shared variables:
 
@@ -432,10 +499,8 @@ data: true
 ```
 
 If the world name differs, replace `default`. If a model already exists, use a new entity name or remove the old entity before spawning it again.
-
-> The supplied geometric markers are pedagogical objects. A pretrained COCO YOLO model is not guaranteed to recognize them reliably as a car, person, or stop sign. Reliable pretrained-YOLO demonstrations require realistic, correctly textured objects, suitable camera distance, and appropriate lighting.
-
 ---
+
 
 ## Terminal 4 - Discover and bridge the RGB camera
 
@@ -522,113 +587,21 @@ ros2 node info /orbit_controller
 ros2 topic hz /fmu/in/trajectory_setpoint
 ros2 topic echo /fmu/out/vehicle_odometry --once
 ```
-
-### Orbit physics
-
-For radius `R` and period `T`:
-
-```text
-angle(t) = 2*pi*t/T
-North(t) = center_N + R*cos(angle)
-East(t)  = center_E + R*sin(angle)
-Down(t)  = -altitude
-```
-
-Tangential speed:
-
-```text
-v = 2*pi*R/T
-```
-
-Centripetal acceleration:
-
-```text
-a_c = v^2/R = 4*pi^2*R/T^2
-```
-
-Students should predict how reducing `T` changes tracking error and image quality before running the experiment.
-
 ---
 
 ## Terminal 6 - Run YOLO
-
-### Preferred method: ROS 2 YOLO package
-
-If `inspection_yolo` is present:
-
-```bash
-cd ~/quard_um6p_intership
-source config/project.env
-source /opt/ros/humble/setup.bash
-source /home/<user_name>/px4-venv/bin/activate
-source "${ROS2_WS}/install/setup.bash"
-
-ros2 launch inspection_yolo inspection_yolo.launch.py \
-  model_path:=/home/<user_name>/dev/yolov8m.pt \
-  image_topic:=/camera/image_raw \
-  output_csv:="$(pwd)/data/inspection_report.csv"
-```
-
-Inspect detections:
-
-```bash
-ros2 topic echo /inspection/detections
-```
-
-Display annotated images:
-
-```bash
-ros2 run rqt_image_view rqt_image_view /inspection/debug_image
-```
-
-### Compatibility method: existing standalone detector
-
-Before running the existing script, verify which ROS topic it subscribes to:
-
-```bash
-cd ~/PX4-ROS2-Gazebo-YOLOv8
-
-grep -nE 'create_subscription|image_raw|/camera|VideoCapture|CvBridge' uav_camera_det.py
-```
-
-If it subscribes to `/camera/image_raw`, run:
-
 ```bash
 source /opt/ros/humble/setup.bash
 source /home/<user_name>/px4-venv/bin/activate
 source ~/quard_um6p_intership/ros2_ws/install/setup.bash
-cd ~/PX4-ROS2-Gazebo-YOLOv8
+cd ~/quard_um6p_intership/perception/yolo
 
 python -u uav_camera_det.py
 ```
 
-Use `python -u` so terminal output is not buffered.
-
-Do not start a second `ros_gz_image` bridge in Terminal 6. Terminal 4 already owns the bridge. Multiple bridges make topic graphs and debugging unnecessarily confusing.
-
-Check publisher/subscriber matching:
-
-```bash
-ros2 topic info /camera/image_raw --verbose
-```
-
-A working chain should show at least one publisher, the image bridge, and at least one subscriber, the YOLO node.
-
 ---
 
 ## Terminal 7 - Visualization and evidence
-
-Raw image:
-
-```bash
-ros2 run rqt_image_view rqt_image_view /camera/image_raw
-```
-
-Annotated YOLO image:
-
-```bash
-ros2 run rqt_image_view rqt_image_view /inspection/debug_image
-```
 
 Node graph:
 
@@ -656,228 +629,37 @@ Stop recording with `Ctrl+C` and confirm that the bag closes successfully.
 
 ---
 
-# 9. Manual keyboard flight before autonomous flight
+## Terminal 7 -  Manual keyboard flight before autonomous flight
 
-Keyboard flight is useful for camera exploration, but the exact command depends on the teleoperation package already installed in the project. Do not run an unknown keyboard node against PX4.
-
+Keyboard flight is useful for camera exploration, 
 First inspect available executables:
 
 ```bash
-ros2 pkg executables | grep -Ei 'teleop|keyboard|offboard'
+source /opt/ros/humble/setup.bash
+source /home/<user_name>/px4-venv/bin/activate
+source ~/quard_um6p_intership/ros2_ws/install/setup.bash
+cd ~/quard_um6p_intership/tools/mavsdk_teleop
+
+python -u keyboard_mavsdk_control.py
+
 ```
 
-Inspect the selected node and its expected message type before running it:
+## Flight Controls
 
-```bash
-ros2 pkg executables <package_name>
-ros2 interface show <message_type>
-```
-
-Recommended student sequence:
-
-1. keep the DDS Agent, PX4, camera bridge and YOLO running;
-2. use the already validated keyboard controller to take off and hover;
-3. rotate slowly until a target becomes visible;
-4. move toward and away from it;
-5. observe detection confidence and bounding-box size;
-6. land;
-7. then repeat using `px4_orbit_inspection` for a reproducible trajectory.
-
-Do not run manual keyboard control and autonomous orbit control simultaneously. Both may publish conflicting PX4 setpoints.
+| Key | Action |
+| --- | --- |
+| `r` | Arm the drone |
+| `l` | Land |
+| `w` / `s` | Throttle up / down |
+| `a` / `d` | Yaw left / right |
+| `Arrow keys` | Roll / Pitch |
+| `i` | Print flight mode |
+| `Ctrl+C` | Quit |
 
 ---
 
-# 10. Camera orientation: recommended safe method
 
-The PX4 v1.15 `x500_depth` model is documented as having a front-facing depth camera. Editing the model inside `dependencies/PX4-Autopilot` directly makes updates and reproducibility harder. Prefer a project-owned custom model, for example `x500_depth_down`, that includes the standard model and changes only the camera pose.
-
-Before changing anything, locate the actual model used by your checkout:
-
-```bash
-cd ~/quard_um6p_intership
-source config/project.env
-
-find "${PX4_DIR}" "$HOME/.gz/models" \
-  -path '*x500_depth*/model.sdf' \
-  -o -path '*OakD-Lite*/model.sdf'
-```
-
-Inspect all relevant poses, not a hard-coded line number:
-
-```bash
-grep -n -B 3 -A 6 '<pose>' /path/to/x500_depth/model.sdf
-```
-
-The suggested change:
-
-```xml
-<pose>.12 .03 .242 0 0 0</pose>
-```
-
-to:
-
-```xml
-<pose>.15 .029 .21 0 0.7854 0</pose>
-```
-
-adds a pitch of `0.7854 rad`, approximately 45 degrees. Whether positive pitch points the optical axis down or up depends on the included camera model's frame convention. Therefore:
-
-1. make a backup or custom model;
-2. change the pose;
-3. restart PX4/Gazebo;
-4. bridge and display `/camera/image_raw`;
-5. verify the direction visually;
-6. if it points upward, test `-0.7854` instead;
-7. document the final working sign and file path.
-
-For a true nadir-looking camera, a pitch near 90 degrees may be appropriate, but verify frame conventions and avoid guessing. A 45-degree oblique view is usually more engaging for inspection because it can include both the ground target and surrounding context.
-
-After modifying a cached model, fully restart the simulation. Do not modify the model while Gazebo is running and expect an already spawned entity to update.
-
----
-
-# 11. Student experiments
-
-## Experiment A - Confidence threshold
-
-```bash
-ros2 param get /yolo_detector confidence_threshold
-ros2 param set /yolo_detector confidence_threshold 0.25
-ros2 param set /yolo_detector confidence_threshold 0.70
-```
-
-Question: how do false detections and missed detections change?
-
-## Experiment B - Process fewer frames
-
-```bash
-ros2 param set /yolo_detector inference_every_n_frames 1
-ros2 param set /yolo_detector inference_every_n_frames 3
-```
-
-Question: what changes in inference load, output frequency and responsiveness?
-
-## Experiment C - Orbit speed
-
-Change the orbit period in the package YAML, rebuild only if required, restart the orbit node, and test 30 s, 24 s and 12 s.
-
-Question: does faster motion increase trajectory error or reduce detection stability?
-
-## Experiment D - Camera viewing angle
-
-Compare forward-facing, 45-degree oblique and validated downward-facing camera orientations.
-
-Question: which view produces the most continuous evidence during the selected inspection mission?
-
-## Experiment E - Distance
-
-Use keyboard control or change the orbit radius. Compare bounding-box area and confidence at multiple distances.
-
-Question: is the closest view always the best view?
-
-For every experiment, record:
-
-```text
-Prediction
-One variable changed
-Fixed conditions
-Measured result
-Failure or anomaly
-Interpretation
-Next experiment
-```
-
----
-
-# 12. Troubleshooting
-
-## The image bridge terminal is silent
-
-This is normally expected. Test the result from another terminal:
-
-```bash
-ros2 topic hz /camera/image_raw
-ros2 topic info /camera/image_raw --verbose
-```
-
-## `/camera/image_raw` does not exist
-
-Check the Gazebo topic first:
-
-```bash
-gz topic -l | grep -Ei 'camera|image|rgb|depth'
-gz topic -i -t /camera
-```
-
-Then check that ROS 2 was sourced before running `image_bridge`.
-
-## ROS topic exists but has no image frequency
-
-Confirm Gazebo itself is publishing:
-
-```bash
-gz topic -e -t /camera
-```
-
-If Gazebo has no messages, the issue is before ROS 2: model, sensor, simulation pause state, or topic selection.
-
-## YOLO runs but reports no detections
-
-First display `/camera/image_raw`. Confirm that a realistic target is visible. Then test a lower threshold:
-
-```bash
-ros2 param set /yolo_detector confidence_threshold 0.25
-```
-
-A visible geometric shape is not automatically a valid pretrained-YOLO object.
-
-## The standalone Python script prints nothing
-
-Run unbuffered and verify its subscription:
-
-```bash
-python -u uav_camera_det.py
-ros2 node list
-ros2 topic info /camera/image_raw --verbose
-```
-
-## PX4 topics are missing
-
-Verify:
-
-```bash
-pgrep -af MicroXRCEAgent
-pgrep -af px4
-ros2 topic list | grep '^/fmu/'
-```
-
-Confirm Agent port `8888`, matching PX4/`px4_msgs` branches, and the same ROS environment.
-
-## PX4 will not enter Offboard mode
-
-Confirm that `OffboardControlMode` and `TrajectorySetpoint` are continuously published before requesting Offboard mode:
-
-```bash
-ros2 topic hz /fmu/in/offboard_control_mode
-ros2 topic hz /fmu/in/trajectory_setpoint
-```
-
-Inspect vehicle status and QGroundControl/preflight conditions.
-
-## Object spawn returns false
-
-Check:
-
-```bash
-test -f "${OBJECT_SDF}" && echo "SDF exists"
-gz service -l | grep '/world/.*/create'
-```
-
-Use a unique entity name and the correct world name.
-
----
-
-# 13. Clean shutdown
+# 10. Clean shutdown
 
 Preferred shutdown:
 
@@ -887,117 +669,3 @@ Preferred shutdown:
 4. stop the camera bridge;
 5. stop PX4/Gazebo;
 6. stop the DDS Agent.
-
-Use normal signals before force-killing:
-
-```bash
-pkill -INT -x px4 || true
-pkill -INT -f 'gz sim' || true
-pkill -INT -x MicroXRCEAgent || true
-```
-
-Check remaining processes:
-
-```bash
-pgrep -af 'px4|gz sim|MicroXRCEAgent|image_bridge|uav_camera_det'
-```
-
-Use `pkill -9` only as a last resort because it prevents processes from cleaning up files and shared resources.
-
----
-
-# 14. Final video plan
-
-Record the final tutorial after the pipeline works without manual correction.
-
-## Video chapter 1 - Installation and versions
-
-Show:
-
-```bash
-lsb_release -a
-ros2 --help
-git -C "${PX4_DIR}" branch --show-current
-git -C "${ROS2_WS}/src/px4_msgs" branch --show-current
-git -C "${DDS_AGENT_DIR}" branch --show-current
-python -c "import sys, numpy; print(sys.executable, numpy.__version__)"
-```
-
-Explain that Phase 3 does not reinstall validated dependencies.
-
-## Video chapter 2 - Terminator layout
-
-Show the six or seven terminals and name their responsibilities:
-
-```text
-1 DDS Agent
-2 PX4 + Gazebo
-3 Gazebo objects
-4 Camera bridge
-5 Orbit controller
-6 YOLO
-7 Visualization and recording
-```
-
-## Video chapter 3 - Data flow
-
-Show:
-
-```bash
-rqt_graph
-ros2 node list
-ros2 topic list | grep -E 'fmu|camera|inspection'
-```
-
-## Video chapter 4 - Manual inspection
-
-Use the validated keyboard controller to explore object distance and camera perspective. Do not run the orbit controller simultaneously.
-
-## Video chapter 5 - Autonomous inspection
-
-Start:
-
-```bash
-ros2 service call /orbit/start std_srvs/srv/Trigger "{}"
-```
-
-Show Gazebo, the raw image, the YOLO image and the detection topic.
-
-## Video chapter 6 - Experiment
-
-Change exactly one parameter, predict the effect, run the mission, and compare the evidence.
-
-## Video chapter 7 - Results
-
-Show:
-
-```bash
-head -n 10 data/inspection_report.csv
-ros2 bag info data/bags/orbit_inspection_run_01
-```
-
-End with the engineering chain:
-
-```text
-Mission > Requirements > Architecture > Simulation > Programming
-> Integration > Testing > Evidence > Demonstration
-```
-
----
-
-# 15. Definition of a successful Phase 3
-
-Phase 3 is complete when:
-
-- PX4 `release/1.15` and `px4_msgs release/1.15` are verified;
-- DDS connects PX4 to ROS 2;
-- the `x500_depth` drone appears and can fly;
-- inspection objects appear in Gazebo;
-- `/camera/image_raw` has a measurable frequency;
-- the raw camera image is visible;
-- YOLO publishes annotated images and detections;
-- manual keyboard inspection works independently;
-- autonomous orbit inspection works independently;
-- no two controllers publish competing setpoints;
-- a rosbag and inspection report are produced;
-- students can explain coordinate frames, orbit speed, camera perspective, confidence threshold, false detections and system integration.
