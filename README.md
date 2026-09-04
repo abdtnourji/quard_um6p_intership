@@ -188,6 +188,66 @@ Do not run project commands with `sudo` unless an installation guide explicitly 
 
 ---
 
+# Download and install Microsoft’s VS-Code
+
+```bash
+sudo apt update
+sudo apt install -y wget gpg apt-transport-https
+```
+
+```bash
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/packages.microsoft.gpg > /dev/null
+```
+
+# Add Microsoft’s official VS Code repository
+
+```bash
+echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+```
+
+
+# Install VS Code
+
+```bash
+sudo apt update
+sudo apt install -y code
+```
+
+#  Install Recommended Extensions
+
+Install the essential tools for Python, ROS 2 (C++/XML), Git, and Markdown by running this block:
+
+```bash
+code --install-extension ms-python.python
+code --install-extension ms-python.vscode-pylance
+code --install-extension ms-vscode.cpptools
+code --install-extension redhat.vscode-yaml
+code --install-extension yzhang.markdown-all-in-one
+code --install-extension eamodio.gitlens
+code --install-extension ms-azuretools.vscode-docker
+```
+
+# Set VS Code as the Default Editor (Optional but Recommended)
+
+```bash
+sudo update-alternatives --install /usr/bin/editor editor "$(which code)" 10
+sudo update-alternatives --set editor "$(which code)"
+```
+
+
+# Working in VS Code
+
+Opening the Complete Project
+Always open the root directory of the project rather than individual files so VS Code can map the complete workspace:
+
+```bash
+cd ~/quard_um6p_intership
+code .
+```
+
+Note: If prompted with a workspace-trust question, select Yes, I trust the authors.
+
+
 ## 5. Read the Installation Guides in Order
 
 All primary setup instructions are located in:
@@ -231,21 +291,6 @@ This phase prepares the base computer:
 - ROS-Gazebo packages;
 - ROS 2 validation.
 
-Open it in the terminal:
-
-```bash
-less \
-    "${HOME}/quard_um6p_intership/installation_guide/README_PHASE0_UBUNTU_ROS2_SETUP.md"
-```
-
-Press `Space` to move forward and `q` to exit `less`.
-
-You may also open the project in a graphical editor:
-
-```bash
-xdg-open \
-    "${HOME}/quard_um6p_intership/installation_guide/README_PHASE0_UBUNTU_ROS2_SETUP.md"
-```
 
 Do not continue until every Phase 0 validation check passes.
 
@@ -272,13 +317,6 @@ It installs and validates the Python packages required for:
 - Ultralytics YOLO;
 - CPU or optional NVIDIA execution.
 
-Open it with:
-
-```bash
-less \
-    "${HOME}/quard_um6p_intership/installation_guide/README_PHASE1_PX4_AI_VENV_SETUP.md"
-```
-
 Do not continue if the final Python, ROS 2, `cv_bridge`, and YOLO import tests fail.
 
 ### Pipeline Phase: Run the Complete Project
@@ -290,13 +328,6 @@ installation_guide/README_PHASE_3_PIPELINE.md
 ```
 
 This phase explains the complete startup order and integration pipeline, including the required terminals, PX4 SITL, Gazebo, communication, camera data, perception, mission execution, and output evidence.
-
-Open it with:
-
-```bash
-less \
-    "${HOME}/quard_um6p_intership/installation_guide/README_PHASE_3_PIPELINE.md"
-```
 
 Follow the terminal order exactly. Do not launch all components randomly.
 
@@ -332,8 +363,7 @@ When an error occurs:
 4. record the current phase and section number;
 5. record the result of `pwd`;
 6. do not install random packages from forums;
-7. consult the troubleshooting section in the same guide;
-8. ask a supervisor if the documented repair does not work.
+7. ask a supervisor if you are not able to repair youself.
 
 A useful support report looks like:
 
@@ -370,7 +400,7 @@ Load ROS 2 when requested:
 source /opt/ros/humble/setup.bash
 ```
 
-Activate the AI environment when requested:
+Activate the AI environment **when requested**:
 
 ```bash
 source "${HOME}/px4-venv/bin/activate"
@@ -400,7 +430,7 @@ Each student is responsible for:
 - respecting simulation and flight-safety rules;
 - explaining what worked, what failed, and why.
 
-A successful internship is not defined only by a perfect demonstration. A well-observed and well-explained failure can be a valuable engineering result.
+**A successful internship is not defined only by a perfect demonstration. A well-observed and well-explained failure can be a valuable engineering result**.
 
 ---
 
@@ -437,35 +467,6 @@ Do not wait until the final day to reconstruct your work from memory.
 
 > **Video resources will be added here by the supervisor.**
 
-### Video 1: Project Orientation
-
-```text
-Title: To be added
-Link:  To be added
-```
-
-### Video 2: Installation Walkthrough
-
-```text
-Title: To be added
-Link:  To be added
-```
-
-### Video 3: PX4, Gazebo, and ROS 2 Pipeline
-
-```text
-Title: To be added
-Link:  To be added
-```
-
-### Video 4: Perception and YOLO Demonstration
-
-```text
-Title: To be added
-Link:  To be added
-```
-
-Videos are supplementary resources. The written installation guides remain the authoritative sequence because they contain commands and validation checks.
 
 ---
 
@@ -478,26 +479,6 @@ Expected location:
 ```text
 tasks/QUARD_UM6P_INTERNSHIP_TASKS.pdf
 ```
-
-Direct link:
-
-```text
-[Open the Internship Tasks and Deliverables PDF](tasks/QUARD_UM6P_INTERNSHIP_TASKS.pdf)
-```
-
-The task PDF will define:
-
-- assigned technical activities;
-- individual and team responsibilities;
-- expected source code;
-- experiments to perform;
-- evidence to collect;
-- engineering logbook requirements;
-- report and presentation requirements;
-- final demonstration criteria;
-- submission format and deadline.
-
-Do not assume that making the software run is the only required output. Read the task PDF completely when it becomes available.
 
 ---
 
