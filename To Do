@@ -1,10 +1,9 @@
 
 
 Add how to
-
-    Install Ros gazebo ubuntu 
-    Intall all pyton px4-venv
-    Install vsCode for wrtting vsCode
-    for px4 and px4msg and make sur it 1.15 branch
-    how to use / creat inpection package
-    Exercice on this package with todo like exercie with same intution and todo line object hard enough to not use chagbt 
+    make sure the doc follwo um6p fomat 
+        include the github public link 
+        make sur every is up to the bare
+        clear the rep
+        add a foloder emply to put in the fututre, work to do and return 
+        
