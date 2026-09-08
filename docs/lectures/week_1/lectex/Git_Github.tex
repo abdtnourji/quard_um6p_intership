@@ -1,10 +1,5 @@
 \section{Git and GitHub Foundations}
 
-% =============================================================================
-% GIT AND GITHUB FOUNDATIONS
-% Insert directly into the existing Beamer project.
-% No preamble, packages, theme definitions, or document-level commands included.
-% =============================================================================
 
 \begin{frame}{From Bash to Version Control}
 \framesubtitle{The terminal operates files; Git manages their engineering history}
@@ -63,16 +58,15 @@ Working files $\longrightarrow$ Selected changes $\longrightarrow$ Recorded chec
 \begin{block}{Intuitive Definition}
 Version control records how a collection of files changes over time. It helps engineers answer: \emph{What changed? Who changed it? Why was it changed? When was it changed?}
 \end{block}
-\pause
-\begin{exampleblock}{Laboratory-Notebook Analogy}
-A commit is similar to a signed experiment entry. It should describe one coherent change, preserve the evidence needed to understand it, and include a meaningful explanation.
-\end{exampleblock}
-\begin{alertblock}{Important Boundary}
-Git records project history, but it does not automatically prove that code is correct. Tests, reviews, simulation evidence, and documentation remain necessary.
-\end{alertblock}
+
 \end{frame}
 
-\begin{frame}{Git and GitHub Are Not the Same}
+
+
+
+
+
+\begin{frame}{Git and GitHub}
 \framesubtitle{A local version-control tool and an online collaboration platform}
 \footnotesize
 \begin{columns}[T,onlytextwidth]
@@ -80,7 +74,7 @@ Git records project history, but it does not automatically prove that code is co
 \begin{block}{Git}
 \begin{itemize}\setlength{\itemsep}{0.18em}
 \item distributed version-control software;
-\item runs on the student's computer;
+\item runs on the local computer;
 \item records commits, branches, and merges;
 \item can work locally without GitHub.
 \end{itemize}
@@ -97,25 +91,58 @@ Git records project history, but it does not automatically prove that code is co
 \end{exampleblock}
 \end{column}
 \end{columns}
-\begin{alertblock}{One-Sentence Distinction}
-Git manages the repository history; GitHub hosts and connects repositories for collaboration and delivery.
-\end{alertblock}
 \end{frame}
 
-\begin{frame}{The Project Exists in Two Places}
-\framesubtitle{The GitHub repository and the local clone have different roles}
+
+
+\begin{frame}{Git and GitHub}
+
 \footnotesize
-\begin{center}
-\colorbox{um6p-color-light-blue}{\parbox[c][1.15cm][c]{3.0cm}{\centering\textbf{GitHub Remote}\\\scriptsize Shared project and collaboration point}}
-\quad$\overset{\texttt{clone / pull}}{\underset{\texttt{push}}{\leftrightarrow}}$\quad
-\colorbox{um6p-color-dark-green!18}{\parbox[c][1.15cm][c]{3.0cm}{\centering\textbf{Local Repository}\\\scriptsize Files, branches, commits, and local work}}
-\end{center}
-\begin{block}{Mental Model}
-The remote is not a magical live folder. Students work in a local clone, create local commits, and then deliberately synchronize those commits with GitHub.
-\end{block}
-\begin{alertblock}{Practical Consequence}
-Saving a file does not create a commit, and creating a commit does not upload it to GitHub. Each action is a separate engineering step.
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Git (The Camera) ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Git: The Local Camera}
+            Think of Git as a digital camera for your project.
+            \begin{itemize}
+                \setlength{\itemsep}{0.2em}
+                \item When you write a good piece of code, you take a "snapshot" (\textbf{commit}).
+                \item If your next experiment breaks the drone, you can simply rewind to an older snapshot.
+                \item \textbf{Limitation:} These snapshots live \textit{only} on your physical laptop. If the laptop breaks, the code is gone.
+            \end{itemize}
+        \end{block}
+    \end{column}
+
+    % --- RIGHT COLUMN: GitHub (The Cloud) ---
+    \begin{column}{0.48\textwidth}
+        \begin{exampleblock}{GitHub: The Shared Gallery}
+            Think of GitHub as an online photo album.
+            \begin{itemize}
+                \setlength{\itemsep}{0.2em}
+                \item You upload your local snapshots to the internet (\textbf{push}).
+                \item Your 9 teammates can browse your code and download it to their own laptops (\textbf{pull}).
+                \item \textbf{Advantage:} It acts as the ultimate backup. It is the "single source of truth" for the team.
+            \end{itemize}
+        \end{exampleblock}
+    \end{column}
+
+\end{columns}
+
+\pause
+\vspace{0.25cm}
+
+% --- BOTTOM: The Daily Workflow ---
+\begin{alertblock}{The Daily Project Workflow}
+    \centering
+    \normalsize
+    \textbf{1. Write Code} 
+    \quad $\longrightarrow$ \quad 
+    \textbf{2. Snap Photo} (\texttt{git commit}) 
+    \quad $\longrightarrow$ \quad 
+    \textbf{3. Upload} (\texttt{git push})
 \end{alertblock}
+
 \end{frame}
 
 \begin{frame}{Essential Git Vocabulary}
@@ -137,23 +164,7 @@ Merge & Combine histories from different lines of development. \\
 \end{tabularx}
 \end{frame}
 
-\begin{frame}{Three Working Areas}
-\framesubtitle{Git separates editing, selection, and permanent history}
-\footnotesize
-\begin{center}
-\colorbox{black!7}{\parbox[c][1.0cm][c]{2.25cm}{\centering\textbf{Working Tree}\\\scriptsize Files being edited}}
-$\xrightarrow{\texttt{git add}}$
-\colorbox{um6p-color-light-blue}{\parbox[c][1.0cm][c]{2.25cm}{\centering\textbf{Staging Area}\\\scriptsize Selected next snapshot}}
-$\xrightarrow{\texttt{git commit}}$
-\colorbox{um6p-color-dark-green!18}{\parbox[c][1.0cm][c]{2.25cm}{\centering\textbf{Local History}\\\scriptsize Recorded commits}}
-\end{center}
-\begin{exampleblock}{Why Staging Exists}
-A student may modify documentation, code, and temporary notes at the same time. Staging allows only the coherent project change to enter the next commit.
-\end{exampleblock}
-\begin{alertblock}{Key Distinction}
-\texttt{git add} does not upload files. It selects content for the next local commit.
-\end{alertblock}
-\end{frame}
+
 
 \begin{frame}[fragile]{Before Cloning: Verify the Destination}
 \framesubtitle{Clone the repository once and into the intended parent directory}
@@ -200,9 +211,6 @@ Select \textbf{Code}, choose the documented authentication method, and copy the 
 \end{block}
 \end{column}
 \end{columns}
-\begin{alertblock}{Authenticity Check}
-Confirm the repository owner and name before cloning. Similar names may refer to unrelated or outdated projects.
-\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]{Clone the Internship Repository}
@@ -223,9 +231,9 @@ cd quard_um6p_intership
 \begin{block}{What the Command Creates}
 The project directory, working files, commit history, branches known at clone time, and a remote normally named \texttt{origin}.
 \end{block}
-\begin{alertblock}{If Authentication Is Requested}
-Do not enter a GitHub account password as though it were a reusable Git password. Follow the repository's approved HTTPS credential or SSH-key procedure.
-\end{alertblock}
+% \begin{alertblock}{If Authentication Is Requested}
+% Do not enter a GitHub account password as though it were a reusable Git password. Follow the repository's approved HTTPS credential or SSH-key procedure.
+% \end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]{Verify That the Clone Is Correct}
@@ -245,9 +253,9 @@ git log --oneline -5
 \begin{block}{Expected Evidence}
 The path identifies the intended repository, \texttt{.git} exists, Git recognizes a branch, the working tree is initially clean, \texttt{origin} points to the expected GitHub URL, and recent commits are visible.
 \end{block}
-\begin{alertblock}{Repository Test}
-If \texttt{git status} reports ``not a git repository,'' verify the current directory and move to the cloned project root.
-\end{alertblock}
+% \begin{alertblock}{Repository Test}
+% If \texttt{git status} reports ``not a git repository,'' verify the current directory and move to the cloned project root.
+% \end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]{Explore Before Modifying}
@@ -410,9 +418,9 @@ git log --oneline --graph --decorate --all
 \item What commit preceded a newly observed problem?
 \end{itemize}
 \end{exampleblock}
-\begin{alertblock}{Quality Signal}
-Small coherent commits with descriptive messages are easier to review, merge, test, and recover than one large unexplained commit.
-\end{alertblock}
+% \begin{alertblock}{Quality Signal}
+% Small coherent commits with descriptive messages are easier to review, merge, test, and recover than one large unexplained commit.
+% \end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]{Branches Isolate Lines of Work}
@@ -531,32 +539,97 @@ The exact branch and review policy is defined by the internship repository. Foll
 \end{alertblock}
 \end{frame}
 
-\begin{frame}[fragile]{Use \texttt{.gitignore} Deliberately}
-\framesubtitle{Keep generated, local, sensitive, and oversized artifacts out of normal history}
+
+\begin{frame}{Protecting the Project: Forking}
+\framesubtitle{Creating your own workspace without impacting the main repository}
+
 \footnotesize
-\begin{block}{Purpose}
-A \texttt{.gitignore} file contains patterns for untracked files Git should normally ignore.
-\end{block}
-\begin{exampleblock}{Typical Robotics-Oriented Patterns}
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: The Concept ---
+    \begin{column}{0.48\textwidth}
+        \begin{alertblock}{The "Golden Copy" Rule}
+            The supervisor's main GitHub repository is the \textbf{Golden Copy}. If 10 students push their experimental code directly into it at the same time, the project will instantly break.
+        \end{alertblock}
+
+        \begin{block}{The Solution: "Forking"}
+            A \textbf{Fork} is a completely separate, personal copy of the repository that lives on \textit{your} GitHub account. 
+            \begin{itemize}
+                \setlength{\itemsep}{0.2em}
+                \item You can freely modify it.
+                \item You can completely break it.
+                \item It \textbf{never} affects the supervisor's original code.
+            \end{itemize}
+        \end{block}
+    \end{column}
+
+    % --- RIGHT COLUMN: The Workflow ---
+    \begin{column}{0.48\textwidth}
+        \begin{exampleblock}{Your Safe Setup Workflow}
+            Instead of cloning the main project directly, you will:
+            \begin{enumerate}
+                \setlength{\itemsep}{0.3em}
+                \item \textbf{Fork (In Browser):} Go to the supervisor's GitHub page and click the "Fork" button to create your copy.
+                \item \textbf{Clone (In Terminal):} Run \texttt{git clone} using the URL of \textit{your} new fork, not the supervisor's URL.
+                \item \textbf{Push (In Terminal):} When you type \texttt{git push}, your code goes safely to your personal cloud repository.
+            \end{enumerate}
+        \end{exampleblock}
+    \end{column}
+
+\end{columns}
+
+
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Use \texttt{.gitignore} Deliberately}
+\framesubtitle{Keep generated, local, and sensitive artifacts out of history}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Theory & Warnings ---
+    \begin{column}{0.52\textwidth}
+        \begin{block}{The Purpose}
+            A \texttt{.gitignore} file contains patterns telling Git to ignore specific untracked files, preventing them from accidentally being committed and pushed to GitHub.
+        \end{block}
+        
+        \begin{alertblock}{Important Boundaries}
+            \begin{itemize}
+                \setlength{\itemsep}{0.3em}
+                \item \textbf{Too Late:} Ignoring a file does \textit{not} remove it from history if it was already committed previously.
+                \item \textbf{Security:} Never rely on \texttt{.gitignore} as your only protection for credentials. Never commit passwords.
+                \item \textbf{Bloat:} Use it to prevent uploading massive ROS 2 logs or compiled build files that crash repositories.
+            \end{itemize}
+        \end{alertblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: The Code Example ---
+    \begin{column}{0.44\textwidth}
+        \begin{exampleblock}{Typical Robotics Patterns}
 \begin{verbatim}
 # Python cache
 __pycache__/
 *.pyc
-
-# Local environments and generated outputs
-.venv/
+# Local ROS 2 workspaces
 build/
 install/
 log/
-
-# Local secrets
+# Local environments
+.venv/
+# Sensitive secrets
 .env
 *.pem
 \end{verbatim}
-\end{exampleblock}
-\begin{alertblock}{Important Boundary}
-Ignoring a file does not remove it from history if it was already committed. Never rely on \texttt{.gitignore} as the only protection for credentials.
-\end{alertblock}
+        \end{exampleblock}
+    \end{column}
+
+\end{columns}
+
 \end{frame}
 
 \begin{frame}{Never Commit Secrets}
@@ -681,7 +754,7 @@ If the correct engineering intention is unclear, stop and ask the file owner or 
 \end{frame}
 
 \begin{frame}[fragile]{Two Computers, One Shared Repository}
-\framesubtitle{Synchronize through commits, not by copying folders manually}
+% \framesubtitle{Synchronize through commits, not by copying folders manually}
 \footnotesize
 \begin{block}{At the Computer Where Work Was Completed}
 \begin{verbatim}
@@ -704,7 +777,7 @@ Each computer must be on the intended repository and branch. Uncommitted local e
 \end{alertblock}
 \end{frame}
 
-\begin{frame}[fragile]{End-to-End Student Practice}
+\begin{frame}[fragile]{End-to-End Practice}
 \framesubtitle{Obtain, modify, record, synchronize, and verify}
 \scriptsize
 \begin{exampleblock}{Guided Workflow}
@@ -728,60 +801,11 @@ git pull origin main
 git push origin main
 \end{verbatim}
 \end{exampleblock}
-\begin{alertblock}{Access Boundary}
-If direct push access or pushing to \texttt{main} is not permitted, create the approved branch and follow the repository's contribution or pull-request workflow.
-\end{alertblock}
+
 \end{frame}
 
-\begin{frame}{Git and GitHub Readiness Check}
-\framesubtitle{Can the student explain both the commands and the system state?}
-\footnotesize
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.48\textwidth}
-\begin{block}{Conceptual Understanding}
-\begin{enumerate}\setlength{\itemsep}{0.18em}
-\item How are Git and GitHub different?
-\item What is the staging area?
-\item Why is a commit local before a push?
-\item What does \texttt{origin} represent?
-\item Why can a merge require judgment?
-\end{enumerate}
-\end{block}
-\end{column}
-\begin{column}{0.48\textwidth}
-\begin{exampleblock}{Practical Capability}
-\begin{enumerate}\setlength{\itemsep}{0.18em}
-\item clone and verify the repository;
-\item read its documentation and structure;
-\item inspect, stage, and commit a change;
-\item pull and push safely;
-\item recover from simple staging or editing mistakes.
-\end{enumerate}
-\end{exampleblock}
-\end{column}
-\end{columns}
-\end{frame}
 
-\begin{frame}{Good Practices for the Internship}
-\framesubtitle{A concise collaboration contract}
-\footnotesize
-\begin{itemize}\setlength{\itemsep}{0.28em}
-\item begin with \texttt{git status}, the correct branch, and an updated local repository;
-\item make focused changes and inspect diffs before staging;
-\item commit coherent work with meaningful messages;
-\item synchronize frequently enough to avoid long divergence;
-\item update documentation whenever setup or behavior changes;
-\item keep generated and unnecessary large files out of normal history;
-\item never commit passwords, tokens, credentials, or private keys;
-\item test integrated robotics behavior after merges and conflict resolution;
-\item verify the published result on GitHub.
-\end{itemize}
-\begin{alertblock}{Definition of Done}
-A contribution is complete when another engineer can understand the change, reproduce the result, and identify the evidence supporting it.
-\end{alertblock}
-\end{frame}
-
-\begin{frame}{Official References}
+\begin{frame}{References}
 \framesubtitle{Primary documentation for continued practice}
 \scriptsize
 \begin{thebibliography}{9}
@@ -806,37 +830,6 @@ GitHub Docs, \emph{Pushing Commits to a Remote Repository}.\\
 \url{https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository}
 \end{thebibliography}
 \end{frame}
-
-\begin{frame}{Transition to Python for Robotics}
-\framesubtitle{The project is reproducible; next we study the language used for robotics logic}
-\footnotesize
-\begin{center}
-\colorbox{um6p-color-dark-green!18}{\parbox[c][0.95cm][c]{2.05cm}{\centering\textbf{Ubuntu}\\\scriptsize Completed}}
-\quad$\Longrightarrow$\quad
-\colorbox{um6p-color-dark-green!18}{\parbox[c][0.95cm][c]{2.15cm}{\centering\textbf{Terminal and Bash}\\\scriptsize Completed}}
-\quad$\Longrightarrow$\quad
-\colorbox{um6p-color-dark-green!18}{\parbox[c][0.95cm][c]{2.05cm}{\centering\textbf{Git and GitHub}\\\scriptsize Completed}}
-\end{center}
-\vspace{0.18cm}
-\begin{center}
-$\Downarrow$
-
-\colorbox{um6p-color-light-blue}{\parbox[c][1.08cm][c]{2.45cm}{\centering\textbf{Python for Robotics}\\\scriptsize Next foundation}}
-\end{center}
-\begin{exampleblock}{Guiding Question}
-How can Python express readable mission logic, process robotics data, implement ROS 2 nodes, and connect camera perception to the wider inspection system?
-\end{exampleblock}
-\end{frame}
-
-
-
-
-
-
-
-
-
-
 
 
 
