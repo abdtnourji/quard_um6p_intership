@@ -1,2 +1,0 @@
-\beamer@sectionintoc {1}{Mission and Foundations}{3}{0}{1}
-\beamer@sectionintoc {2}{Understanding Ubuntu and the Linux Environment}{22}{0}{2}

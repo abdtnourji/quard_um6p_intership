@@ -1,28 +1,46 @@
-\frametitle{Algorithm}
-\begin{algorithm}[H]
-\fontsize{6}{1}\selectfont
-\caption{Bellman-Kalaba (adapted from \hrefcol{https://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/algorithmicx.pdf}{algorithmicx documentation}).}
-\begin{algorithmic}
-\REQUIRE $G$, $u$, $l$, $p$
-% \ENSURE optional output
-\FORALL {$v \in V(G)$}
-    \STATE $l(v) \leftarrow \infty$
-\ENDFOR
-\STATE $l(u) \leftarrow 0$
-\REPEAT
-    \FOR {$i \leftarrow 1, n$}
-        \STATE $min \leftarrow l(v_i)$
-        \FOR {$j \leftarrow 1, n$}
-            \IF {$min > \CALL{Edge}{v_i, v_j} + l(v_j)$}
-                \STATE $min \leftarrow \CALL{Edge}{v_i, v_j} + l(v_j)$ \ANNOTATE{Example comment}
-                \STATE $p(i) \leftarrow v_j$
-            \ENDIF
-        \ENDFOR
-        \STATE $l’(i) \leftarrow min$
-    \ENDFOR
-    \STATE $changed \leftarrow l \not= l’$
-    \STATE $l \leftarrow l’$
-\UNTIL{$\neg changed$}
-% \RETURN optional return
-\end{algorithmic}
-\end{algorithm}
+\frametitle{Terminal Sandbox (Part 3/3)}
+\framesubtitle{Moving, Searching, and Cleanup}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: The Mission ---
+    \begin{column}{0.48\textwidth}
+        \begin{exampleblock}{Mission 3: System Administration}
+            Engineers must regularly restructure projects and search through massive log files.
+            \begin{enumerate}
+                \setlength{\itemsep}{0.2em}
+                \item Rename your \texttt{backup} folder to \texttt{archive}.
+                \item Use the \texttt{grep} command to search for the word \texttt{ROS} inside your archived configuration file.
+                \item Finally, clean up your workspace by permanently deleting the entire \texttt{archive} folder.
+            \end{enumerate}
+        \end{exampleblock}
+
+        \begin{alertblock}{Danger Zone: \texttt{rm -rf}}
+            In Linux, there is no "Recycle Bin" for the terminal. The \texttt{rm} command deletes files instantly and permanently. Use it with extreme caution!
+        \end{alertblock}
+    \end{column}
+
+    \pause
+    % --- RIGHT COLUMN: The Solution ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Mission 3: Solution Workflow}
+
+\begin{verbatim}
+# 1. Rename (Move) backup to archive
+mv backup archive
+# Verify the name changed
+ls
+# 2. Search for "ROS" inside the file
+grep "ROS" archive/config.env
+# 3. Delete the archive folder
+# (-r = recursive, -f = force)
+rm -rf archive/
+# Verify it is gone forever
+ls
+\end{verbatim}
+        \end{block}
+    \end{column}
+
+\end{columns}
