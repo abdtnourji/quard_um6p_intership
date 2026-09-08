@@ -3,6 +3,15 @@
 % OPENING SECTION: MISSION, SYSTEM VISION, AND LEARNING ROADMAP
 % ---------------------------------------- ------------------------------------
 
+\begin{frame}{First, Observe the Destination}
+        
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.9\textwidth]{./images/Gemini_Generated_Image_vo4vdvvo4vdvvo4v.jpeg}
+    \end{figure}
+
+\end{frame}
+
 \begin{frame}{The Internship Mission}
 \framesubtitle{Build a reproducible autonomous-drone inspection system in simulation}
 \footnotesize
@@ -28,9 +37,6 @@
         \end{exampleblock}
     \end{column}
 \end{columns}
-\begin{alertblock}{Professional Perspective}
-The objective is not only to make a demonstration run once. The objective is to build a system that another engineer can understand, reproduce, verify, and improve.
-\end{alertblock}
 \end{frame}
 
 % ----------------------------------------------------------------------------
@@ -73,33 +79,33 @@ A successful simulation is evidence of software integration, not proof that a re
 
 
 
-% ----------------------------------------------------------------------------
-\begin{frame}{The Expected Final Demonstration}
-\framesubtitle{What the completed GitHub-based project should reproduce}
-\footnotesize
-\begin{columns}[T,onlytextwidth]
-    \begin{column}{0.32\textwidth}
-        \begin{block}{1. Launch}
-            Start the required simulation, flight-control, communication, and perception processes from a documented workspace.
-        \end{block}
-    \end{column}
-    \pause
-    \begin{column}{0.32\textwidth}
-        \begin{block}{2. Observe}
-            Watch the vehicle, mission state, camera stream, ROS 2 interfaces, and detector outputs.
-        \end{block}
-    \end{column}
-    \pause
-    \begin{column}{0.32\textwidth}
-        \begin{block}{3. Verify}
-            Compare intended behavior with logs, messages, detections, screenshots, and saved mission evidence.
-        \end{block}
-    \end{column}
-\end{columns}
-\begin{exampleblock}{Definition of Success}
-The system launches predictably, its components exchange the expected information, the simulated drone executes the intended mission, and the results can be explained and reproduced from the repository documentation.
-\end{exampleblock}
-\end{frame}
+% % ----------------------------------------------------------------------------
+% \begin{frame}{The Expected Final Demonstration}
+% \framesubtitle{What the completed GitHub-based project should reproduce}
+% \footnotesize
+% \begin{columns}[T,onlytextwidth]
+%     \begin{column}{0.32\textwidth}
+%         \begin{block}{1. Launch}
+%             Start the required simulation, flight-control, communication, and perception processes from a documented workspace.
+%         \end{block}
+%     \end{column}
+%     \pause
+%     \begin{column}{0.32\textwidth}
+%         \begin{block}{2. Observe}
+%             Watch the vehicle, mission state, camera stream, ROS 2 interfaces, and detector outputs.
+%         \end{block}
+%     \end{column}
+%     \pause
+%     \begin{column}{0.32\textwidth}
+%         \begin{block}{3. Verify}
+%             Compare intended behavior with logs, messages, detections, screenshots, and saved mission evidence.
+%         \end{block}
+%     \end{column}
+% \end{columns}
+% \begin{exampleblock}{Definition of Success}
+% The system launches predictably, its components exchange the expected information, the simulated drone executes the intended mission, and the results can be explained and reproduced from the repository documentation.
+% \end{exampleblock}
+% \end{frame}
 
 % ----------------------------------------------------------------------------
 \begin{frame}{The Engineering Challenge}
@@ -109,7 +115,8 @@ The system launches predictably, its components exchange the expected informatio
 A drone inspection mission is a \textbf{system-of-systems problem}. Motion, sensing, communication, software, perception, testing, and documentation must work together.
 \end{block}
 \begin{center}
-\scriptsize
+% \scriptsize
+\textbf{
 Operating environment
 $\rightarrow$
 Simulation
@@ -121,14 +128,12 @@ $\rightarrow$
 Perception
 $\rightarrow$
 Evidence
+}
 \end{center}
 \pause
 \begin{alertblock}{A Chain Is Verified Link by Link}
 A detector cannot process a missing camera stream. A mission node cannot guide the vehicle through an incorrect interface. A working local setup cannot be reproduced without controlled dependencies and documentation.
 \end{alertblock}
-\begin{exampleblock}{Central Principle}
-Do not memorize isolated commands. Understand each component's responsibility, its inputs and outputs, its connections, and the observation that proves it works.
-\end{exampleblock}
 \end{frame}
 
 % ----------------------------------------------------------------------------
@@ -144,10 +149,143 @@ Do not memorize isolated commands. Understand each component's responsibility, i
     \item \textbf{Verify:} test one layer at a time before testing the complete pipeline.
     \item \textbf{Deliver:} publish reproducible code, configuration, evidence, documentation, and a technical report.
 \end{enumerate}
-\begin{alertblock}{Day 1 Perspective}
-You are not expected to master every technology immediately. First build a reliable mental map; then develop each branch through focused tutorials and practical work.
-\end{alertblock}
 \end{frame}
+
+
+
+
+
+
+\begin{frame}{One Project, Several Foundations}
+\framesubtitle{A complete robotic system is built layer by layer}
+
+\footnotesize
+
+\begin{center}
+    \large
+    \textbf{The drone demonstration is the visible result.}\\[0.3em]
+    \normalsize
+    Behind it, several technical foundations must work together.
+\end{center}
+
+\pause
+
+\begin{columns}[T,onlytextwidth]
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Prepare}
+            Configure the computer and create a reproducible project environment.
+        \end{block}
+    \end{column}
+    \hfill
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Build}
+            Program, simulate, connect, and test the robotic components.
+        \end{block}
+    \end{column}
+    \hfill
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Deliver}
+            Document the work, preserve the results, and share a working project.
+        \end{block}
+    \end{column}
+\end{columns}
+
+\pause
+
+\begin{exampleblock}{Think of the Project as a Team}
+    Ubuntu provides the workplace, Bash executes instructions, Git preserves progress,
+    Python implements logic, ROS~2 connects components, Gazebo provides the simulated
+    world, and AI interprets camera data.
+\end{exampleblock}
+
+\begin{center}
+    \textbf{You are not expected to master everything on Day~1.}\\
+    You will learn each foundation when the project needs it.
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Technology Ecosystem I}
+\framesubtitle{Preparing the environment and preserving your work}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Ubuntu: The Workplace}
+            Ubuntu is the Linux distribution used to run the project.
+            It provides the files, processes, packages, and services
+            required by the robotics tools.
+        \end{block}
+
+        \begin{block}{Terminal and Bash: The Control Desk}
+            The \textbf{terminal} is the window where commands are entered.
+            \textbf{Bash} is the shell that reads and executes those commands,
+            variables, and scripts.
+        \end{block}
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Git: The Project Timeline}
+            Git records changes on the computer. It allows students to create
+            checkpoints, compare versions, and recover a previous working state.
+        \end{block}
+
+        \begin{block}{GitHub: The Shared Project Home}
+            GitHub hosts the Git repository online. It supports collaboration,
+            documentation, issue tracking, review, and delivery of the internship
+            project.
+        \end{block}
+    \end{column}
+\end{columns}
+
+\pause
+
+\begin{exampleblock}{How These Foundations Support the Drone Project}
+    \centering
+    \textbf{Ubuntu} runs the tools
+    \(\rightarrow\)
+    \textbf{Bash} launches the workflow
+    \(\rightarrow\)
+    \textbf{Git} preserves the work
+    \(\rightarrow\)
+    \textbf{GitHub} makes the project reproducible and shareable.
+\end{exampleblock}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 % ----------------------------------------------------------------------------
 \begin{frame}{Technology Ecosystem I}
@@ -171,8 +309,10 @@ You are not expected to master every technology immediately. First build a relia
         \end{block}
     \end{column}
 \end{columns}
+
+\pause
 \begin{exampleblock}{Project Connection}
-These foundations let students install the environment, obtain the repository, run documented commands, diagnose problems, preserve changes, and share verified results.
+These foundations help you install the environment, obtain the repository, run documented commands, diagnose problems, preserve changes, and share verified results.
 \end{exampleblock}
 \end{frame}
 

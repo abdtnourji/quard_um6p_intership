@@ -524,6 +524,12 @@ ros2 run ros_gz_image image_bridge /camera \
   -p qos:=sensor_data
 ```
 
+or
+
+```bash
+ros2 run ros_gz_image image_bridge /camera
+```
+
 An apparently silent bridge terminal is normal. Leave it running and verify from another terminal:
 
 ```bash
