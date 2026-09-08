@@ -1,6 +1,5 @@
 # UM6P Autonomous Drone Internship
 
-
 # Phase 3 - Run the Autonomous AI Drone Inspection Pipeline
 
 This guide explains how to run the complete internship demonstration in separate Terminator terminals:
@@ -113,6 +112,7 @@ cd ~/quard_um6p_intership
 chmod +x scripts/02_download_sources.sh
 ./scripts/02_download_sources.sh
 ```
+
 Expected final output:
 
 ```text
@@ -326,7 +326,6 @@ MODEL_SDF="${INTERNSHIP_ROOT}/gazebo/models/inspection_car/model.sdf"
 test -f "${MODEL_SDF}" && echo "Inspection model: READY"
 ```
 
-
 # 4. Run the full pipeline in Terminator
 
 Open a Terminator window and split it into at least six terminals. Run the terminals in the order below.
@@ -361,10 +360,9 @@ PX4_GZ_MODEL=x500_depth \
 
 The empty world is expected. It confirms that PX4 and the `x500_depth` model started before the inspection objects are added.
 
-
 ## Open VsCode - Camera orientation: Down
 
-Change the angle of Drone's camera; The PX4 v1.15 `x500_depth` model is documented as having a front-facing depth camera. 
+Change the angle of Drone's camera; The PX4 v1.15 `x500_depth` model is documented as having a front-facing depth camera.
 
 # Go to PX4-Autopilot/Tools/simulation/gz/models/x500_depth/model.sdf then change <pose> tag in line 9 from:
 
@@ -379,18 +377,6 @@ to:
 ```xml
 <pose>.15 .029 .21 0 0.7854 0</pose>
 ```
-
-### Verify the ROS 2 connection
-
-In a separate ROS 2 terminal after the Agent and PX4 are running:
-
-```bash
-source /opt/ros/humble/setup.bash
-ros2 topic echo /fmu/out/vehicle_status --once
-ros2 topic echo /fmu/out/vehicle_odometry --once
-```
-
-Do not begin autonomous flight if these topics are unavailable.
 
 ---
 
@@ -501,9 +487,7 @@ A successful response should include:
 data: true
 ```
 
-If the world name differs, replace `default`. If a model already exists, use a new entity name or remove the old entity before spawning it again.
----
-
+## If the world name differs, replace `default`. If a model already exists, use a new entity name or remove the old entity before spawning it again.
 
 ## Terminal 4 - Discover and bridge the RGB camera
 
@@ -590,9 +574,11 @@ ros2 node info /orbit_controller
 ros2 topic hz /fmu/in/trajectory_setpoint
 ros2 topic echo /fmu/out/vehicle_odometry --once
 ```
+
 ---
 
 ## Terminal 6 - Run YOLO
+
 ```bash
 source /opt/ros/humble/setup.bash
 source /home/<user_name>/px4-venv/bin/activate
@@ -632,9 +618,9 @@ Stop recording with `Ctrl+C` and confirm that the bag closes successfully.
 
 ---
 
-## Terminal 8 -  Manual keyboard flight before autonomous flight
+## Terminal 8 - Manual keyboard flight before autonomous flight
 
-Keyboard flight is useful for camera exploration, 
+Keyboard flight is useful for camera exploration,
 First inspect available executables:
 
 ```bash
@@ -649,18 +635,17 @@ python -u keyboard_mavsdk_control.py
 
 ## Flight Controls
 
-| Key | Action |
-| --- | --- |
-| `r` | Arm the drone |
-| `l` | Land |
-| `w` / `s` | Throttle up / down |
-| `a` / `d` | Yaw left / right |
-| `Arrow keys` | Roll / Pitch |
-| `i` | Print flight mode |
-| `Ctrl+C` | Quit |
+| Key          | Action             |
+| ------------ | ------------------ |
+| `r`          | Arm the drone      |
+| `l`          | Land               |
+| `w` / `s`    | Throttle up / down |
+| `a` / `d`    | Yaw left / right   |
+| `Arrow keys` | Roll / Pitch       |
+| `i`          | Print flight mode  |
+| `Ctrl+C`     | Quit               |
 
 ---
-
 
 # Clean shutdown
 

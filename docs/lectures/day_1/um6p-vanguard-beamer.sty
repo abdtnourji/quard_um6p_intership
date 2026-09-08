@@ -9,7 +9,11 @@
 \usepackage[T1]{fontenc}
 %\usefonttheme[onlymath]{serif} % Math looking fine!
 \usefonttheme{professionalfonts}
-\usepackage{arev}
+\IfFileExists{arev.sty}{%
+  \usepackage{arev}%
+}{%
+  \PackageWarningNoLine{um6p-vanguard-beamer}{Package 'arev' not found; continuing without it.}%
+}
 \usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 \usepackage{amsfonts,amsmath,oldgerm,algorithmic,algorithm}
 %\usepackage[table]{xcolor}
