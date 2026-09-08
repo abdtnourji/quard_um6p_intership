@@ -1,3 +1,839 @@
+\section{Git and GitHub Foundations}
+
+% =============================================================================
+% GIT AND GITHUB FOUNDATIONS
+% Insert directly into the existing Beamer project.
+% No preamble, packages, theme definitions, or document-level commands included.
+% =============================================================================
+
+\begin{frame}{From Bash to Version Control}
+\framesubtitle{The terminal operates files; Git manages their engineering history}
+\footnotesize
+\begin{center}
+\colorbox{um6p-color-dark-green!18}{\parbox[c][0.92cm][c]{2.15cm}{\centering\textbf{Ubuntu}\\\scriptsize Completed}}
+\quad$\Longrightarrow$\quad
+\colorbox{um6p-color-dark-green!18}{\parbox[c][0.92cm][c]{2.15cm}{\centering\textbf{Terminal and Bash}\\\scriptsize Completed}}
+\quad$\Longrightarrow$\quad
+\colorbox{um6p-color-light-blue}{\parbox[c][1.02cm][c]{2.25cm}{\centering\textbf{Git and GitHub}\\\scriptsize Current foundation}}
+\end{center}
+\begin{block}{New Engineering Question}
+How can several students modify the same robotics project while preserving its history, identifying each contribution, and keeping the GitHub repository reproducible?
+\end{block}
+\begin{alertblock}{Central Principle}
+Git is not a replacement for careful engineering. It makes careful work visible, traceable, reviewable, and recoverable.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Why Robotics Needs Version Control}
+\framesubtitle{Robotics systems evolve through many connected files and contributors}
+\footnotesize
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{block}{Without Version Control}
+\begin{itemize}\setlength{\itemsep}{0.2em}
+\item files become \texttt{final}, \texttt{final2}, and \texttt{final\_fixed};
+\item working configurations are overwritten;
+\item changes cannot be attributed or reviewed;
+\item two contributors may replace each other's work.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{exampleblock}{With Version Control}
+\begin{itemize}\setlength{\itemsep}{0.2em}
+\item each meaningful change becomes a recorded checkpoint;
+\item experiments can be isolated on branches;
+\item collaborators synchronize controlled changes;
+\item earlier states remain available for investigation.
+\end{itemize}
+\end{exampleblock}
+\end{column}
+\end{columns}
+\begin{alertblock}{Project Connection}
+A change to a ROS 2 node may depend on a launch file, model, environment variable, or README instruction. Version control preserves these relationships as the system evolves.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{What Is Version Control?}
+\framesubtitle{A structured history of a project's meaningful states}
+\footnotesize
+\begin{center}
+Working files $\longrightarrow$ Selected changes $\longrightarrow$ Recorded checkpoint $\longrightarrow$ Shared history
+\end{center}
+\begin{block}{Intuitive Definition}
+Version control records how a collection of files changes over time. It helps engineers answer: \emph{What changed? Who changed it? Why was it changed? When was it changed?}
+\end{block}
+\pause
+\begin{exampleblock}{Laboratory-Notebook Analogy}
+A commit is similar to a signed experiment entry. It should describe one coherent change, preserve the evidence needed to understand it, and include a meaningful explanation.
+\end{exampleblock}
+\begin{alertblock}{Important Boundary}
+Git records project history, but it does not automatically prove that code is correct. Tests, reviews, simulation evidence, and documentation remain necessary.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Git and GitHub Are Not the Same}
+\framesubtitle{A local version-control tool and an online collaboration platform}
+\footnotesize
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.47\textwidth}
+\begin{block}{Git}
+\begin{itemize}\setlength{\itemsep}{0.18em}
+\item distributed version-control software;
+\item runs on the student's computer;
+\item records commits, branches, and merges;
+\item can work locally without GitHub.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.47\textwidth}
+\begin{exampleblock}{GitHub}
+\begin{itemize}\setlength{\itemsep}{0.18em}
+\item online hosting and collaboration platform;
+\item stores shared Git repositories;
+\item provides browsing, issues, reviews, and documentation;
+\item connects contributors through remote repositories.
+\end{itemize}
+\end{exampleblock}
+\end{column}
+\end{columns}
+\begin{alertblock}{One-Sentence Distinction}
+Git manages the repository history; GitHub hosts and connects repositories for collaboration and delivery.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{The Project Exists in Two Places}
+\framesubtitle{The GitHub repository and the local clone have different roles}
+\footnotesize
+\begin{center}
+\colorbox{um6p-color-light-blue}{\parbox[c][1.15cm][c]{3.0cm}{\centering\textbf{GitHub Remote}\\\scriptsize Shared project and collaboration point}}
+\quad$\overset{\texttt{clone / pull}}{\underset{\texttt{push}}{\leftrightarrow}}$\quad
+\colorbox{um6p-color-dark-green!18}{\parbox[c][1.15cm][c]{3.0cm}{\centering\textbf{Local Repository}\\\scriptsize Files, branches, commits, and local work}}
+\end{center}
+\begin{block}{Mental Model}
+The remote is not a magical live folder. Students work in a local clone, create local commits, and then deliberately synchronize those commits with GitHub.
+\end{block}
+\begin{alertblock}{Practical Consequence}
+Saving a file does not create a commit, and creating a commit does not upload it to GitHub. Each action is a separate engineering step.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Essential Git Vocabulary}
+\framesubtitle{A project-centered mental model before using commands}
+\scriptsize
+\renewcommand{\arraystretch}{1.16}
+\begin{tabularx}{\textwidth}{>{\bfseries\color{um6p-color-dark-blue}}p{0.18\textwidth} X}
+\toprule
+Repository & Project files together with the Git history and metadata. \\
+Commit & A recorded snapshot of selected changes with author, time, and message. \\
+Branch & A movable line of development used to isolate related work. \\
+Remote & A named connection to another repository, commonly \texttt{origin} on GitHub. \\
+Clone & A local copy of a repository, including its history and remote connection. \\
+Pull & Retrieve remote changes and integrate them into the current local branch. \\
+Push & Publish local commits to a remote branch. \\
+Merge & Combine histories from different lines of development. \\
+\texttt{.gitignore} & Rules describing untracked files that Git should normally ignore. \\
+\bottomrule
+\end{tabularx}
+\end{frame}
+
+\begin{frame}{Three Working Areas}
+\framesubtitle{Git separates editing, selection, and permanent history}
+\footnotesize
+\begin{center}
+\colorbox{black!7}{\parbox[c][1.0cm][c]{2.25cm}{\centering\textbf{Working Tree}\\\scriptsize Files being edited}}
+$\xrightarrow{\texttt{git add}}$
+\colorbox{um6p-color-light-blue}{\parbox[c][1.0cm][c]{2.25cm}{\centering\textbf{Staging Area}\\\scriptsize Selected next snapshot}}
+$\xrightarrow{\texttt{git commit}}$
+\colorbox{um6p-color-dark-green!18}{\parbox[c][1.0cm][c]{2.25cm}{\centering\textbf{Local History}\\\scriptsize Recorded commits}}
+\end{center}
+\begin{exampleblock}{Why Staging Exists}
+A student may modify documentation, code, and temporary notes at the same time. Staging allows only the coherent project change to enter the next commit.
+\end{exampleblock}
+\begin{alertblock}{Key Distinction}
+\texttt{git add} does not upload files. It selects content for the next local commit.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Before Cloning: Verify the Destination}
+\framesubtitle{Clone the repository once and into the intended parent directory}
+\footnotesize
+\begin{block}{Pre-Clone Checks}
+\begin{verbatim}
+cd ~
+pwd
+ls -la
+which git
+git --version
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Question Before Execution}
+Will \texttt{git clone} create \texttt{quard\_um6p\_intership} inside the current directory, or does a folder with that name already exist?
+\end{exampleblock}
+\begin{alertblock}{Common Mistake}
+Do not clone the repository repeatedly inside itself or inside another accidental clone. If the target folder already exists, inspect it before taking action.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Access the Internship Repository on GitHub}
+\framesubtitle{Understand the platform before copying commands}
+\footnotesize
+\begin{block}{Repository Address}
+\centering
+\url{https://github.com/abdtnourji/quard_um6p_intership}
+\end{block}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{exampleblock}{Inspect on GitHub}
+\begin{itemize}\setlength{\itemsep}{0.18em}
+\item repository name and owner;
+\item default branch;
+\item README and documentation;
+\item folders and recent commits;
+\item access permissions.
+\end{itemize}
+\end{exampleblock}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Obtain the URL}
+Select \textbf{Code}, choose the documented authentication method, and copy the repository URL exactly. HTTPS is the simplest starting point when no SSH key workflow has been configured.
+\end{block}
+\end{column}
+\end{columns}
+\begin{alertblock}{Authenticity Check}
+Confirm the repository owner and name before cloning. Similar names may refer to unrelated or outdated projects.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Clone the Internship Repository}
+\framesubtitle{Create one local working copy with history and remote configuration}
+\footnotesize
+\begin{block}{Purpose and Syntax}
+\begin{verbatim}
+git clone <repository-url>
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Internship Command}
+\begin{verbatim}
+cd ~
+git clone https://github.com/abdtnourji/quard_um6p_intership.git
+cd quard_um6p_intership
+\end{verbatim}
+\end{exampleblock}
+\begin{block}{What the Command Creates}
+The project directory, working files, commit history, branches known at clone time, and a remote normally named \texttt{origin}.
+\end{block}
+\begin{alertblock}{If Authentication Is Requested}
+Do not enter a GitHub account password as though it were a reusable Git password. Follow the repository's approved HTTPS credential or SSH-key procedure.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Verify That the Clone Is Correct}
+\framesubtitle{A successful-looking download still requires engineering checks}
+\footnotesize
+\begin{exampleblock}{Verification Sequence}
+\begin{verbatim}
+cd ~/quard_um6p_intership
+pwd
+ls -la
+git status
+git branch
+git remote -v
+git log --oneline -5
+\end{verbatim}
+\end{exampleblock}
+\begin{block}{Expected Evidence}
+The path identifies the intended repository, \texttt{.git} exists, Git recognizes a branch, the working tree is initially clean, \texttt{origin} points to the expected GitHub URL, and recent commits are visible.
+\end{block}
+\begin{alertblock}{Repository Test}
+If \texttt{git status} reports ``not a git repository,'' verify the current directory and move to the cloned project root.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Explore Before Modifying}
+\framesubtitle{Understand the project structure and follow its documentation}
+\footnotesize
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{block}{Filesystem View}
+\begin{verbatim}
+ls -la
+find . -maxdepth 2 -type d | sort
+find . -name "README*"
+find . -name "package.xml"
+\end{verbatim}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{exampleblock}{Git-Aware View}
+\begin{verbatim}
+git status
+git branch
+git log --oneline --graph -8
+git remote -v
+\end{verbatim}
+\end{exampleblock}
+\end{column}
+\end{columns}
+\begin{alertblock}{Professional Rule}
+The README is part of the engineering interface. Read setup instructions, folder responsibilities, prerequisites, and known limitations before executing the pipeline.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Use \texttt{git status} as the Dashboard}
+\framesubtitle{Ask Git what it sees before and after every important action}
+\footnotesize
+\begin{block}{Purpose and Syntax}
+\begin{verbatim}
+git status
+git status --short
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Interpret the Categories}
+\begin{itemize}\setlength{\itemsep}{0.18em}
+\item \textbf{untracked}: Git has not been asked to include the file;
+\item \textbf{modified}: tracked content differs from the last commit;
+\item \textbf{staged}: content is selected for the next commit;
+\item \textbf{clean}: no uncommitted change is detected.
+\end{itemize}
+\end{exampleblock}
+\begin{alertblock}{Habit}
+Run \texttt{git status} before editing, before staging, before committing, before pulling, and before pushing. It provides context, not just success or failure.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Create a Small, Safe Change}
+\framesubtitle{Practise the workflow with student-owned documentation}
+\footnotesize
+\begin{exampleblock}{Project Exercise}
+\begin{verbatim}
+cd ~/quard_um6p_intership
+mkdir -p student_work
+echo "Git workflow observations" > student_work/git_notes.txt
+git status
+\end{verbatim}
+\end{exampleblock}
+\begin{block}{Engineering Intention}
+This creates a visible, low-risk change without modifying flight logic, simulation models, or shared configuration.
+\end{block}
+\begin{alertblock}{Repository Policy}
+If the project defines a specific student folder, naming convention, or contribution process, follow that documentation instead of inventing a parallel structure.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Inspect Changes with \texttt{git diff}}
+\framesubtitle{Review content before selecting it for a commit}
+\footnotesize
+\begin{block}{Purpose and Syntax}
+\begin{verbatim}
+git diff              # unstaged tracked changes
+git diff --staged     # changes selected for commit
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Project Workflow}
+\begin{verbatim}
+echo "Repository inspected from the project root." \
+  >> student_work/git_notes.txt
+git diff
+git status
+\end{verbatim}
+\end{exampleblock}
+\begin{alertblock}{Important Detail}
+An untracked file may not appear in ordinary \texttt{git diff}. Use \texttt{git status} to discover it, then stage it before reviewing with \texttt{git diff --staged}.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Stage Only the Intended Change}
+\framesubtitle{Build the next commit deliberately}
+\footnotesize
+\begin{block}{Purpose and Syntax}
+\begin{verbatim}
+git add <file-or-directory>
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Preferred Beginner Workflow}
+\begin{verbatim}
+git add student_work/git_notes.txt
+git status
+git diff --staged
+\end{verbatim}
+\end{exampleblock}
+\begin{alertblock}{Why Not Always Use \texttt{git add .}?}
+Staging everything may include logs, generated files, credentials, unrelated edits, or large assets. Add explicit paths until you can explain every staged change.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Create a Meaningful Commit}
+\framesubtitle{Record one coherent engineering change with a useful message}
+\footnotesize
+\begin{block}{Purpose and Syntax}
+\begin{verbatim}
+git commit -m "concise description of the change"
+\end{verbatim}
+\end{block}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{exampleblock}{Useful Message}
+\begin{verbatim}
+git commit -m \
+  "docs: add student Git workflow notes"
+\end{verbatim}
+It states the area and result.
+\end{exampleblock}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{Weak Messages}
+\texttt{update}, \texttt{changes}, \texttt{final}, and \texttt{fix stuff} do not explain engineering intent.
+\end{alertblock}
+\end{column}
+\end{columns}
+\begin{block}{After Committing}
+Run \texttt{git status} and \texttt{git log --oneline -5}. The commit exists locally until it is pushed.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Read the Project History}
+\framesubtitle{Commits form an engineering narrative, not merely a backup list}
+\footnotesize
+\begin{block}{Purpose and Useful Views}
+\begin{verbatim}
+git log
+git log --oneline
+git log --oneline --graph --decorate --all
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Questions the History Can Answer}
+\begin{itemize}\setlength{\itemsep}{0.18em}
+\item Which change introduced a launch instruction?
+\item When was a model or configuration updated?
+\item Which branch contains a student's contribution?
+\item What commit preceded a newly observed problem?
+\end{itemize}
+\end{exampleblock}
+\begin{alertblock}{Quality Signal}
+Small coherent commits with descriptive messages are easier to review, merge, test, and recover than one large unexplained commit.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Branches Isolate Lines of Work}
+\framesubtitle{Experiment without immediately changing the shared main line}
+\footnotesize
+\begin{block}{Inspect and Create}
+\begin{verbatim}
+git branch
+git switch -c docs/student-git-notes
+\end{verbatim}
+\texttt{git branch} lists branches. \texttt{git switch -c} creates and enters a new branch.
+\end{block}
+\begin{exampleblock}{Move Between Existing Branches}
+\begin{verbatim}
+git switch main
+git switch docs/student-git-notes
+\end{verbatim}
+\end{exampleblock}
+\begin{alertblock}{Before Switching}
+Check \texttt{git status}. Uncommitted changes may follow you, conflict with the destination, or prevent the switch. Branch names should describe the task, not the contributor's mood.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{What Does Merge Mean?}
+\framesubtitle{Combine compatible histories after review and verification}
+\footnotesize
+\begin{center}
+\texttt{main}: A $\longrightarrow$ B $\longrightarrow$ C
+
+\vspace{0.15cm}
+\hspace{1.0cm}$\searrow$ D $\longrightarrow$ E \quad \texttt{feature branch}
+
+\vspace{0.15cm}
+$\Downarrow$
+
+\texttt{main}: A $\longrightarrow$ B $\longrightarrow$ C $\longrightarrow$ M
+\end{center}
+\begin{block}{Intuition}
+A merge combines changes from different lines of development. If both lines modify incompatible parts of the same content, Git asks an engineer to resolve the conflict.
+\end{block}
+\begin{alertblock}{Responsibility}
+A conflict is not Git failing. It is Git refusing to guess which engineering intention is correct. Resolve it by understanding both changes, then test the combined result.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Inspect the Remote Connection}
+\framesubtitle{Know where pulls come from and where pushes go}
+\footnotesize
+\begin{block}{Purpose and Syntax}
+\begin{verbatim}
+git remote -v
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Expected Interpretation}
+\texttt{origin} is the conventional name created by cloning. The output normally shows fetch and push URLs for the GitHub repository.
+\end{exampleblock}
+\begin{alertblock}{Wrong-Remote Prevention}
+Before your first push, confirm that the owner and repository name are correct and that you have authorized contribution access. Do not replace \texttt{origin} randomly to bypass a permission problem.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Synchronize Before Publishing}
+\framesubtitle{Bring in remote work before sending your own commits}
+\footnotesize
+\begin{block}{Safe Beginner Sequence}
+\begin{verbatim}
+git status
+git branch
+git pull origin main
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Meaning}
+\texttt{git pull} retrieves remote changes and integrates them into the current local branch. Read the output to determine whether the branch was already current, fast-forwarded, or requires conflict resolution.
+\end{exampleblock}
+\begin{alertblock}{Before Pulling}
+Start from a clean, understood working state. If local edits are unfinished, commit them appropriately or follow the instructor's recovery procedure rather than forcing the pull.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Publish Local Commits with \texttt{git push}}
+\framesubtitle{Synchronize verified history to GitHub}
+\footnotesize
+\begin{block}{Purpose and Syntax}
+\begin{verbatim}
+git push <remote> <branch>
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Examples}
+\begin{verbatim}
+git push origin main
+# For a new contribution branch:
+git push -u origin docs/student-git-notes
+\end{verbatim}
+\end{exampleblock}
+\begin{alertblock}{Rejected Push}
+A non-fast-forward rejection usually means the remote contains commits missing locally. Do not force-push. Retrieve and understand upstream changes, resolve any conflict, test, and then push normally.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{The Everyday Internship Workflow}
+\framesubtitle{Observe, synchronize, modify, review, record, and share}
+\scriptsize
+\begin{enumerate}\setlength{\itemsep}{0.28em}
+\item \textbf{Enter and inspect:} move to the repository, then run \texttt{git status} and \texttt{git branch}.
+\item \textbf{Synchronize:} pull the approved branch before beginning new work.
+\item \textbf{Modify:} make one focused code, configuration, test, or documentation change.
+\item \textbf{Review:} inspect \texttt{git status} and \texttt{git diff}.
+\item \textbf{Stage:} add only the files intended for the next checkpoint.
+\item \textbf{Verify staged content:} inspect \texttt{git diff --staged}.
+\item \textbf{Commit:} use a concise message that explains the result.
+\item \textbf{Synchronize again:} pull if necessary, resolve carefully, test, and push.
+\item \textbf{Confirm on GitHub:} verify the branch, commit, and documentation online.
+\end{enumerate}
+\begin{alertblock}{Team Rule}
+The exact branch and review policy is defined by the internship repository. Follow the documented collaboration workflow rather than assuming every contributor pushes directly to \texttt{main}.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Use \texttt{.gitignore} Deliberately}
+\framesubtitle{Keep generated, local, sensitive, and oversized artifacts out of normal history}
+\footnotesize
+\begin{block}{Purpose}
+A \texttt{.gitignore} file contains patterns for untracked files Git should normally ignore.
+\end{block}
+\begin{exampleblock}{Typical Robotics-Oriented Patterns}
+\begin{verbatim}
+# Python cache
+__pycache__/
+*.pyc
+
+# Local environments and generated outputs
+.venv/
+build/
+install/
+log/
+
+# Local secrets
+.env
+*.pem
+\end{verbatim}
+\end{exampleblock}
+\begin{alertblock}{Important Boundary}
+Ignoring a file does not remove it from history if it was already committed. Never rely on \texttt{.gitignore} as the only protection for credentials.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Never Commit Secrets}
+\framesubtitle{Repository history can outlive the working file}
+\footnotesize
+\begin{alertblock}{Do Not Commit}
+\begin{itemize}\setlength{\itemsep}{0.20em}
+\item passwords, access tokens, API keys, or private SSH keys;
+\item private certificates or machine-specific credentials;
+\item confidential datasets or personal information;
+\item environment files containing secret values.
+\end{itemize}
+\end{alertblock}
+\begin{block}{If a Secret Is Exposed}
+Stop sharing it, notify the responsible instructor or repository maintainer, revoke or rotate the credential, and follow the approved history-cleaning procedure. Merely deleting the file in a later commit may leave the secret in earlier history.
+\end{block}
+\begin{exampleblock}{Better Pattern}
+Commit a documented template such as \texttt{.env.example} with placeholder names, then keep real secret values outside version control.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Keep the Repository Engineering-Friendly}
+\framesubtitle{Version the source of truth, not every generated artifact}
+\footnotesize
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{block}{Good Candidates}
+\begin{itemize}\setlength{\itemsep}{0.18em}
+\item source code and launch files;
+\item human-maintained configuration;
+\item small test fixtures;
+\item README files and reports;
+\item scripts needed to reproduce outputs.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{exampleblock}{Review Before Adding}
+\begin{itemize}\setlength{\itemsep}{0.18em}
+\item build and cache directories;
+\item large videos, models, bags, or datasets;
+\item temporary logs and screenshots;
+\item machine-specific settings;
+\item files obtainable from documented sources.
+\end{itemize}
+\end{exampleblock}
+\end{column}
+\end{columns}
+\begin{alertblock}{Reason}
+Large binary files make cloning, reviewing, and history management harder. Use the repository's approved storage and release strategy for necessary large assets.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Recover: Staged the Wrong File}
+\framesubtitle{Correct the selection without destroying the working change}
+\footnotesize
+\begin{exampleblock}{Situation}
+You staged a file that should not be part of the next commit.
+\begin{verbatim}
+git status
+git restore --staged path/to/file
+git status
+\end{verbatim}
+\end{exampleblock}
+\begin{block}{Effect}
+The file is removed from the staging area, but its working-tree modification is preserved for later review.
+\end{block}
+\begin{alertblock}{Do Not Guess Recovery Commands}
+Always inspect \texttt{git status} before and after recovery. Commands involving \texttt{--hard}, forced pushes, or history rewriting are outside the beginner workflow unless supervised.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Recover: Discard an Unwanted Local Edit}
+\framesubtitle{Use only when the last committed version is truly the desired state}
+\footnotesize
+\begin{exampleblock}{For One Tracked, Unstaged File}
+\begin{verbatim}
+git diff -- path/to/file
+git restore path/to/file
+git status
+\end{verbatim}
+\end{exampleblock}
+\begin{alertblock}{Irreversible Working-Tree Loss}
+\texttt{git restore path/to/file} discards the selected uncommitted edit. Copy valuable experimental content elsewhere or commit it on an appropriate branch before restoring.
+\end{alertblock}
+\begin{block}{Safer Question}
+Do I want to remove the file from the next commit, or destroy the actual edit? These are different intentions and require different commands.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Recover: Push Rejected or Pull Conflicted}
+\framesubtitle{Preserve evidence and resolve the real synchronization problem}
+\scriptsize
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{block}{Push Rejected}
+\begin{verbatim}
+git status
+git branch
+git remote -v
+git pull origin main
+\end{verbatim}
+Read the output, integrate approved remote work, test, and push again. Never use force as the automatic response.
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{exampleblock}{Merge Conflict}
+\begin{enumerate}\setlength{\itemsep}{0.15em}
+\item run \texttt{git status};
+\item open each conflicted file;
+\item understand both alternatives;
+\item remove conflict markers after deciding;
+\item test the integrated result;
+\item stage and commit the resolution.
+\end{enumerate}
+\end{exampleblock}
+\end{column}
+\end{columns}
+\begin{alertblock}{Escalation Rule}
+If the correct engineering intention is unclear, stop and ask the file owner or instructor. A syntactically resolved conflict can still create incorrect robot behavior.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Two Computers, One Shared Repository}
+\framesubtitle{Synchronize through commits, not by copying folders manually}
+\footnotesize
+\begin{block}{At the Computer Where Work Was Completed}
+\begin{verbatim}
+git status
+git add <intended-files>
+git commit -m "describe the completed change"
+git pull origin main
+git push origin main
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{At the Other Computer}
+\begin{verbatim}
+cd ~/quard_um6p_intership
+git status
+git pull origin main
+\end{verbatim}
+\end{exampleblock}
+\begin{alertblock}{Precondition}
+Each computer must be on the intended repository and branch. Uncommitted local edits must be reviewed before pulling, or they may conflict with the incoming work.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{End-to-End Student Practice}
+\framesubtitle{Obtain, modify, record, synchronize, and verify}
+\scriptsize
+\begin{exampleblock}{Guided Workflow}
+\begin{verbatim}
+cd ~
+git clone https://github.com/abdtnourji/quard_um6p_intership.git
+cd quard_um6p_intership
+
+git status
+git remote -v
+git log --oneline -5
+
+mkdir -p student_work
+echo "Git practice completed" > student_work/git_practice.txt
+
+git status
+git add student_work/git_practice.txt
+git diff --staged
+git commit -m "docs: add Git practice evidence"
+git pull origin main
+git push origin main
+\end{verbatim}
+\end{exampleblock}
+\begin{alertblock}{Access Boundary}
+If direct push access or pushing to \texttt{main} is not permitted, create the approved branch and follow the repository's contribution or pull-request workflow.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Git and GitHub Readiness Check}
+\framesubtitle{Can the student explain both the commands and the system state?}
+\footnotesize
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{block}{Conceptual Understanding}
+\begin{enumerate}\setlength{\itemsep}{0.18em}
+\item How are Git and GitHub different?
+\item What is the staging area?
+\item Why is a commit local before a push?
+\item What does \texttt{origin} represent?
+\item Why can a merge require judgment?
+\end{enumerate}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{exampleblock}{Practical Capability}
+\begin{enumerate}\setlength{\itemsep}{0.18em}
+\item clone and verify the repository;
+\item read its documentation and structure;
+\item inspect, stage, and commit a change;
+\item pull and push safely;
+\item recover from simple staging or editing mistakes.
+\end{enumerate}
+\end{exampleblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Good Practices for the Internship}
+\framesubtitle{A concise collaboration contract}
+\footnotesize
+\begin{itemize}\setlength{\itemsep}{0.28em}
+\item begin with \texttt{git status}, the correct branch, and an updated local repository;
+\item make focused changes and inspect diffs before staging;
+\item commit coherent work with meaningful messages;
+\item synchronize frequently enough to avoid long divergence;
+\item update documentation whenever setup or behavior changes;
+\item keep generated and unnecessary large files out of normal history;
+\item never commit passwords, tokens, credentials, or private keys;
+\item test integrated robotics behavior after merges and conflict resolution;
+\item verify the published result on GitHub.
+\end{itemize}
+\begin{alertblock}{Definition of Done}
+A contribution is complete when another engineer can understand the change, reproduce the result, and identify the evidence supporting it.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Official References}
+\framesubtitle{Primary documentation for continued practice}
+\scriptsize
+\begin{thebibliography}{9}
+\bibitem{gitdocs}
+Git Project, \emph{Git Documentation}.\\
+\url{https://git-scm.com/doc}
+
+\bibitem{gittutorial}
+Git Project, \emph{A Tutorial Introduction to Git}.\\
+\url{https://git-scm.com/docs/gittutorial}
+
+\bibitem{githubbasics}
+GitHub Docs, \emph{Git Basics}.\\
+\url{https://docs.github.com/en/get-started/git-basics}
+
+\bibitem{githubclone}
+GitHub Docs, \emph{Cloning a Repository}.\\
+\url{https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository}
+
+\bibitem{githubpush}
+GitHub Docs, \emph{Pushing Commits to a Remote Repository}.\\
+\url{https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository}
+\end{thebibliography}
+\end{frame}
+
+\begin{frame}{Transition to Python for Robotics}
+\framesubtitle{The project is reproducible; next we study the language used for robotics logic}
+\footnotesize
+\begin{center}
+\colorbox{um6p-color-dark-green!18}{\parbox[c][0.95cm][c]{2.05cm}{\centering\textbf{Ubuntu}\\\scriptsize Completed}}
+\quad$\Longrightarrow$\quad
+\colorbox{um6p-color-dark-green!18}{\parbox[c][0.95cm][c]{2.15cm}{\centering\textbf{Terminal and Bash}\\\scriptsize Completed}}
+\quad$\Longrightarrow$\quad
+\colorbox{um6p-color-dark-green!18}{\parbox[c][0.95cm][c]{2.05cm}{\centering\textbf{Git and GitHub}\\\scriptsize Completed}}
+\end{center}
+\vspace{0.18cm}
+\begin{center}
+$\Downarrow$
+
+\colorbox{um6p-color-light-blue}{\parbox[c][1.08cm][c]{2.45cm}{\centering\textbf{Python for Robotics}\\\scriptsize Next foundation}}
+\end{center}
+\begin{exampleblock}{Guiding Question}
+How can Python express readable mission logic, process robotics data, implement ROS 2 nodes, and connect camera perception to the wider inspection system?
+\end{exampleblock}
+\end{frame}
+
+
+
+
+
+
+
 
 
 
