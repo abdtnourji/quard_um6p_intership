@@ -1,25 +1,30 @@
-\frametitle{End-to-End Practice}
-\framesubtitle{Obtain, modify, record, synchronize, and verify}
+\frametitle{Complete End-to-End OOP Example III}
+\framesubtitle{ROS~2 integration: framework class plus project objects}
+
 \scriptsize
-\begin{exampleblock}{Guided Workflow}
 \begin{verbatim}
-cd ~
-git clone https://github.com/abdtnourji/quard_um6p_intership.git
-cd quard_um6p_intership
+class DroneMonitorNode(Node):
+    def __init__(self):
+        super().__init__("drone_monitor")
+        self.monitor = DroneMonitor("uav_1", 25.0)
+        self.subscription = self.create_subscription(
+            VehicleOdometry,
+            "/fmu/out/vehicle_odometry",
+            self.odometry_callback,
+            10,
+        )
 
-git status
-git remote -v
-git log --oneline -5
+    def odometry_callback(self, msg):
+        try:
+            self.monitor.state.update_position(*msg.position)
+        except (TypeError, ValueError) as exc:
+            self.get_logger().error(
+                f"Rejected odometry: {exc}"
+            )
+            return
 
-mkdir -p student_work
-echo "Git practice completed" > student_work/git_practice.txt
-
-git status
-git add student_work/git_practice.txt
-git diff --staged
-git commit -m "docs: add Git practice evidence"
-git pull origin main
-git push origin main
+        self.get_logger().info(
+            f"altitude={self.monitor.state.altitude_m:.2f} m, "
+            f"status={self.monitor.status()}"
+        )
 \end{verbatim}
-\end{exampleblock}
-
