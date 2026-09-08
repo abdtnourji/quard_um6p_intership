@@ -1,0 +1,25 @@
+\frametitle{End-to-End Practice}
+\framesubtitle{Obtain, modify, record, synchronize, and verify}
+\scriptsize
+\begin{exampleblock}{Guided Workflow}
+\begin{verbatim}
+cd ~
+git clone https://github.com/abdtnourji/quard_um6p_intership.git
+cd quard_um6p_intership
+
+git status
+git remote -v
+git log --oneline -5
+
+mkdir -p student_work
+echo "Git practice completed" > student_work/git_practice.txt
+
+git status
+git add student_work/git_practice.txt
+git diff --staged
+git commit -m "docs: add Git practice evidence"
+git pull origin main
+git push origin main
+\end{verbatim}
+\end{exampleblock}
+
