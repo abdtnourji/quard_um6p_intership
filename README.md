@@ -205,7 +205,6 @@ wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | su
 echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
 ```
 
-
 # Install VS Code
 
 ```bash
@@ -213,7 +212,7 @@ sudo apt update
 sudo apt install -y code
 ```
 
-#  Install Recommended Extensions
+# Install Recommended Extensions
 
 Install the essential tools for Python, ROS 2 (C++/XML), Git, and Markdown by running this block:
 
@@ -234,7 +233,6 @@ sudo update-alternatives --install /usr/bin/editor editor "$(which code)" 10
 sudo update-alternatives --set editor "$(which code)"
 ```
 
-
 # Working in VS Code
 
 Opening the Complete Project
@@ -246,7 +244,6 @@ code .
 ```
 
 Note: If prompted with a workspace-trust question, select Yes, I trust the authors.
-
 
 ## 5. Read the Installation Guides in Order
 
@@ -290,7 +287,6 @@ This phase prepares the base computer:
 - ROS 2 Humble;
 - ROS-Gazebo packages;
 - ROS 2 validation.
-
 
 Do not continue until every Phase 0 validation check passes.
 
@@ -465,8 +461,7 @@ Do not wait until the final day to reconstruct your work from memory.
 
 ## 10. Video Tutorials
 
-> **Video resources will be added here by the supervisor.**
-
+[Watch the Drone Demo Video](docs/videodemo/Screencast%20from%2009-09-2026%2012:17:54%20PM.webm)
 
 ---
 
