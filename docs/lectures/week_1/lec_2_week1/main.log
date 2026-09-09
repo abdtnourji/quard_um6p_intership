@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.7.27)  9 SEP 2026 11:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.7.27)  9 SEP 2026 11:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1268,34 +1268,40 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 255.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [16
 
+] (./main.toc)
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 274.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [17
+
+]
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 289.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [18
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb
+LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <9> not available
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 19.
+)
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 311.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [19
+
 ]
 \openout4 = `main.vrb'.
 
  (./main.vrb)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 272.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [17
-
-] (./main.toc)
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 274.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [18
-
-]
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 289.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [19
-
-]
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 289.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 338.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [20
 
@@ -1303,12 +1309,12 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 289.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (18.82997pt too high) detected at line 309
+Overfull \vbox (1.27103pt too high) detected at line 356
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 309.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 356.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [21
 
@@ -1316,62 +1322,59 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 309.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
+Overfull \vbox (4.00064pt too high) detected at line 388
+ []
+
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 336.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 388.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [22
+[22
 
 ]
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (1.27103pt too high) detected at line 354
+Overfull \vbox (40.2424pt too high) detected at line 414
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 354.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 414.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [23
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
-Overfull \vbox (42.67575pt too high) detected at line 375
- []
-
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 375.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[24
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
-Overfull \vbox (40.2424pt too high) detected at line 396
- []
-
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 396.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[25
 
 ] (./main.toc)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 398.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 416.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [26
+ [24
 
 ]
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 418.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 436.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [25
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb)
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 453.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [26
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb)
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 468.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [27
 
@@ -1379,89 +1382,89 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 418.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 435.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [28
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 450.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [29
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
-Overfull \vbox (13.14243pt too high) detected at line 470
+Overfull \vbox (13.14243pt too high) detected at line 488
  []
 
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 470.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[30
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
 Package pdftex.def Info: logos/um6p-white-short.png  used on input line 488.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [31
+[28
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb)
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 506.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [29
 
 ] (./main.toc)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 490.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 508.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [32
+ [30
 
 ]
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 513.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 531.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [33
+ [31
 
 ]
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (24.51326pt too high) detected at line 532
- []
-
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 532.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[34
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
-Overfull \vbox (7.9924pt too high) detected at line 550
+Overfull \vbox (24.51326pt too high) detected at line 550
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
 Package pdftex.def Info: logos/um6p-white-short.png  used on input line 550.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[35
+[32
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb)
+Overfull \vbox (7.9924pt too high) detected at line 568
+ []
+
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 568.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+[33
 
 ] (./main.toc)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 552.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 570.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [34
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb)
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 586.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [35
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb)
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 610.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [36
 
@@ -1471,7 +1474,7 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 552.
  (./main.vrb)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 568.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 627.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [37
 
@@ -1479,54 +1482,34 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 568.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 592.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [38
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 609.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [39
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
-Overfull \vbox (1.87573pt too high) detected at line 627
+Overfull \vbox (1.87573pt too high) detected at line 645
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 627.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 645.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[40
+[38
 
 ]
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (13.95488pt too high) detected at line 646
+Overfull \vbox (13.95488pt too high) detected at line 664
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 646.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 664.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[41
+[39
 
 ] (./main.toc)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 648.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 666.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [42
+ [40
 
 ]
 \openout4 = `main.vrb'.
@@ -1534,7 +1517,24 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 648.
  (./main.vrb)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 665.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 683.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [41
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb)
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 698.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [42
+
+]
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 713.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [43
 
@@ -1544,120 +1544,101 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 665.
  (./main.vrb)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 680.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 730.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [44
 
 ]
+\openout4 = `main.vrb'.
+
+ (./main.vrb)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 695.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 748.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [45
 
 ]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 766.
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 712.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 766.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [46
 
 ]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 730.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 780.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [47
 
 ]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 748.
-LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 748.
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 748.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 801.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [48
 
 ]
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 762.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 801.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [49
 
-]
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 783.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [50
-
-]
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 783.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [51
-
-] (./main.toc) [52
+] (./main.toc) [50
 
 ] (./main.toc)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 793.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 811.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [51
+
+]
+LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <14.4> not available
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 847.
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 847.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [52
+
+]
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 847.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [53
 
 ]
-LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <14.4> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 829.
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 829.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 875.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [54
 
 ]
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 829.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 875.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [55
 
 ]
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 857.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [56
-
-]
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 857.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [57
-
-]
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (4.62526pt too high) detected at line 880
+Overfull \vbox (4.62526pt too high) detected at line 898
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 880.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 898.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[58
+[56
 
 ]
 \openout4 = `main.vrb'.
@@ -1665,9 +1646,9 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 880.
  (./main.vrb)
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 912.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 930.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [59
+ [57
 
 ]
 \openout4 = `main.vrb'.
@@ -1676,12 +1657,38 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 912.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 21.
 )
-Overfull \vbox (21.11777pt too high) detected at line 937
+Overfull \vbox (21.11777pt too high) detected at line 955
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 937.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 955.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+[58
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb)
+Overfull \vbox (42.67575pt too high) detected at line 982
+ []
+
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 982.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+[59
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb)
+Overfull \vbox (38.82158pt too high) detected at line 1009
+ []
+
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1009.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [60
 
@@ -1689,12 +1696,12 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 937.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (42.67575pt too high) detected at line 964
+Overfull \vbox (18.82997pt too high) detected at line 1033
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 964.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1033.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [61
 
@@ -1702,12 +1709,12 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 964.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (38.82158pt too high) detected at line 991
+Overfull \vbox (17.76353pt too high) detected at line 1059
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 991.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1059.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [62
 
@@ -1715,12 +1722,12 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 991.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (18.82997pt too high) detected at line 1015
+Overfull \vbox (24.6133pt too high) detected at line 1085
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1015.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1085.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [63
 
@@ -1728,12 +1735,12 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1015.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (17.76353pt too high) detected at line 1041
+Overfull \vbox (56.27576pt too high) detected at line 1114
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1041.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1114.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [64
 
@@ -1741,25 +1748,22 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1041.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (24.6133pt too high) detected at line 1067
- []
-
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1067.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1139.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[65
+ [65
 
 ]
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (56.27576pt too high) detected at line 1096
+Overfull \vbox (36.84691pt too high) detected at line 1165
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1096.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1165.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [66
 
@@ -1767,22 +1771,25 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1096.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
+Overfull \vbox (2.89665pt too high) detected at line 1188
+ []
+
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1121.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1188.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [67
+[67
 
 ]
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (36.84691pt too high) detected at line 1147
+Overfull \vbox (38.82158pt too high) detected at line 1215
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1147.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1215.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [68
 
@@ -1790,12 +1797,12 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1147.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (2.89665pt too high) detected at line 1170
+Overfull \vbox (36.84691pt too high) detected at line 1241
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1170.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1241.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [69
 
@@ -1803,12 +1810,12 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1170.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (38.82158pt too high) detected at line 1197
+Overfull \vbox (10.27881pt too high) detected at line 1271
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1197.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1271.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [70
 
@@ -1816,12 +1823,12 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1197.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (36.84691pt too high) detected at line 1223
+Overfull \vbox (18.66771pt too high) detected at line 1302
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1223.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1302.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [71
 
@@ -1829,82 +1836,56 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1223.
 \openout4 = `main.vrb'.
 
  (./main.vrb)
-Overfull \vbox (10.27881pt too high) detected at line 1253
+Overfull \vbox (37.66771pt too high) detected at line 1335
  []
 
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1253.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1335.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
 [72
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
-Overfull \vbox (18.66771pt too high) detected at line 1284
- []
-
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1284.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[73
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb)
-Overfull \vbox (37.66771pt too high) detected at line 1317
- []
-
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1317.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
-[74
-
-]
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1337.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [75
 
 ]
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
 Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1355.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [73
+
+]
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1373.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [74
+
+]
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1394.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
+ [75
+
+] (./main.toc)
+File: logos/um6p-white-short.png Graphic file (type png)
+<use logos/um6p-white-short.png>
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1417.
+(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [76
 
 ]
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1376.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1443.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
  [77
-
-] (./main.toc)
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1399.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [78
-
-]
-File: logos/um6p-white-short.png Graphic file (type png)
-<use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1425.
-(pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [79
 
  </usr/share/texlive/texmf-dist/tex/latex/beamer/beamericonarticle.pdf>]
 File: logos/um6p-white-short.png Graphic file (type png)
 <use logos/um6p-white-short.png>
-Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1451.
+Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1469.
 (pdftex.def)             Requested size: 28.45274pt x 9.90755pt.
- [80
+ [78
 
 ])
 \tf@nav=\write6
@@ -1918,21 +1899,21 @@ Package pdftex.def Info: logos/um6p-white-short.png  used on input line 1451.
 
  (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 032AD8B4F5CE810132CC8BCF66BB7DA4;2589.
+(rerunfilecheck)             Checksum: B956B46C6F5196DDB2637FD21D0B52DB;2589.
  ) 
 Here is how much of TeX's memory you used:
- 32863 strings out of 480171
- 659279 string characters out of 5894489
- 913108 words of memory out of 5000000
- 49834 multiletter control sequences out of 15000+600000
+ 32851 strings out of 480171
+ 659115 string characters out of 5894489
+ 914038 words of memory out of 5000000
+ 49828 multiletter control sequences out of 15000+600000
  546992 words of font info for 91 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  99i,17n,104p,498b,913s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmss10.pfb></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb></usr/share/texmf/fonts/type1/public/lm/lmss8.pfb></usr/share/texmf/fonts/type1/public/lm/lmss9.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-Output written on main.pdf (80 pages, 712471 bytes).
+Output written on main.pdf (78 pages, 713215 bytes).
 PDF statistics:
- 2343 PDF objects out of 2487 (max. 8388607)
- 2171 compressed objects within 22 object streams
- 182 named destinations out of 1000 (max. 500000)
+ 2290 PDF objects out of 2487 (max. 8388607)
+ 2120 compressed objects within 22 object streams
+ 178 named destinations out of 1000 (max. 500000)
  151 words of extra memory for PDF output out of 10000 (max. 10000000)
 

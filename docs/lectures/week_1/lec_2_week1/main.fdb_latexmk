@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1788949123 "/home/tnourji/quard_um6p_intership/docs/lectures/week_1/lec_2_week1/main.tex" "main.pdf" "main" 1788949125
+["pdflatex"] 1788950863 "/home/tnourji/quard_um6p_intership/docs/lectures/week_1/lec_2_week1/main.tex" "main.pdf" "main" 1788950865
   "/etc/texmf/web2c/texmf.cnf" 1785167350 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/tnourji/quard_um6p_intership/docs/lectures/week_1/lec_2_week1/main.tex" 1788885313 752 aca0a4ff197e7aff1c4e48dc40e405ae ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -288,16 +288,16 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1785167354 1435838 00674709103a47e917e83b6bcd3e5092 ""
   "images/Python-for-robotics.jpg" 1788947014 158776 bd9f4de191ca4e82cad15d558b9d4f3d ""
   "information.tex" 1788885278 599 a6511fdf38160669767ebae7de1cf60c ""
-  "lectex/Python_For_Robotics.tex" 1788949123 48635 6518a51aedfa268a2bad2ddec9eb1772 ""
+  "lectex/Python_For_Robotics.tex" 1788950861 48768 89bbc5bfe3e2c6e95a6d518cc07a3045 ""
   "logos/um6p-white-short.png" 1788885215 14109 6cca5691d92b285678b614f4d1a8461c ""
   "logos/um6p-white.png" 1788885215 10202 cb28ae8768bc32faa77a08682503ff4b ""
   "logos/vanguard-white.png" 1788885215 50594 54314f269aaff90739102a433b2ae57c ""
-  "main.aux" 1788949124 19941 cd56253f0792a9e3ce9b49790659fee1 "pdflatex"
-  "main.nav" 1788949124 11226 a3880be64882fae6abdb77687caba74f "pdflatex"
-  "main.out" 1788949124 2589 032ad8b4f5ce810132cc8bcf66bb7da4 "pdflatex"
+  "main.aux" 1788950865 19704 080e3953ad6dc5c75c12600c54123454 "pdflatex"
+  "main.nav" 1788950865 11103 a8744b57dff294b4adb377deb881421a "pdflatex"
+  "main.out" 1788950865 2589 b956b46c6f5196ddb2637fd21d0b52db "pdflatex"
   "main.tex" 1788885313 752 aca0a4ff197e7aff1c4e48dc40e405ae ""
-  "main.toc" 1788949124 834 8541ec3850a029105eb7b945f63e4c99 "pdflatex"
-  "main.vrb" 1788949124 927 7c058734e4e31b8d4dc59f8c34ecbcef "pdflatex"
+  "main.toc" 1788950865 834 083916aad5b183f427734fb5a49c74b4 "pdflatex"
+  "main.vrb" 1788950865 927 7c058734e4e31b8d4dc59f8c34ecbcef "pdflatex"
   "um6p-vanguard-beamer.sty" 1788885215 8992 991dcdde8e8b490b4097cdac832be7e6 ""
   "user-commands.tex" 1788885215 98 7af205459b68ebc77faf5ce6621232a7 ""
   (generated)

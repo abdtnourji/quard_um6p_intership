@@ -254,22 +254,22 @@ Keep trajectory mathematics, ROS~2 node logic, configuration handling, and tests
 \end{exampleblock}
 \end{frame}
 
-\begin{frame}[fragile]{Script Entry Point}
-\framesubtitle{Run code intentionally, not accidentally during import}
-\begin{verbatim}
-def main():
-    print("Starting telemetry processor")
+% \begin{frame}[fragile]{Script Entry Point}
+% \framesubtitle{Run code intentionally, not accidentally during import}
+% \begin{verbatim}
+% def main():
+%     print("Starting telemetry processor")
 
-if __name__ == "__main__":
-    main()
-\end{verbatim}
-\begin{block}{Why It Matters}
-Top-level code executes when a module is imported. The entry-point guard allows functions and classes to be imported by tests or other modules without launching the whole program.
-\end{block}
-\begin{exampleblock}{ROS~2 Connection}
-A package console script calls a \texttt{main()} function that initializes ROS~2, creates a node object, spins it, and performs orderly shutdown.
-\end{exampleblock}
-\end{frame}
+% if __name__ == "__main__":
+%     main()
+% \end{verbatim}
+% \begin{block}{Why It Matters}
+% Top-level code executes when a module is imported. The entry-point guard allows functions and classes to be imported by tests or other modules without launching the whole program.
+% \end{block}
+% \begin{exampleblock}{ROS~2 Connection}
+% A package console script calls a \texttt{main()} function that initializes ROS~2, creates a node object, spins it, and performs orderly shutdown.
+% \end{exampleblock}
+% \end{frame}
 
 \subsection{Object-Oriented Python for Robotics}
 
@@ -279,17 +279,19 @@ A package console script calls a \texttt{main()} function that initializes ROS~2
 \textbf{Procedural view:} data + separate functions\\[0.4em]
 \textbf{Object-oriented view:} state + behavior inside one object
 \end{center}
-\pause
-\begin{exampleblock}{Robot Analogy}
-A drone-state object stores position, velocity, and mode. Its methods can update the estimate, validate values, or produce a readable summary.
-\end{exampleblock}
-\begin{block}{Why ROS~2 Uses This Pattern}
-A Python ROS~2 node is commonly represented by a class. The object owns publishers, subscriptions, timers, parameters, callbacks, and logger access.
-\end{block}
+% \pause
+% \begin{exampleblock}{Robot Analogy}
+% A drone-state object stores position, velocity, and mode. Its methods can update the estimate, validate values, or produce a readable summary.
+% \end{exampleblock}
+% \begin{block}{Why ROS~2 Uses This Pattern}
+% A Python ROS~2 node is commonly represented by a class. The object owns publishers, subscriptions, timers, parameters, callbacks, and logger access.
+% \end{block}
 \end{frame}
 
 \begin{frame}[fragile]{Class, Object, Attributes, and Methods}
 \framesubtitle{The blueprint and the individual instance}
+
+\footnotesize
 \begin{verbatim}
 class DroneState:
     def __init__(self, north_m, east_m, down_m):
@@ -353,8 +355,19 @@ A class should have one coherent responsibility: mission state, telemetry filter
 \end{exampleblock}
 \end{frame}
 
+
+
+% TO DO: add class inheritance definitions !!
+
+
+
+
+
+
 \begin{frame}[fragile]{Inheritance in ROS~2 Nodes}
 \framesubtitle{Extend an existing class instead of rebuilding its capabilities}
+
+\footnotesize
 \begin{verbatim}
 from rclpy.node import Node
 
@@ -373,6 +386,11 @@ class OrbitController(Node):
 Prefer composition for unrelated capabilities. Use inheritance when the ``is a'' relationship is clear and supported by the framework.
 \end{alertblock}
 \end{frame}
+
+
+
+
+
 
 \begin{frame}[fragile]{State Machines as Objects}
 \framesubtitle{Make mission phases explicit and mutually understandable}
