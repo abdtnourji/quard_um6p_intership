@@ -1760,10 +1760,10 @@ INPUT ./logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
+INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
-INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/rm-lmr10.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/rm-lmr8.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/lmmi10.tfm
