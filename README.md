@@ -265,8 +265,8 @@ You should find:
 
 ```text
 README_PHASE0_UBUNTU_ROS2_SETUP.md
-README_PHASE1_PX4_AI_VENV_SETUP.md
-README_PHASE_3_PIPELINE.md
+README_PHASE_1_PX4_AI_VENV_SETUP.md
+README_PHASE_2_PIPELINE.md
 ```
 
 Follow them in the exact order below.
