@@ -424,7 +424,8 @@ MODEL_DIR="$(pwd)/gazebo/models"
 ### Spawn the car marker
 
 ```bash
-OBJECT_SDF="${MODEL_DIR}/inspection_car/model.sdf"
+# OBJECT_SDF="${MODEL_DIR}/inspection_car/model.sdf"
+OBJECT_SDF="${MODEL_DIR}/inspection_hatchback/model.sdf"
 
 gz service \
   -s "/world/${WORLD_NAME}/create" \
@@ -444,7 +445,9 @@ gz service \
 ### Spawn the stop-sign marker
 
 ```bash
-OBJECT_SDF="${MODEL_DIR}/inspection_stop_sign/model.sdf"
+# OBJECT_SDF="${MODEL_DIR}/inspection_stop_sign/model.sdf"
+OBJECT_SDF="${MODEL_DIR}/inspection_pickup/model.sdf"
+
 
 gz service \
   -s "/world/${WORLD_NAME}/create" \
@@ -452,7 +455,8 @@ gz service \
   --reptype gz.msgs.Boolean \
   --timeout 3000 \
   --req "
-    name: 'inspection_stop_sign_instance',
+    # name: 'inspection_stop_sign_instance',
+    name: 'inspection_pickup',
     sdf_filename: '${OBJECT_SDF}',
     pose: {
       position: {x: -5.0, y: 2.5, z: 0.0},
@@ -464,7 +468,8 @@ gz service \
 ### Spawn the person marker
 
 ```bash
-OBJECT_SDF="${MODEL_DIR}/inspection_person_marker/model.sdf"
+# OBJECT_SDF="${MODEL_DIR}/inspection_person_marker/model.sdf"
+OBJECT_SDF="${MODEL_DIR}/inspection_person/model.sdf"
 
 gz service \
   -s "/world/${WORLD_NAME}/create" \
@@ -472,7 +477,8 @@ gz service \
   --reptype gz.msgs.Boolean \
   --timeout 3000 \
   --req "
-    name: 'inspection_person_marker_instance',
+    # name: 'inspection_person_marker_instance',
+    name: 'inspection_person',
     sdf_filename: '${OBJECT_SDF}',
     pose: {
       position: {x: 0.0, y: 6.0, z: 0.0},
@@ -527,6 +533,7 @@ ros2 run ros_gz_image image_bridge /camera \
 or
 
 ```bash
+source /opt/ros/humble/setup.bash
 ros2 run ros_gz_image image_bridge /camera
 ```
 
