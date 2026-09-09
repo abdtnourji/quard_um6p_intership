@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1788885237 "/home/tnourji/quard_um6p_intership/docs/lectures/week_1/lec_1_week1/main.tex" "main.pdf" "main" 1788885240
+["pdflatex"] 1788961120 "/home/tnourji/quard_um6p_intership/docs/lectures/week_1/lec_1_week1/main.tex" "main.pdf" "main" 1788961123
   "/etc/texmf/web2c/texmf.cnf" 1785167350 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/tnourji/quard_um6p_intership/docs/lectures/week_1/lec_1_week1/main.tex" 1788885237 840 78405f614ebe6d16c00dbdcc39ed3e41 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -294,19 +294,19 @@
   "images/linux.png" 1788866522 104116 17960181aff64350162df958348a862a ""
   "images/terminal.png" 1788878615 51428 9af79b8812e2f0d944ea2bfd590c7723 ""
   "information.tex" 1788856940 641 376eb8d4f3e877bd8f2ec449464b8438 ""
-  "lectex/Foundation.tex" 1788865539 18381 70913a838475d14b75b039298a428da8 ""
+  "lectex/Foundation.tex" 1788961120 18391 e958b646ac0e8ef94d02110f1254c13d ""
   "lectex/Git_Github.tex" 1788884851 32379 1e9f1987afe170e797e457f129a961ef ""
   "lectex/Terminal.tex" 1788881647 44635 ed3aecca449a17183664ffb850ac060b ""
   "lectex/Ubuntu.tex" 1788877858 25231 d8b43228730a2c7910181838ef66d5a9 ""
   "logos/um6p-white-short.png" 1788856604 14109 6cca5691d92b285678b614f4d1a8461c ""
   "logos/um6p-white.png" 1788856604 10202 cb28ae8768bc32faa77a08682503ff4b ""
   "logos/vanguard-white.png" 1788856604 50594 54314f269aaff90739102a433b2ae57c ""
-  "main.aux" 1788885239 22336 9bb180ad30263f01a1d354f12197cab8 "pdflatex"
-  "main.nav" 1788885239 10970 ab45719a1319ac9eefe7313ba8c2f749 "pdflatex"
-  "main.out" 1788885239 907 c3fe10fafdb0b090c0c7347f297d42c7 "pdflatex"
+  "main.aux" 1788961122 22336 9bb180ad30263f01a1d354f12197cab8 "pdflatex"
+  "main.nav" 1788961122 10970 ab45719a1319ac9eefe7313ba8c2f749 "pdflatex"
+  "main.out" 1788961122 907 c3fe10fafdb0b090c0c7347f297d42c7 "pdflatex"
   "main.tex" 1788885237 840 78405f614ebe6d16c00dbdcc39ed3e41 ""
-  "main.toc" 1788885239 285 180b6d438da092d1f9742f15ac27cf66 "pdflatex"
-  "main.vrb" 1788885239 583 dbff9baa6b67e1787490baa060629763 "pdflatex"
+  "main.toc" 1788961122 285 180b6d438da092d1f9742f15ac27cf66 "pdflatex"
+  "main.vrb" 1788961122 583 dbff9baa6b67e1787490baa060629763 "pdflatex"
   "um6p-vanguard-beamer.sty" 1788856882 8992 991dcdde8e8b490b4097cdac832be7e6 ""
   "user-commands.tex" 1788856604 98 7af205459b68ebc77faf5ce6621232a7 ""
   (generated)
