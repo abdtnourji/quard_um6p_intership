@@ -1,43 +1,9 @@
-% ============================================================================
-% SECTION: Python Refresher for Robotics
-% Insert directly inside the existing Beamer document.
-% No preamble, packages, theme, or document-level commands are included.
-% ============================================================================
-
 \section{Python Refresher for Robotics}
 
-\begin{frame}{Python Refresher for Robotics}
-\framesubtitle{Preparation for ROS~2 nodes, simulation tools, and AI integration}
-\begin{center}
-\Large\textbf{Python is the language that turns project ideas into executable logic.}
-\end{center}
-\pause
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.31\textwidth}
-\begin{block}{Represent}
-Sensor values, drone states, detections, and configuration.
-\end{block}
-\end{column}
-\hfill
-\begin{column}{0.31\textwidth}
-\begin{block}{Process}
-Distances, trajectories, images, messages, and decisions.
-\end{block}
-\end{column}
-\hfill
-\begin{column}{0.31\textwidth}
-\begin{block}{Integrate}
-ROS~2 nodes, Gazebo data, PX4 interfaces, and AI models.
-\end{block}
-\end{column}
-\end{columns}
-\begin{alertblock}{Scope}
-This is a focused refresher, not a complete Python course. We study only the concepts needed to read, modify, test, and explain the internship code.
-\end{alertblock}
-\end{frame}
 
-\begin{frame}{The Mental Model}
+\begin{frame}{Introduction}
 \framesubtitle{A robotics program transforms inputs into useful outputs}
+
 \begin{center}
 \textbf{Sensors and configuration}
 \(\rightarrow\)
@@ -45,13 +11,13 @@ This is a focused refresher, not a complete Python course. We study only the con
 \(\rightarrow\)
 \textbf{telemetry, commands, logs, and detections}
 \end{center}
-\pause
-\begin{exampleblock}{One Mission Cycle}
-Read the estimated drone position, calculate a target reference, validate the result, publish a ROS~2 message, and record what happened.
-\end{exampleblock}
-\begin{block}{Professional Principle}
-Readable names, explicit units, small functions, clear errors, and reproducible environments are more important than clever one-line code.
-\end{block}
+
+\vspace{0.5cm}
+\begin{center}
+\includegraphics[width=0.4\textwidth]{images/Python-for-robotics.jpg}
+\end{center}
+
+
 \end{frame}
 
 \subsection{Core Language Foundations}
@@ -151,13 +117,14 @@ alias.append(3.0)
 
 independent_copy = measurements.copy()
 \end{verbatim}
-\begin{alertblock}{Why Robotics Students Should Care}
+\begin{alertblock}{Intuition}
 Unexpected shared changes can corrupt a measurement history, configuration, or message buffer. Use \texttt{copy()} when an independent list is required.
 \end{alertblock}
-\begin{exampleblock}{Key Distinction}
-\texttt{==} compares values. \texttt{is} checks whether two names refer to the same object. Use \texttt{is None} when testing for missing data.
-\end{exampleblock}
+% \begin{exampleblock}{Key Distinction}
+% \texttt{==} compares values. \texttt{is} checks whether two names refer to the same object. Use \texttt{is None} when testing for missing data.
+% \end{exampleblock}
 \end{frame}
+
 
 \begin{frame}[fragile]{Conditions}
 \framesubtitle{Choose behavior from validated information}
@@ -197,12 +164,14 @@ Iterate directly over values. Use \texttt{enumerate(...)} only when an index is 
 
 \begin{frame}[fragile]{While Loops and Repeated Callbacks}
 \framesubtitle{Repeat until a condition changes, but always define an exit}
+
 \begin{verbatim}
 attempt = 0
 while attempt < 3:
     attempt += 1
     print(f"Connection attempt {attempt}")
 \end{verbatim}
+
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.47\textwidth}
 \begin{block}{Use \texttt{while} When}
