@@ -1,25 +1,30 @@
-\frametitle{End-to-End Practice}
-\framesubtitle{Obtain, modify, record, synchronize, and verify}
-\scriptsize
-\begin{exampleblock}{Guided Workflow}
+\frametitle{Daily Workflow After the First Clone}
+\framesubtitle{Do not clone the repository again every day}
+
+\footnotesize
+
+\begin{block}{Start a New Working Session}
 \begin{verbatim}
-cd ~
-git clone https://github.com/abdtnourji/quard_um6p_intership.git
-cd quard_um6p_intership
-
+cd ~/quard_um6p_intership
 git status
-git remote -v
-git log --oneline -5
-
-mkdir -p student_work
-echo "Git practice completed" > student_work/git_practice.txt
-
-git status
-git add student_work/git_practice.txt
-git diff --staged
-git commit -m "docs: add Git practice evidence"
+git branch
 git pull origin main
-git push origin main
+\end{verbatim}
+\end{block}
+
+\begin{exampleblock}{After Making a Focused Change}
+\begin{verbatim}
+git status
+git diff
+git add path/to/intended_file
+git diff --staged
+git commit -m "type: explain the change"
+git push
 \end{verbatim}
 \end{exampleblock}
+
+\begin{alertblock}{Mental Model}
+Clone once. Pull to receive new work. Commit to preserve local progress.
+Push to publish the commits to the configured remote branch.
+\end{alertblock}
 
