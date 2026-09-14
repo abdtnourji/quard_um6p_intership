@@ -392,26 +392,26 @@ Prefer composition for unrelated capabilities. Use inheritance when the ``is a''
 
 
 
-\begin{frame}[fragile]{State Machines as Objects}
-\framesubtitle{Make mission phases explicit and mutually understandable}
-\begin{verbatim}
-from enum import Enum, auto
+% \begin{frame}[fragile]{State Machines as Objects}
+% \framesubtitle{Make mission phases explicit and mutually understandable}
+% \begin{verbatim}
+% from enum import Enum, auto
 
-class State(Enum):
-    WAITING = auto()
-    CLIMB = auto()
-    ORBIT = auto()
-    LANDING = auto()
+% class State(Enum):
+%     WAITING = auto()
+%     CLIMB = auto()
+%     ORBIT = auto()
+%     LANDING = auto()
 
-current_state = State.WAITING
-\end{verbatim}
-\begin{exampleblock}{Why This Is Better Than Magic Numbers}
-\texttt{State.ORBIT} communicates intent. A mission controller can store one current state and execute only the behavior associated with that phase.
-\end{exampleblock}
-\begin{block}{Internship Connection}
-The provided orbit controller uses a class, an enumeration, parameters, publishers, subscriptions, services, a timer, and mission-state transitions.
-\end{block}
-\end{frame}
+% current_state = State.WAITING
+% \end{verbatim}
+% \begin{exampleblock}{Why This Is Better Than Magic Numbers}
+% \texttt{State.ORBIT} communicates intent. A mission controller can store one current state and execute only the behavior associated with that phase.
+% \end{exampleblock}
+% \begin{block}{Internship Connection}
+% The provided orbit controller uses a class, an enumeration, parameters, publishers, subscriptions, services, a timer, and mission-state transitions.
+% \end{block}
+% \end{frame}
 
 \subsection{Errors, Files, and Configuration}
 
