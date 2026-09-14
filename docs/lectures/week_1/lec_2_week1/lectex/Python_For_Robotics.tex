@@ -544,6 +544,12 @@ deactivate
 \begin{block}{How to Verify}
 After activation, \texttt{python} and \texttt{python -m pip} should refer to the environment. Verify rather than assuming from the prompt alone.
 \end{block}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Document Dependencies in a File}
 \begin{alertblock}{ROS~2 Compatibility}
 Some ROS~2 Python packages depend on the system Python environment. Follow the internship's documented setup rather than creating arbitrary environments for every node.
 \end{alertblock}
@@ -551,6 +557,8 @@ Some ROS~2 Python packages depend on the system Python environment. Follow the i
 
 \begin{frame}[fragile]{Install Packages with \texttt{pip}}
 \framesubtitle{Install into the interpreter you intentionally selected}
+
+\footnotesize
 \begin{verbatim}
 python -m pip install numpy
 python -m pip install -r requirements.txt
