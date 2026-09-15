@@ -1976,9 +1976,6 @@ INPUT ./logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
-INPUT ./logos/um6p-white-short.png
-INPUT logos/um6p-white-short.png
-INPUT ./logos/um6p-white-short.png
 OUTPUT main.vrb
 INPUT ./main.vrb
 INPUT main.vrb
