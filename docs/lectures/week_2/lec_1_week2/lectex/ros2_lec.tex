@@ -216,11 +216,214 @@ An orbit controller, PX4 bridge, image bridge, detector, and evidence logger app
 
 
 
+
+
+\begin{frame}{A Simple ROS 2 Computation Graph}
+\framesubtitle{How a mobile robot exchanges sensor data and motion commands}
+
+\footnotesize
+
+\begin{center}
+    \textbf{Obstacle Detector}
+    \(\xleftarrow{\quad \texttt{/scan} \quad}\)
+    \textbf{Robot Driver}
+    \(\xleftarrow{\quad \texttt{/cmd\_vel} \quad}\)
+    \textbf{Motion Controller}
+\end{center}
+
+\vspace{0.15cm}
+
+\begin{columns}[T,onlytextwidth]
+
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Sensor Information}
+            The robot driver acts as a
+            \textbf{publisher} on:
+
+            \begin{center}
+                \texttt{/scan}
+            \end{center}
+
+            It publishes laser measurements using:
+
+            \begin{center}
+                \texttt{sensor\_msgs/msg/LaserScan}
+            \end{center}
+
+            Any node interested in obstacle detection can
+            \textbf{subscribe} to this topic.
+        \end{block}
+    \end{column}
+
+    \hfill
+
+    \begin{column}{0.48\textwidth}
+        \begin{exampleblock}{Motion Commands}
+            The robot driver acts as a
+            \textbf{subscriber} on:
+
+            \begin{center}
+                \texttt{/cmd\_vel}
+            \end{center}
+
+            It receives velocity commands using:
+
+            \begin{center}
+                \texttt{geometry\_msgs/msg/Twist}
+            \end{center}
+
+            A controller publishes the desired linear and
+            angular velocities on this topic.
+        \end{exampleblock}
+    \end{column}
+
+\end{columns}
+
+\pause
+
+\begin{alertblock}{Key Intuition}
+    The robot driver connects ROS 2 to the robot or simulator.
+    It publishes what the robot senses and subscribes to what
+    the software wants the robot to do.
+\end{alertblock}
+
+\end{frame}
+
+
+
+\begin{frame}{ROS 2 Names and Namespaces}
+\framesubtitle{Organizing communication in single-robot and multi-robot systems}
+
+\footnotesize
+
+\begin{block}{Names Work Like Filesystem Paths}
+    ROS 2 resources use structured names beginning with
+    \texttt{/}. A namespace adds a common prefix that groups
+    related nodes and topics.
+\end{block}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c@{\hspace{0.5cm}}c}
+    \textbf{Single Robot}
+    &
+    \textbf{Two Robots}
+    \\[0.1cm]
+
+    \texttt{/cmd\_vel}
+    &
+    \texttt{/drone\_1/cmd\_vel}
+    \\
+
+    \texttt{/scan}
+    &
+    \texttt{/drone\_1/scan}
+    \\[0.1cm]
+
+    &
+    \texttt{/drone\_2/cmd\_vel}
+    \\
+
+    &
+    \texttt{/drone\_2/scan}
+\end{tabular}
+\end{center}
+
+\pause
+
+\begin{exampleblock}{Why Namespaces Matter}
+    Both robots may use the same node design and message types,
+    while their namespaces keep their commands and sensor data
+    separate.
+\end{exampleblock}
+
+\begin{alertblock}{Drone Project Connection}
+    A command published to \texttt{/drone\_1/cmd\_vel} should not
+    accidentally control \texttt{drone\_2}.
+\end{alertblock}
+
+\end{frame}
+
+
 \begin{frame}{The ROS 2 Graph}
     \centering
     \includegraphics[width=0.6\textwidth]{./images/computation_graph.png}\cite{martin-rico-ros2}
-    
 \end{frame}
+
+\begin{frame}{What Is a ROS 2 Node?}
+\framesubtitle{One software specialist responsible for one part of the robot}
+
+\footnotesize
+
+\begin{center}
+    \textbf{A robotic system is a team of specialized programs.}\\[0.2em]
+    In ROS 2, each running specialist is called a \textbf{node}.
+\end{center}
+
+\pause
+
+\begin{columns}[T,onlytextwidth]
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Receive}
+            A node can receive information from other nodes.
+
+            \vspace{0.1cm}
+            \textbf{Example:} receive a camera image.
+        \end{block}
+    \end{column}
+    \hfill
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Process}
+            A node performs one focused software task.
+
+            \vspace{0.1cm}
+            \textbf{Example:} detect an object.
+        \end{block}
+    \end{column}
+    \hfill
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Send}
+            A node can share its result with other nodes.
+
+            \vspace{0.1cm}
+            \textbf{Example:} publish detections.
+        \end{block}
+    \end{column}
+\end{columns}
+
+\pause
+
+\begin{exampleblock}{Drone Project Example}
+    The \textbf{camera node} publishes images
+    \(\rightarrow\)
+    the \textbf{detector node} identifies objects
+    \(\rightarrow\)
+    the \textbf{mission node} uses the observations
+    \(\rightarrow\)
+    the \textbf{logger node} records evidence.
+\end{exampleblock}
+
+\begin{alertblock}{Central Idea}
+    A node is not a physical sensor or part of the drone.
+    It is a running software component with one clear responsibility
+    inside the complete robotic system.
+\end{alertblock}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -240,6 +443,18 @@ A camera node produces images. A detector node interprets them. A mission node c
 Avoid one giant node that performs every task. Clear responsibilities make components easier to test, replace, diagnose, and reuse.
 \end{alertblock}
 \end{frame}
+
+
+    \begin{frame}{ROS 2 Demonstration}
+        \centering
+        \includegraphics[width=0.8\textwidth]{./images/NodesTopicandService1.png}
+    \end{frame}
+
+    \begin{frame}{ROS 2 Demonstration}
+        \centering
+        \includegraphics[width=0.8\textwidth]{./images/NodesTopicandService2.png}
+    \end{frame}
+
 
 \begin{frame}[fragile]{Live Tutorial: Discover Nodes}
 \framesubtitle{Ask the running system who is participating}
