@@ -1673,6 +1673,7 @@ INPUT ./logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
+INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT /usr/share/texmf/tex/latex/lm/ot1lmr.fd
 INPUT /usr/share/texmf/tex/latex/lm/ot1lmr.fd
 INPUT /usr/share/texmf/tex/latex/lm/ot1lmr.fd
@@ -1713,7 +1714,12 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
-INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmssbx10.tfm
+INPUT ./logos/um6p-white-short.png
+INPUT logos/um6p-white-short.png
+INPUT ./logos/um6p-white-short.png
+INPUT ./logos/um6p-white-short.png
+INPUT logos/um6p-white-short.png
+INPUT ./logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
@@ -2018,8 +2024,8 @@ OUTPUT main.snm
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out
-INPUT /usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc
+INPUT /usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc
 INPUT /usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb

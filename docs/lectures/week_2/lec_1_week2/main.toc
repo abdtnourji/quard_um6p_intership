@@ -1,9 +1,9 @@
 \beamer@sectionintoc {1}{ROS 2 Humble Foundations}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Environment and First Observation}{10}{0}{1}
-\beamer@subsectionintoc {1}{2}{The ROS 2 Graph and Nodes}{14}{0}{1}
-\beamer@subsectionintoc {1}{3}{Topics, Publishers, Subscribers, and Messages}{19}{0}{1}
-\beamer@subsectionintoc {1}{4}{Services and Actions}{26}{0}{1}
-\beamer@subsectionintoc {1}{5}{Parameters, Packages, and Workspaces}{32}{0}{1}
-\beamer@subsectionintoc {1}{6}{Python Publisher and Subscriber}{40}{0}{1}
-\beamer@subsectionintoc {1}{7}{Drone-System Integration}{44}{0}{1}
-\beamer@subsectionintoc {1}{8}{Troubleshooting and Practice}{50}{0}{1}
+\beamer@subsectionintoc {1}{1}{Environment and First Observation}{12}{0}{1}
+\beamer@subsectionintoc {1}{2}{The ROS 2 Graph and Nodes}{16}{0}{1}
+\beamer@subsectionintoc {1}{3}{Topics, Publishers, Subscribers, and Messages}{21}{0}{1}
+\beamer@subsectionintoc {1}{4}{Services and Actions}{28}{0}{1}
+\beamer@subsectionintoc {1}{5}{Parameters, Packages, and Workspaces}{34}{0}{1}
+\beamer@subsectionintoc {1}{6}{Python Publisher and Subscriber}{42}{0}{1}
+\beamer@subsectionintoc {1}{7}{Drone-System Integration}{46}{0}{1}
+\beamer@subsectionintoc {1}{8}{Troubleshooting and Practice}{52}{0}{1}

@@ -48,21 +48,80 @@ ROS 2 is not the computer's operating system. Ubuntu manages hardware, files, me
 \end{alertblock}
 \end{frame}
 
-\begin{frame}{Why Use ROS 2 in Robotics?}
-\framesubtitle{Complex systems become understandable when responsibilities are separated}
+% \begin{frame}{Why Use ROS 2 in Robotics?}
+% \framesubtitle{Complex systems become understandable when responsibilities are separated}
+% \footnotesize
+% \begin{itemize}
+% \item \textbf{Modularity:} camera, mission, control, and logging components can be developed separately.
+% \item \textbf{Typed communication:} interfaces define the structure of exchanged data.
+% \item \textbf{Observability:} terminal tools expose nodes, topics, services, actions, and parameters.
+% \item \textbf{Language flexibility:} components may be implemented in Python or C++.
+% \item \textbf{Reuse:} packages and standard interfaces reduce duplicated engineering work.
+% \item \textbf{Distributed operation:} communicating components may run in different processes or on different computers.
+% \end{itemize}
+% \begin{exampleblock}{Drone Project Connection}
+% ROS 2 connects mission logic, PX4 interfaces, camera bridges, perception programs, visualization, and evidence collection without forcing them into one monolithic program.
+% \end{exampleblock}
+% \end{frame}
+
+
+
+
+\begin{frame}{Why Use ROS 2?}
+\framesubtitle{ROS 2 helps separate programs work together}
+
 \footnotesize
-\begin{itemize}
-\item \textbf{Modularity:} camera, mission, control, and logging components can be developed separately.
-\item \textbf{Typed communication:} interfaces define the structure of exchanged data.
-\item \textbf{Observability:} terminal tools expose nodes, topics, services, actions, and parameters.
-\item \textbf{Language flexibility:} components may be implemented in Python or C++.
-\item \textbf{Reuse:} packages and standard interfaces reduce duplicated engineering work.
-\item \textbf{Distributed operation:} communicating components may run in different processes or on different computers.
-\end{itemize}
-\begin{exampleblock}{Drone Project Connection}
-ROS 2 connects mission logic, PX4 interfaces, camera bridges, perception programs, visualization, and evidence collection without forcing them into one monolithic program.
+
+\begin{center}
+    \textbf{A complete robot is not one large program.}\\[0.2em]
+    It is a team of smaller programs with different responsibilities.
+\end{center}
+
+\pause
+
+\begin{columns}[T,onlytextwidth]
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Separate}
+            Each component performs one clear task:
+            camera, mission, control, perception, or logging.
+        \end{block}
+    \end{column}
+    \hfill
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Connect}
+            ROS 2 allows the components to exchange structured messages
+            through defined interfaces.
+        \end{block}
+    \end{column}
+    \hfill
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Observe}
+            ROS 2 tools help engineers inspect which components are
+            running and what information they exchange.
+        \end{block}
+    \end{column}
+\end{columns}
+
+\pause
+
+\begin{exampleblock}{Drone Project Example}
+    The camera produces images
+    \(\rightarrow\)
+    the detector identifies objects
+    \(\rightarrow\)
+    the mission node uses the observations
+    \(\rightarrow\)
+    the results are visualized and recorded.
 \end{exampleblock}
+
+\begin{alertblock}{Central Idea}
+    ROS 2 does not fly the drone and does not detect objects.
+    It is the communication and integration framework that helps
+    the specialized software components work together.
+\end{alertblock}
+
 \end{frame}
+
 
 \begin{frame}{Course Compatibility Contract}
 \framesubtitle{Every command and exercise targets one supported baseline}
