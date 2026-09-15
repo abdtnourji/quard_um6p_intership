@@ -1782,6 +1782,14 @@ INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
+INPUT ./images/computation_graph.png
+INPUT ./images/computation_graph.png
+INPUT ./images/computation_graph.png
+INPUT ./images/computation_graph.png
+INPUT ./images/computation_graph.png
+INPUT ./logos/um6p-white-short.png
+INPUT logos/um6p-white-short.png
+INPUT ./logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
