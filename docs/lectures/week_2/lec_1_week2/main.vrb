@@ -1,30 +1,24 @@
-\frametitle{Daily Workflow After the First Clone}
-\framesubtitle{Do not clone the repository again every day}
-
-\footnotesize
-
-\begin{block}{Start a New Working Session}
+\frametitle{Common Humble Problems and First Checks}
+\framesubtitle{Use observable evidence before reinstalling software}
+\scriptsize
 \begin{verbatim}
-cd ~/quard_um6p_intership
-git status
-git branch
-git pull origin main
-\end{verbatim}
-\end{block}
+# ros2: command not found
+source /opt/ros/humble/setup.bash
 
-\begin{exampleblock}{After Making a Focused Change}
-\begin{verbatim}
-git status
-git diff
-git add path/to/intended_file
-git diff --staged
-git commit -m "type: explain the change"
-git push
-\end{verbatim}
-\end{exampleblock}
+# Package not found after building
+source ~/your_workspace/install/setup.bash
 
-\begin{alertblock}{Mental Model}
-Clone once. Pull to receive new work. Commit to preserve local progress.
-Push to publish the commits to the configured remote branch.
+# Node expected but absent
+ps aux | grep process_name
+ros2 node list
+
+# Topic exists but no data
+ros2 topic info /topic_name --verbose
+ros2 topic echo /topic_name
+
+# Broad environment report
+ros2 doctor --report
+\end{verbatim}
+\begin{alertblock}{Do Not Guess}
+Confirm the Ubuntu release, ROS distribution, current workspace, active process, interface type, and complete terminal output before changing the installation.
 \end{alertblock}
-

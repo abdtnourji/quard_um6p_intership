@@ -1,0 +1,807 @@
+\section{ROS 2 Humble Foundations}
+
+\begin{frame}{From Python to ROS 2}
+\framesubtitle{Python provides logic; ROS 2 connects that logic to the robotic system}
+\begin{center}
+\large
+\textbf{A drone is not one program. It is a team of communicating components.}
+\end{center}
+\pause
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.30\textwidth}
+\begin{block}{Perception}
+Camera acquisition and object detection.
+\end{block}
+\end{column}
+\hfill
+\begin{column}{0.30\textwidth}
+\begin{block}{Mission Logic}
+Trajectory generation and inspection decisions.
+\end{block}
+\end{column}
+\hfill
+\begin{column}{0.30\textwidth}
+\begin{block}{Flight Interface}
+Telemetry reception and PX4 setpoint publication.
+\end{block}
+\end{column}
+\end{columns}
+\begin{exampleblock}{ROS 2 Role}
+ROS 2 provides the communication and integration framework that allows these components to discover one another and exchange typed information.
+\end{exampleblock}
+\end{frame}
+
+
+
+
+\begin{frame}{What Is ROS 2?}
+\framesubtitle{A modular software framework for building robot systems}
+\begin{block}{Intuitive Definition}
+ROS 2 is a collection of software libraries, command-line tools, conventions, and communication mechanisms used to create and integrate robotic applications.
+\end{block}
+\pause
+\begin{exampleblock}{Team Analogy}
+Imagine a technical team in which each specialist has one responsibility. ROS 2 provides the shared language, communication channels, addresses, and rules that let the specialists cooperate.
+\end{exampleblock}
+\begin{alertblock}{Important Distinction}
+ROS 2 is not the computer's operating system. Ubuntu manages hardware, files, memory, users, and processes. ROS 2 runs on top of Ubuntu and organizes communication between robotics software components.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Why Use ROS 2 in Robotics?}
+\framesubtitle{Complex systems become understandable when responsibilities are separated}
+\footnotesize
+\begin{itemize}
+\item \textbf{Modularity:} camera, mission, control, and logging components can be developed separately.
+\item \textbf{Typed communication:} interfaces define the structure of exchanged data.
+\item \textbf{Observability:} terminal tools expose nodes, topics, services, actions, and parameters.
+\item \textbf{Language flexibility:} components may be implemented in Python or C++.
+\item \textbf{Reuse:} packages and standard interfaces reduce duplicated engineering work.
+\item \textbf{Distributed operation:} communicating components may run in different processes or on different computers.
+\end{itemize}
+\begin{exampleblock}{Drone Project Connection}
+ROS 2 connects mission logic, PX4 interfaces, camera bridges, perception programs, visualization, and evidence collection without forcing them into one monolithic program.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Course Compatibility Contract}
+\framesubtitle{Every command and exercise targets one supported baseline}
+\begin{center}
+\Large\textbf{Ubuntu 22.04 LTS + ROS 2 Humble Hawksbill}
+\end{center}
+\begin{block}{Student Rule}
+Use the versions specified by the internship repository. Do not silently replace Humble commands or packages with instructions written for another ROS 2 distribution.
+\end{block}
+\begin{alertblock}{Why This Matters}
+Package names, supported platforms, simulator combinations, APIs, and setup instructions may differ between ROS 2 distributions. Newer does not automatically mean compatible with this project.
+\end{alertblock}
+\end{frame}
+
+\subsection{Environment and First Observation}
+
+\begin{frame}[fragile]{Live Check 1: Load ROS 2 Humble}
+\framesubtitle{Each new terminal must receive the ROS 2 environment}
+\begin{block}{Execute}
+\begin{verbatim}
+source /opt/ros/humble/setup.bash
+printenv ROS_DISTRO
+which ros2
+ros2 --help
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Expected Evidence}
+\texttt{ROS\_DISTRO} should report \texttt{humble}, and \texttt{which ros2} should locate the ROS 2 command-line executable.
+\end{exampleblock}
+\begin{alertblock}{Interpretation}
+\texttt{source} changes the current shell environment. It does not reinstall ROS 2. Repeat it in every new terminal unless the project defines an approved automatic setup.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Check 2: Diagnose the Environment}
+\framesubtitle{Verify the installation before blaming application code}
+\begin{block}{Execute}
+\begin{verbatim}
+ros2 doctor --report
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{What to Inspect}
+Confirm the ROS 2 distribution, platform, middleware information, network interfaces, and package environment. Read warnings in context rather than treating every line as a fatal error.
+\end{exampleblock}
+\begin{alertblock}{Engineering Habit}
+Preserve the command and complete output when asking for help. A screenshot of only the last line may hide the actual cause.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Demonstration: Start Turtlesim}
+\framesubtitle{Use a small system before connecting the drone stack}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{block}{Terminal 1}
+\begin{verbatim}
+source /opt/ros/humble/setup.bash
+ros2 run turtlesim turtlesim_node
+\end{verbatim}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Terminal 2}
+\begin{verbatim}
+source /opt/ros/humble/setup.bash
+ros2 run turtlesim turtle_teleop_key
+\end{verbatim}
+\end{block}
+\end{column}
+\end{columns}
+\begin{exampleblock}{What to Observe}
+Two executables run as separate processes. One displays the simulated turtle; the other converts keyboard input into movement commands.
+\end{exampleblock}
+\begin{alertblock}{Terminal Focus}
+Keep Terminal 2 active while pressing arrow keys. Stop each foreground process deliberately with \texttt{Ctrl+C}.
+\end{alertblock}
+\end{frame}
+
+\subsection{The ROS 2 Graph and Nodes}
+
+\begin{frame}{The ROS 2 Graph}
+\framesubtitle{A live map of components and communication relationships}
+\begin{center}
+Nodes $+$ topics $+$ services $+$ actions $+$ parameters $=$ \textbf{ROS 2 graph}
+\end{center}
+\begin{block}{Intuition}
+The graph is not a file stored once. It is the changing network of ROS 2 entities that currently exist and communicate while the system runs.
+\end{block}
+\begin{exampleblock}{Drone Example}
+An orbit controller, PX4 bridge, image bridge, detector, and evidence logger appear as nodes connected through named interfaces.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{What Is a Node?}
+\framesubtitle{One focused participant in the robotic software system}
+\begin{block}{Definition}
+A node is a ROS 2 participant responsible for a focused purpose. It may publish, subscribe, provide services, execute actions, use parameters, and write logs.
+\end{block}
+\pause
+\begin{exampleblock}{Specialist Analogy}
+A camera node produces images. A detector node interprets them. A mission node creates trajectory references. A logger node preserves evidence. Each specialist has a clear responsibility.
+\end{exampleblock}
+\begin{alertblock}{Design Principle}
+Avoid one giant node that performs every task. Clear responsibilities make components easier to test, replace, diagnose, and reuse.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Discover Nodes}
+\framesubtitle{Ask the running system who is participating}
+\begin{block}{Keep Turtlesim Running, Then Execute}
+\begin{verbatim}
+ros2 node list
+ros2 node info /turtlesim
+ros2 node info /teleop_turtle
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{Read the Output}
+\texttt{ros2 node list} identifies active node names. \texttt{ros2 node info} reveals publishers, subscribers, services, actions, and interfaces associated with one node.
+\end{exampleblock}
+\begin{alertblock}{Project Transfer}
+Later, use \texttt{ros2 node list} to verify that the orbit controller, bridges, and perception nodes actually started. A terminal window alone is not sufficient evidence.
+\end{alertblock}
+\end{frame}
+
+\subsection{Topics, Publishers, Subscribers, and Messages}
+
+\begin{frame}{Topics: Continuous Information Channels}
+\framesubtitle{Publishers send data; subscribers receive matching data}
+\begin{center}
+\textbf{Publisher} $\longrightarrow$ named topic $\longrightarrow$ \textbf{Subscriber}
+\end{center}
+\begin{block}{Intuition}
+A topic resembles a radio channel. Publishers transmit without addressing one specific receiver. Any compatible subscriber may listen to the named channel.
+\end{block}
+\begin{exampleblock}{Drone Examples}
+Camera images, vehicle odometry, desired paths, detection results, and telemetry are natural topic data because they may be produced repeatedly over time.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Publishers and Subscribers}
+\framesubtitle{Communication roles are independent from node names}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.47\textwidth}
+\begin{block}{Publisher}
+Creates messages of a defined type and sends them on a named topic.
+\end{block}
+\end{column}
+\hfill
+\begin{column}{0.47\textwidth}
+\begin{block}{Subscriber}
+Registers interest in a named topic and executes a callback when compatible data arrives.
+\end{block}
+\end{column}
+\end{columns}
+\begin{exampleblock}{Many-to-Many Possibility}
+One publisher may serve several subscribers, and several publishers may write compatible messages to the same topic. System design must make this intentional.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Messages: Typed Data Contracts}
+\framesubtitle{Every topic carries a defined data structure}
+\begin{block}{Intuition}
+A message type is a standardized form. It defines the fields and field types that communicating components agree to exchange.
+\end{block}
+\begin{exampleblock}{Examples}
+A velocity command may contain linear and angular components. An image message includes pixel data and metadata. PX4 odometry includes estimated position, velocity, orientation, and timestamps.
+\end{exampleblock}
+\begin{alertblock}{Why Types Matter}
+A subscriber cannot safely interpret arbitrary bytes. Both sides must agree on the interface, units, coordinate conventions, and semantic meaning.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Inspect Topics}
+\framesubtitle{Discover names, types, rates, and current data}
+\scriptsize
+\begin{verbatim}
+ros2 topic list
+ros2 topic list -t
+ros2 topic info /turtle1/cmd_vel --verbose
+ros2 topic type /turtle1/cmd_vel
+ros2 interface show geometry_msgs/msg/Twist
+ros2 topic echo /turtle1/pose
+ros2 topic hz /turtle1/pose
+\end{verbatim}
+\begin{block}{Observation Sequence}
+Find the topic, identify its type, inspect the interface fields, observe actual messages, and measure publication frequency.
+\end{block}
+\begin{alertblock}{Stop Streaming Commands}
+\texttt{ros2 topic echo} and \texttt{ros2 topic hz} continue until interrupted. Stop them with \texttt{Ctrl+C}.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Publish a Topic Message}
+\framesubtitle{Send a typed velocity command from the terminal}
+\scriptsize
+\begin{verbatim}
+ros2 topic pub --once /turtle1/cmd_vel \
+geometry_msgs/msg/Twist \
+"{linear: {x: 1.0}, angular: {z: 0.5}}"
+\end{verbatim}
+\begin{exampleblock}{What Happens}
+The command-line tool temporarily acts as a publisher. It creates one \texttt{Twist} message and sends it to the turtle's velocity command topic.
+\end{exampleblock}
+\begin{alertblock}{Flight-Safety Boundary}
+Terminal publication is appropriate for controlled tutorials and simulation. Never publish experimental commands to a real vehicle without an approved safety process and operator control.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Quality of Service: Communication Policy}
+\framesubtitle{Not every robotics data stream needs the same delivery behavior}
+\begin{block}{Intuition}
+Quality of Service, or QoS, describes policies such as reliability, history depth, durability, and whether fresh data is preferred over recovering every old sample.
+\end{block}
+\begin{exampleblock}{Drone Example}
+For high-rate sensor estimates, the newest value may be more useful than a delayed queue of old values. Configuration or state information may have different delivery needs.
+\end{exampleblock}
+\begin{alertblock}{Compatibility}
+A publisher and subscriber can use the same topic type and still fail to communicate if their QoS policies are incompatible. Inspect interfaces with \texttt{--verbose} when data is missing.
+\end{alertblock}
+\end{frame}
+
+\subsection{Services and Actions}
+
+\begin{frame}{Services: Request and Response}
+\framesubtitle{Ask for one operation and receive one result}
+\begin{center}
+\textbf{Client request} $\longrightarrow$ \textbf{Service server} $\longrightarrow$ \textbf{response}
+\end{center}
+\begin{block}{Intuition}
+A service resembles asking a technician one question and waiting for one answer. It is best for short operations that complete quickly.
+\end{block}
+\begin{exampleblock}{Drone Examples}
+Start an inspection mission, reset a component, query one configuration state, or request a controlled operation with an immediate response.
+\end{exampleblock}
+\begin{alertblock}{Not for Continuous Data}
+Use topics for streams. Do not repeatedly call a service to imitate high-rate telemetry.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Discover and Call a Service}
+\framesubtitle{Create a second turtle through a request-response interaction}
+\scriptsize
+\begin{verbatim}
+ros2 service list
+ros2 service type /spawn
+ros2 interface show turtlesim/srv/Spawn
+ros2 service call /spawn turtlesim/srv/Spawn \
+"{x: 2.0, y: 2.0, theta: 0.0, name: 'inspector'}"
+\end{verbatim}
+\begin{exampleblock}{Read the Interaction}
+The service type defines request fields and response fields. The client sends position, orientation, and name; the server returns the created turtle name.
+\end{exampleblock}
+\begin{alertblock}{Common Mistake}
+A correct service name with an incorrect service type or malformed field structure will fail. Inspect the interface before composing the request.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Actions: Long-Running Goals}
+\framesubtitle{A goal may need feedback, time, completion, or cancellation}
+\begin{center}
+Goal $\longrightarrow$ repeated feedback $\longrightarrow$ result
+
+\smallskip
+\textit{with the possibility of cancellation}
+\end{center}
+\begin{block}{Intuition}
+An action resembles assigning a technician a task that takes time. You receive progress updates, can cancel if needed, and receive a final result.
+\end{block}
+\begin{exampleblock}{Drone Examples}
+Execute a planned inspection segment, navigate to a waypoint, or perform a long-running scan where progress and cancellation matter.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Inspect and Send an Action Goal}
+\framesubtitle{Rotate the turtle while observing feedback}
+\scriptsize
+\begin{verbatim}
+ros2 action list -t
+ros2 action info /turtle1/rotate_absolute
+ros2 interface show turtlesim/action/RotateAbsolute
+ros2 action send_goal --feedback \
+/turtle1/rotate_absolute \
+turtlesim/action/RotateAbsolute "{theta: 1.57}"
+\end{verbatim}
+\begin{exampleblock}{What to Observe}
+The action client sends a target angle, receives periodic feedback while rotation continues, and finally receives a result.
+\end{exampleblock}
+\begin{alertblock}{Concept Check}
+If an operation is immediate, a service may fit. If it takes time and needs feedback or cancellation, an action is usually the clearer model.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Topics, Services, or Actions?}
+\framesubtitle{Choose the interface from the communication need}
+\footnotesize
+\begin{itemize}
+\item \textbf{Topic:} repeated stream with no direct response, such as odometry or images.
+\item \textbf{Service:} short request with one response, such as resetting or starting a simple operation.
+\item \textbf{Action:} long-running goal with feedback, result, and cancellation, such as executing a mission segment.
+\end{itemize}
+\begin{exampleblock}{Design Question}
+Do not begin by asking, ``Which ROS 2 feature do I want to use?'' Ask, ``What communication behavior does this engineering interaction require?''
+\end{exampleblock}
+\end{frame}
+
+\subsection{Parameters, Packages, and Workspaces}
+
+\begin{frame}{Parameters: Node Configuration}
+\framesubtitle{Adjust behavior without rewriting source code}
+\begin{block}{Intuition}
+Parameters are named configuration values associated with a node. They may express limits, rates, target names, radii, durations, or feature choices.
+\end{block}
+\begin{exampleblock}{Drone Example}
+The orbit controller may expose \texttt{radius\_m}, \texttt{altitude\_m}, \texttt{orbit\_period\_s}, and \texttt{face\_center} as parameters.
+\end{exampleblock}
+\begin{alertblock}{Validation}
+A configurable value still requires type, range, unit, and consistency checks before it influences vehicle behavior.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Inspect Parameters}
+\framesubtitle{Discover and modify node configuration}
+\begin{verbatim}
+ros2 param list /turtlesim
+ros2 param describe /turtlesim background_r
+ros2 param get /turtlesim background_r
+ros2 param set /turtlesim background_r 80
+ros2 service call /clear std_srvs/srv/Empty "{}"
+\end{verbatim}
+\begin{exampleblock}{Observation}
+The parameter value changes the background configuration. Calling \texttt{/clear} redraws the window so the new value becomes visible.
+\end{exampleblock}
+\begin{block}{Project Transfer}
+Use \texttt{ros2 param list /orbit\_controller} to discover mission parameters instead of searching blindly through source code.
+\end{block}
+\end{frame}
+
+\begin{frame}{Packages: Deliverable Units of ROS 2 Software}
+\framesubtitle{Group code, metadata, configuration, and launch resources}
+\begin{block}{Definition}
+A ROS 2 package is an organizational and build unit containing related executables, libraries, interfaces, tests, configuration, launch files, and dependency metadata.
+\end{block}
+\begin{exampleblock}{Drone Examples}
+A mission package may contain the orbit controller and trajectory utilities. A perception package may contain camera-processing nodes and detector configuration.
+\end{exampleblock}
+\begin{alertblock}{Package Responsibility}
+A package should communicate a coherent purpose. Do not place every internship file into one undefined package.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Inspect Installed Packages}
+\framesubtitle{Use the package index rather than guessing locations}
+\begin{verbatim}
+ros2 pkg list | grep turtlesim
+ros2 pkg executables turtlesim
+ros2 pkg prefix turtlesim
+ros2 interface package turtlesim
+\end{verbatim}
+\begin{exampleblock}{Interpretation}
+These commands confirm that the package is discoverable, list its executables, identify its installation prefix, and display its interfaces.
+\end{exampleblock}
+\begin{alertblock}{Environment Reminder}
+If a newly built package is missing, verify that the correct workspace was built and that its \texttt{install/setup.bash} file was sourced in the current terminal.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Workspaces: Where Packages Are Developed Together}
+\framesubtitle{A controlled environment for source, build products, and installation results}
+\begin{center}
+\texttt{src/} $\longrightarrow$ \texttt{build/} $+$ \texttt{install/} $+$ \texttt{log/}
+\end{center}
+\begin{itemize}
+\item \texttt{src/}: package source code and maintained project files.
+\item \texttt{build/}: intermediate files created during compilation or installation.
+\item \texttt{install/}: discoverable executables, libraries, and environment setup.
+\item \texttt{log/}: build and test logs used for diagnosis.
+\end{itemize}
+\begin{exampleblock}{Mental Model}
+The workspace is the engineering workshop; packages are organized projects inside it; \texttt{colcon} performs the coordinated build.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Create a Humble Python Workspace}
+\framesubtitle{Build in a separate practice area before modifying the internship packages}
+\scriptsize
+\begin{verbatim}
+source /opt/ros/humble/setup.bash
+mkdir -p ~/ros2_humble_practice/src
+cd ~/ros2_humble_practice/src
+
+ros2 pkg create --build-type ament_python \
+--license Apache-2.0 \
+--node-name telemetry_demo robotics_practice
+\end{verbatim}
+\begin{exampleblock}{What Is Created}
+A Python ROS 2 package containing metadata, Python package structure, resource index entry, setup files, and a starter node.
+\end{exampleblock}
+\begin{alertblock}{Naming}
+Use lowercase package names with underscores. Do not create the practice package inside the installed ROS directory or an unrelated Git repository.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Build and Source the Workspace}
+\framesubtitle{Source code becomes a discoverable ROS 2 package}
+\begin{verbatim}
+cd ~/ros2_humble_practice
+colcon build --symlink-install
+source install/setup.bash
+
+ros2 pkg executables robotics_practice
+ros2 run robotics_practice telemetry_demo
+\end{verbatim}
+\begin{exampleblock}{Why \texttt{--symlink-install}?}
+For Python development, editable source files are linked into the install space, reducing unnecessary rebuilds for many code-only changes. Metadata changes may still require rebuilding.
+\end{exampleblock}
+\begin{alertblock}{Overlay Order}
+Source the base Humble installation first, then the workspace overlay. A new terminal forgets both until they are sourced again.
+\end{alertblock}
+\end{frame}
+
+\subsection{Python Publisher and Subscriber}
+
+\begin{frame}[fragile]{Python Publisher: The Communication Pattern}
+\framesubtitle{A timer creates and publishes typed telemetry}
+\scriptsize
+\begin{verbatim}
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float32
+
+class AltitudePublisher(Node):
+    def __init__(self):
+        super().__init__('altitude_publisher')
+        self.publisher = self.create_publisher(
+            Float32, '/demo/altitude_m', 10)
+        self.timer = self.create_timer(1.0, self.publish_altitude)
+
+    def publish_altitude(self):
+        msg = Float32()
+        msg.data = 4.0
+        self.publisher.publish(msg)
+\end{verbatim}
+\begin{block}{Read It as a Story}
+Create a node, create a typed publisher, create a periodic timer, build one message, and publish it on a named topic.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Python Subscriber: The Callback Pattern}
+\framesubtitle{Incoming telemetry triggers a focused method}
+\scriptsize
+\begin{verbatim}
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float32
+
+class AltitudeSubscriber(Node):
+    def __init__(self):
+        super().__init__('altitude_subscriber')
+        self.subscription = self.create_subscription(
+            Float32, '/demo/altitude_m', self.callback, 10)
+
+    def callback(self, msg):
+        self.get_logger().info(
+            f'Received altitude: {msg.data:.2f} m')
+\end{verbatim}
+\begin{block}{Read It as a Story}
+Create a node, subscribe to a typed topic, and execute the callback whenever a compatible message arrives.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Verify a Publisher Before Integration}
+\framesubtitle{Use terminal tools as an independent observer}
+\begin{verbatim}
+ros2 node list
+ros2 topic list -t
+ros2 topic info /demo/altitude_m --verbose
+ros2 topic echo /demo/altitude_m
+ros2 topic hz /demo/altitude_m
+\end{verbatim}
+\begin{exampleblock}{Layer-by-Layer Evidence}
+First confirm the node exists, then the topic and type, then endpoint compatibility, then actual values, and finally the observed rate.
+\end{exampleblock}
+\begin{alertblock}{Debugging Principle}
+Do not connect five unverified components and then ask why the pipeline fails. Verify each interface independently before integration.
+\end{alertblock}
+\end{frame}
+
+\subsection{Drone-System Integration}
+
+\begin{frame}{ROS 2 in the Autonomous-Drone Pipeline}
+\framesubtitle{Communication joins mission, flight, simulation, and perception}
+\footnotesize
+\begin{block}{Command Flow}
+\centering
+ROS 2 mission node $\rightarrow$ PX4 input topics $\rightarrow$ PX4 control $\rightarrow$ Gazebo motion
+\end{block}
+\begin{exampleblock}{Evidence Flow}
+\centering
+Gazebo camera $\rightarrow$ image bridge $\rightarrow$ ROS 2 image topic $\rightarrow$ detector $\rightarrow$ results and logs
+\end{exampleblock}
+\begin{alertblock}{Responsibility Boundary}
+ROS 2 transports and integrates information. PX4 performs flight estimation and control. Gazebo simulates physics. The AI detector produces observations, not direct safety-certified commands.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Inspect the Drone Graph}
+\framesubtitle{Use the same discovery method on the full project}
+\scriptsize
+\begin{verbatim}
+source /opt/ros/humble/setup.bash
+cd ~/quard_um6p_intership
+source config/project.env
+# After building the workspace:
+source install/setup.bash
+
+ros2 node list
+ros2 topic list -t
+ros2 service list -t
+ros2 action list -t
+ros2 param list
+\end{verbatim}
+\begin{exampleblock}{Question for Every Interface}
+Who produces it? Who consumes it? What type does it use? At what rate? In which units and coordinate frame? What observation proves it works?
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]{Live Tutorial: Inspect PX4 Interfaces}
+\framesubtitle{Understand direction before publishing or subscribing}
+\scriptsize
+\begin{verbatim}
+ros2 topic list | grep /fmu
+ros2 topic info /fmu/out/vehicle_odometry --verbose
+ros2 interface show px4_msgs/msg/VehicleOdometry
+ros2 topic echo /fmu/out/vehicle_odometry --once
+
+ros2 topic info /fmu/in/trajectory_setpoint --verbose
+ros2 interface show px4_msgs/msg/TrajectorySetpoint
+\end{verbatim}
+\begin{block}{Naming Intuition}
+For PX4 interfaces, \texttt{/fmu/out/...} carries data leaving PX4, while \texttt{/fmu/in/...} carries data entering PX4.
+\end{block}
+\begin{alertblock}{No Blind Publication}
+Inspecting a setpoint interface is safe. Publishing arbitrary flight setpoints is a separate controlled activity performed only in the documented simulation workflow.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Visualize the Graph with \texttt{rqt\_graph}}
+\framesubtitle{A diagram complements terminal evidence}
+\begin{block}{Execute While Nodes Are Running}
+\begin{verbatim}
+rqt_graph
+\end{verbatim}
+\end{block}
+\begin{exampleblock}{What to Trace}
+Locate the mission node, PX4 communication path, camera bridge, perception node, and topics connecting them. Compare the graph with the intended architecture.
+\end{exampleblock}
+\begin{alertblock}{Interpretation}
+A visible connection shows discovered ROS 2 endpoints. It does not prove correct values, rates, units, QoS, or system behavior. Use CLI inspection and observed outputs as additional evidence.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Record and Replay Topic Data}
+\framesubtitle{Preserve communication evidence for repeatable analysis}
+\begin{verbatim}
+ros2 bag record /turtle1/pose
+# Move the turtle, then stop recording with Ctrl+C.
+ros2 bag info rosbag2_*
+ros2 bag play rosbag2_*
+\end{verbatim}
+\begin{block}{Intuition}
+A ROS bag records serialized topic messages with timing information. It allows later inspection or replay without reproducing the original motion immediately.
+\end{block}
+\begin{alertblock}{Data Management}
+High-rate images and telemetry can create large files quickly. Record only required topics, monitor storage, and keep generated bag data out of normal Git history unless the project explicitly requires a small fixture.
+\end{alertblock}
+\end{frame}
+
+\subsection{Troubleshooting and Practice}
+
+\begin{frame}{A ROS 2 Troubleshooting Ladder}
+\framesubtitle{Move from environment to behavior without skipping layers}
+\begin{enumerate}
+\item \textbf{Environment:} Was Humble sourced in this terminal?
+\item \textbf{Process:} Is the expected executable still running?
+\item \textbf{Node:} Does it appear in \texttt{ros2 node list}?
+\item \textbf{Interface:} Does the topic, service, or action exist with the expected type?
+\item \textbf{Compatibility:} Do endpoints and QoS policies match?
+\item \textbf{Data:} Are values, rate, timestamp, units, and frame correct?
+\item \textbf{Behavior:} Does the complete component produce the intended result?
+\end{enumerate}
+\begin{alertblock}{Method}
+Change one factor at a time and preserve the original error. Random restarts may remove the symptom without explaining the cause.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Common Humble Problems and First Checks}
+\framesubtitle{Use observable evidence before reinstalling software}
+\scriptsize
+\begin{verbatim}
+# ros2: command not found
+source /opt/ros/humble/setup.bash
+
+# Package not found after building
+source ~/your_workspace/install/setup.bash
+
+# Node expected but absent
+ps aux | grep process_name
+ros2 node list
+
+# Topic exists but no data
+ros2 topic info /topic_name --verbose
+ros2 topic echo /topic_name
+
+# Broad environment report
+ros2 doctor --report
+\end{verbatim}
+\begin{alertblock}{Do Not Guess}
+Confirm the Ubuntu release, ROS distribution, current workspace, active process, interface type, and complete terminal output before changing the installation.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Guided Exercise: Communication Detective}
+\framesubtitle{Explain a running ROS 2 system without reading its source code first}
+\begin{block}{Mission}
+With Turtlesim running, identify both nodes, all velocity-related topics, the command message type, one service, one action, and one configurable parameter.
+\end{block}
+\begin{exampleblock}{Required Evidence}
+Record the commands used, selected output, a simple hand-drawn graph, and one sentence explaining why each interface is a topic, service, action, or parameter.
+\end{exampleblock}
+\begin{alertblock}{Learning Goal}
+The objective is not command memorization. It is the ability to reconstruct the software architecture from observable ROS 2 interfaces.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Guided Exercise: Drone Interface Map}
+\framesubtitle{Transfer the same reasoning to the internship repository}
+\begin{block}{Create a Small Interface Table in Your Notes}
+For one mission node and one perception node, record the node name, input interfaces, output interfaces, message types, expected rates, units, coordinate frames, and verification commands.
+\end{block}
+\begin{exampleblock}{Minimum Questions}
+What information enters the component? What does it produce? Which ROS 2 mechanism is used? Who is connected? What evidence confirms meaningful data rather than only discovery?
+\end{exampleblock}
+\begin{alertblock}{Do Not Control the Vehicle Yet}
+This exercise is architecture inspection. Flight-command publication belongs to the later documented PX4 simulation tutorial.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{ROS 2 Readiness Check}
+\framesubtitle{Students should now be able to explain and demonstrate}
+\footnotesize
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{block}{Conceptual Understanding}
+\begin{itemize}
+\item ROS 2 versus Ubuntu
+\item graph, nodes, and interfaces
+\item publishers, subscribers, and messages
+\item topics, services, and actions
+\item packages, workspaces, and parameters
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{exampleblock}{Practical Capability}
+\begin{itemize}
+\item source ROS 2 Humble
+\item run and inspect nodes
+\item inspect and publish topic data
+\item call a service and send an action goal
+\item create, build, source, and run a package
+\item diagnose a missing interface systematically
+\end{itemize}
+\end{exampleblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Learning Roadmap}
+\framesubtitle{From communication foundations to the complete autonomous-drone system}
+\begin{center}
+ROS 2 graph
+$\rightarrow$
+Python nodes
+$\rightarrow$
+PX4 interfaces
+$\rightarrow$
+Gazebo sensors
+$\rightarrow$
+AI perception
+$\rightarrow$
+mission evidence
+\end{center}
+\begin{exampleblock}{Next Technical Step}
+Use these communication concepts to understand the project's Python nodes, PX4 message interfaces, image bridge, and launch sequence before integrating the full simulation pipeline.
+\end{exampleblock}
+\begin{alertblock}{Final Principle}
+A connected graph is only the beginning. A professional engineer also verifies interface types, QoS, data values, units, coordinate frames, timing, system behavior, and documented limitations.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Official ROS 2 Humble Resources I}
+\framesubtitle{Follow the Humble documentation for version-compatible tutorials}
+\scriptsize
+\begin{thebibliography}{9}
+\bibitem{humble-docs}
+Open Robotics, \emph{ROS 2 Humble Documentation}.\\
+\url{https://docs.ros.org/en/humble/}
+
+\bibitem{humble-tutorials}
+Open Robotics, \emph{ROS 2 Humble Tutorials}.\\
+\url{https://docs.ros.org/en/humble/Tutorials.html}
+
+\bibitem{humble-cli}
+Open Robotics, \emph{Beginner CLI Tools}.\\
+\url{https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools.html}
+
+\bibitem{humble-concepts}
+Open Robotics, \emph{ROS 2 Concepts}.\\
+\url{https://docs.ros.org/en/humble/Concepts.html}
+\end{thebibliography}
+\end{frame}
+
+\begin{frame}{Official ROS 2 Humble Resources II}
+\framesubtitle{Packages, Python nodes, and integration practice}
+\scriptsize
+\begin{thebibliography}{9}
+\bibitem{workspace}
+Open Robotics, \emph{Creating a Workspace}.\\
+\url{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html}
+
+\bibitem{package}
+Open Robotics, \emph{Creating a Package}.\\
+\url{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html}
+
+\bibitem{python-pubsub}
+Open Robotics, \emph{Writing a Simple Publisher and Subscriber in Python}.\\
+\url{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html}
+
+\bibitem{python-service}
+Open Robotics, \emph{Writing a Simple Service and Client in Python}.\\
+\url{https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html}
+\end{thebibliography}
+\end{frame}
