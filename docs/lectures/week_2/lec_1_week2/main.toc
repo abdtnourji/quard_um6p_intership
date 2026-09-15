@@ -2,8 +2,8 @@
 \beamer@subsectionintoc {1}{1}{Environment and First Observation}{12}{0}{1}
 \beamer@subsectionintoc {1}{2}{The ROS 2 Graph and Nodes}{16}{0}{1}
 \beamer@subsectionintoc {1}{3}{Topics, Publishers, Subscribers, and Messages}{32}{0}{1}
-\beamer@subsectionintoc {1}{4}{Services and Actions}{39}{0}{1}
-\beamer@subsectionintoc {1}{5}{Parameters, Packages, and Workspaces}{45}{0}{1}
-\beamer@subsectionintoc {1}{6}{Python Publisher and Subscriber}{53}{0}{1}
-\beamer@subsectionintoc {1}{7}{Drone-System Integration}{57}{0}{1}
-\beamer@subsectionintoc {1}{8}{Troubleshooting and Practice}{63}{0}{1}
+\beamer@subsectionintoc {1}{4}{Services and Actions}{48}{0}{1}
+\beamer@subsectionintoc {1}{5}{Parameters, Packages, and Workspaces}{54}{0}{1}
+\beamer@subsectionintoc {1}{6}{Python Publisher and Subscriber}{62}{0}{1}
+\beamer@subsectionintoc {1}{7}{Drone-System Integration}{66}{0}{1}
+\beamer@subsectionintoc {1}{8}{Troubleshooting and Practice}{72}{0}{1}

@@ -603,6 +603,370 @@ Find the topic, identify its type, inspect the interface fields, observe actual 
 \end{alertblock}
 \end{frame}
 
+
+\begin{frame}[fragile]{Discover the Available Topics}
+\framesubtitle{Which communication channels currently exist?}
+
+\footnotesize
+
+\begin{block}{List the Active Topics}
+\begin{verbatim}
+ros2 topic list
+\end{verbatim}
+\end{block}
+
+% \begin{exampleblock}{Observed Output}
+% \begin{verbatim}
+% /parameter_events
+% /rosout
+% /turtle1/cmd_vel
+% /turtle1/color_sensor
+% /turtle1/pose
+% \end{verbatim}
+% \end{exampleblock}
+
+\begin{block}{Intuitive Interpretation}
+Each topic is a named communication channel:
+
+\begin{itemize}
+    \setlength{\itemsep}{0.16em}
+    \item \texttt{/turtle1/cmd\_vel}: receives motion commands;
+    \item \texttt{/turtle1/pose}: publishes the turtle state;
+    \item \texttt{/turtle1/color\_sensor}: publishes sensed background color.
+\end{itemize}
+\end{block}
+
+\begin{alertblock}{Central Idea}
+\texttt{ros2 topic list} shows which communication channels exist,
+but it does not show their message types or current data.
+\end{alertblock}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Discover Topics and Their Types}
+\framesubtitle{What kind of message travels through each channel?}
+
+\footnotesize
+
+\begin{block}{Execute}
+\begin{verbatim}
+ros2 topic list -t
+\end{verbatim}
+\end{block}
+
+% \begin{exampleblock}{Observed Output}
+% \begin{verbatim}
+% /parameter_events [rcl_interfaces/msg/ParameterEvent]
+% /rosout [rcl_interfaces/msg/Log]
+% /turtle1/cmd_vel [geometry_msgs/msg/Twist]
+% /turtle1/color_sensor [turtlesim/msg/Color]
+% /turtle1/pose [turtlesim/msg/Pose]
+% \end{verbatim}
+% \end{exampleblock}
+
+\begin{block}{How to Read One Line}
+\begin{center}
+\texttt{/turtle1/cmd\_vel}
+\quad
+\(\longrightarrow\)
+\quad
+\texttt{geometry\_msgs/msg/Twist}
+\end{center}
+
+The first element is the \textbf{topic name}.  
+The value in brackets is the \textbf{message type}.
+\end{block}
+
+\begin{alertblock}{Central Idea}
+A topic is the channel. The message type defines the structure of the
+information allowed to travel through that channel.
+\end{alertblock}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Inspect One Topic}
+\framesubtitle{Who is connected to the velocity-command channel?}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: The Terminal Action ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{1. Execute the Command}
+\begin{verbatim}
+ros2 topic info /turtle1/cmd_vel --verbose
+\end{verbatim}
+        \end{block}
+
+        \begin{exampleblock}{2. The Terminal Output}
+\begin{verbatim}
+Type: geometry_msgs/msg/Twist
+
+Publisher count: 0
+Subscription count: 1
+...
+\end{verbatim}
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: The Engineering Meaning ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{3. Intuitive Interpretation}
+            Let's break down exactly what the system is telling us:
+            \begin{itemize}
+                \setlength{\itemsep}{0.3em}
+                \item \textbf{Type:} The expected message structure is \texttt{Twist} (linear \& angular velocity).
+                \item \textbf{Sub count = 1:} One node (\texttt{turtlesim}) is actively listening and waiting for commands.
+                \item \textbf{Pub count = 0:} Absolutely no node is currently sending commands into this topic.
+            \end{itemize}
+        \end{block}
+    \end{column}
+
+\end{columns}
+
+        \vspace{0.1cm}
+
+        \begin{alertblock}{4. The Engineering Conclusion}
+            The turtle is fully awake and ready to receive velocity commands, but no controller program is currently publishing them. \textbf{This explains exactly why the turtle is stationary on your screen.}
+        \end{alertblock}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Inspect the Message Contract}
+\framesubtitle{What exact information must a velocity command contain?}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: The Terminal Commands ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{1. Find the Message Type}
+\begin{verbatim}
+$ ros2 topic type /turtle1/cmd_vel
+geometry_msgs/msg/Twist
+\end{verbatim}
+        \end{block}
+    \end{column}
+
+    % --- RIGHT COLUMN: The Engineering Translation ---
+    \begin{column}{0.48\textwidth}
+        \pause
+        \begin{block}{3. The Engineering Contract}
+            A \texttt{Twist} message is the universal ROS 2 standard for rigid body movement. It enforces two 3D vectors:
+            \begin{itemize}
+                \setlength{\itemsep}{0.3em}
+                \item \textbf{\texttt{linear}:} Translational velocity (meters/second).
+                \item \textbf{\texttt{angular}:} Rotational velocity (radians/second).
+            \end{itemize}
+        \end{block}
+
+        \vspace{0.15cm}
+    \end{column}
+
+\end{columns}
+
+        \begin{alertblock}{4. Application to the Turtle (and Drone)}
+            Because the turtle lives in a flat 2D world, it only needs two of these six variables:
+            \begin{itemize}
+                \setlength{\itemsep}{0.2em}
+                \item \texttt{linear.x} to drive forward/backward.
+                \item \texttt{angular.z} to spin left/right.
+            \end{itemize}
+            \vspace{0.1cm}
+            % \textit{Note: Later in the internship, your 3D drone will use all 6 variables to fly!}
+        \end{alertblock}
+\end{frame}
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Observe Live Topic Data}
+\framesubtitle{What is the turtle publishing right now?}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: The Terminal Action ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{1. Execute the Echo Command}
+            \textit{Listen to the live stream of data:}
+\begin{verbatim}
+$ ros2 topic echo /turtle1/pose
+\end{verbatim}
+        \end{block}
+
+        \begin{exampleblock}{2. The Continuous Output}
+\begin{verbatim}
+x: 5.544445 y: 5.544445
+theta: 0.0  linear_velocity: 0.0
+angular_velocity: 0.0
+\end{verbatim}
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: The Engineering Analysis ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{3. Breaking Down the Telemetry}
+            \begin{itemize}
+                \setlength{\itemsep}{0.25em}
+                \item \textbf{\texttt{x} and \texttt{y}:} Current 2D position in the grid.
+                \item \textbf{\texttt{theta}:} Current orientation (yaw).
+                \item \textbf{\texttt{velocities}:} Current physical speed.
+                \item \textbf{\texttt{---}:} Separates messages. Because this data publishes continuously (e.g., at 62 Hz), the terminal will stream endlessly until you press \texttt{Ctrl+C}.
+            \end{itemize}
+        \end{block}
+    \end{column}
+
+\end{columns}
+
+        \begin{alertblock}{4. The Drone Connection}
+            Right now, both velocities are zero (the turtle is stationary). \textbf{Later this week, you will use this exact same command to read the live GPS and IMU data streaming from your 3D drone in Gazebo!}
+        \end{alertblock}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Measure the Publication Frequency}
+\framesubtitle{How frequently does the pose topic deliver new messages?}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: The Terminal Action ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{1. Execute the Hertz Command}
+            \textit{Measure the data rate in real-time:}
+\begin{verbatim}
+$ ros2 topic hz /turtle1/pose
+\end{verbatim}
+        \end{block}
+
+        \begin{exampleblock}{2. The Terminal Output}
+\begin{verbatim}
+average rate: 62.504
+  min: 0.015s
+  max: 0.017s
+  std dev: 0.00047s
+  window: 64
+\end{verbatim}
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: The Engineering Math ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{3. The Math \& Interpretation}
+            An average rate of $\approx 62.5$ Hz means the turtle broadcasts its position $62.5$ times per second. 
+            
+            \vspace{0.1cm}
+            The time between two messages (the period) is:
+            \[
+            T = \frac{1}{f}
+              = \frac{1}{62.5}
+              \approx 0.016~\text{seconds}
+            \]
+            \textit{Meaning:} Your flight controller will have exactly \textbf{16 milliseconds} to process this data and react!
+        \end{block}
+
+        \vspace{0.1cm}
+
+        \begin{alertblock}{4. The Engineering Caveat}
+            A high frequency confirms the sensor is talking \textbf{fast}, but it does not prove the data is \textbf{accurate}. A broken drone GPS can perfectly publish the wrong coordinates at 100 Hz!
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Complete Topic Inspection Workflow}
+\framesubtitle{Move from discovery to quantitative verification}
+
+\footnotesize
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c@{\hspace{0.20cm}}c@{\hspace{0.20cm}}c}
+\texttt{topic list}
+&
+\(\longrightarrow\)
+&
+Discover available channels
+\\
+\texttt{topic list -t}
+&
+\(\longrightarrow\)
+&
+Discover channels and message types
+\\
+\texttt{topic info --verbose}
+&
+\(\longrightarrow\)
+&
+Inspect connected endpoints and QoS
+\\
+\texttt{topic type}
+&
+\(\longrightarrow\)
+&
+Identify the message type
+\\
+\texttt{interface show}
+&
+\(\longrightarrow\)
+&
+Inspect the message fields
+\\
+\texttt{topic echo}
+&
+\(\longrightarrow\)
+&
+Observe live message values
+\\
+\texttt{topic hz}
+&
+\(\longrightarrow\)
+&
+Measure the message frequency
+\end{tabular}
+\end{center}
+
+\pause
+
+\begin{exampleblock}{Engineering Question Sequence}
+\begin{enumerate}
+    \setlength{\itemsep}{0.14em}
+    \item Does the topic exist?
+    \item Which nodes are connected?
+    \item What message structure is expected?
+    \item Are messages actually arriving?
+    \item Do the values make sense?
+    \item Is the publication frequency appropriate?
+\end{enumerate}
+\end{exampleblock}
+
+\begin{alertblock}{Project Connection}
+The same workflow will later be used to inspect PX4 odometry,
+trajectory setpoints, camera images, and object-detection results.
+\end{alertblock}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \begin{frame}[fragile]{Live Tutorial: Publish a Topic Message}
 \framesubtitle{Send a typed velocity command from the terminal}
 \scriptsize
