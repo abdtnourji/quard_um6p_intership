@@ -882,87 +882,55 @@ average rate: 62.504
 
 % -----------------------------------------------------------------------------
 \begin{frame}{Complete Topic Inspection Workflow}
-\framesubtitle{Move from discovery to quantitative verification}
+\framesubtitle{Moving from discovery to quantitative verification}
 
 \footnotesize
 
-\begin{center}
-\renewcommand{\arraystretch}{1.25}
-\begin{tabular}{c@{\hspace{0.20cm}}c@{\hspace{0.20cm}}c}
-\texttt{topic list}
-&
-\(\longrightarrow\)
-&
-Discover available channels
-\\
-\texttt{topic list -t}
-&
-\(\longrightarrow\)
-&
-Discover channels and message types
-\\
-\texttt{topic info --verbose}
-&
-\(\longrightarrow\)
-&
-Inspect connected endpoints and QoS
-\\
-\texttt{topic type}
-&
-\(\longrightarrow\)
-&
-Identify the message type
-\\
-\texttt{interface show}
-&
-\(\longrightarrow\)
-&
-Inspect the message fields
-\\
-\texttt{topic echo}
-&
-\(\longrightarrow\)
-&
-Observe live message values
-\\
-\texttt{topic hz}
-&
-\(\longrightarrow\)
-&
-Measure the message frequency
-\end{tabular}
-\end{center}
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: The Tools (Commands) ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{1. The ROS 2 Cheat Sheet}
+            \renewcommand{\arraystretch}{1.35} % Add breathing room to table rows
+            \begin{tabular}{l l}
+                \textbf{\texttt{topic list}} & Discover channels \\
+                \textbf{\texttt{topic info}} & Check connections \\
+                \textbf{\texttt{topic type}} & Find message name \\
+                \textbf{\texttt{interface show}} & Inspect data fields \\
+                \textbf{\texttt{topic echo}} & View live values \\
+                \textbf{\texttt{topic hz}} & Measure frequency \\
+            \end{tabular}
+        \end{block}
+    \end{column}
+
+    % --- RIGHT COLUMN: The Mindset (Questions) ---
+    \begin{column}{0.48\textwidth}
+        \pause
+        \begin{exampleblock}{2. The Debugging Sequence}
+            \textit{When a robotics system fails, ask in order:}
+            \begin{enumerate}
+                \setlength{\itemsep}{0.25em}
+                \item \textbf{Does the channel exist?} (\texttt{list})
+                \item \textbf{Is anyone listening?} (\texttt{info})
+                \item \textbf{What is the contract?} (\texttt{show})
+                \item \textbf{Is data actually flowing?} (\texttt{echo})
+                \item \textbf{Do the numbers make sense?} (\texttt{echo})
+                \item \textbf{Is it fast enough to fly?} (\texttt{hz})
+            \end{enumerate}
+        \end{exampleblock}
+    \end{column}
+
+\end{columns}
 
 \pause
+\vspace{0.2cm}
 
-\begin{exampleblock}{Engineering Question Sequence}
-\begin{enumerate}
-    \setlength{\itemsep}{0.14em}
-    \item Does the topic exist?
-    \item Which nodes are connected?
-    \item What message structure is expected?
-    \item Are messages actually arriving?
-    \item Do the values make sense?
-    \item Is the publication frequency appropriate?
-\end{enumerate}
-\end{exampleblock}
-
-\begin{alertblock}{Project Connection}
-The same workflow will later be used to inspect PX4 odometry,
-trajectory setpoints, camera images, and object-detection results.
+% --- BOTTOM: The Takeaway ---
+\begin{alertblock}{3. The Project Connection}
+    Memorize this 6-step loop. Whether your turtle refuses to move today, or your \textbf{PX4 drone} refuses to accept YOLOv8 object-detection commands next week, this is the exact workflow you will use to find the bug.
 \end{alertblock}
 
 \end{frame}
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -983,18 +951,169 @@ Terminal publication is appropriate for controlled tutorials and simulation. Nev
 \end{alertblock}
 \end{frame}
 
-\begin{frame}{Quality of Service: Communication Policy}
-\framesubtitle{Not every robotics data stream needs the same delivery behavior}
-\begin{block}{Intuition}
-Quality of Service, or QoS, describes policies such as reliability, history depth, durability, and whether fresh data is preferred over recovering every old sample.
+
+
+
+
+\begin{frame}{Quality of Service}
+\framesubtitle{How should ROS~2 deliver the messages?}
+
+\footnotesize
+
+\begin{block}{Simple Intuition}
+    QoS is the \textbf{delivery agreement} between a publisher
+    and a subscriber.
+
+    It answers a practical question:
+
+    \begin{center}
+        \textbf{Should we prioritize receiving every message,
+        or receiving the newest message quickly?}
+    \end{center}
 \end{block}
-\begin{exampleblock}{Drone Example}
-For high-rate sensor estimates, the newest value may be more useful than a delayed queue of old values. Configuration or state information may have different delivery needs.
-\end{exampleblock}
-\begin{alertblock}{Compatibility}
-A publisher and subscriber can use the same topic type and still fail to communicate if their QoS policies are incompatible. Inspect interfaces with \texttt{--verbose} when data is missing.
-\end{alertblock}
+
+\pause
+
+\begin{columns}[T,onlytextwidth]
+
+    \begin{column}{0.47\textwidth}
+        \begin{exampleblock}{Live Sensor Data}
+            Camera images and drone positions arrive continuously.
+
+            \vspace{0.12cm}
+
+            If one sample is lost, the next sample will arrive soon.
+            Receiving the \textbf{latest information} is often more useful
+            than waiting for an old sample.
+
+            \vspace{0.12cm}
+
+            \centering
+            \textbf{Fresh data first}
+        \end{exampleblock}
+    \end{column}
+
+    \hfill
+
+    \begin{column}{0.47\textwidth}
+        \begin{exampleblock}{Important Information}
+            Configuration or mission-state messages may arrive less often.
+
+            \vspace{0.12cm}
+
+            Missing one of these messages may leave a component with
+            incomplete or outdated information.
+
+            \vspace{0.12cm}
+
+            \centering
+            \textbf{Reliable delivery first}
+        \end{exampleblock}
+    \end{column}
+
+\end{columns}
+
 \end{frame}
+
+
+\begin{frame}{Quality of Service}
+    \framesubtitle{How should ROS~2 deliver the messages?}
+
+
+    \begin{alertblock}{Important Compatibility Rule}
+        A publisher and subscriber must use compatible QoS settings.
+
+        They may use the same topic name and message type, but still exchange
+        no data if their delivery agreements are incompatible.
+    \end{alertblock}
+
+\end{frame}
+
+
+\begin{frame}{Three QoS Questions}
+% \framesubtitle{A beginner-friendly way to understand communication policy}
+
+\footnotesize
+
+\begin{enumerate}
+    \setlength{\itemsep}{0.35em}
+
+    \item \textbf{How important is delivery?}
+
+    \textbf{Reliable} tries to deliver every message.
+
+    \textbf{Best effort} sends messages without repeatedly recovering
+    every missed sample.
+
+    \item \textbf{How many messages should we keep?}
+
+    The queue depth defines how many recent messages may wait
+    for processing.
+
+    \item \textbf{Do the publisher and subscriber agree?}
+
+    Their QoS settings must be compatible before communication
+    can occur.
+\end{enumerate}
+
+\pause
+
+\begin{exampleblock}{Drone Example}
+    For high-rate odometry, the newest position is normally more useful
+    than a long queue of old positions.
+
+    A delayed history could make the software react to where the drone
+    \textbf{was}, rather than where it \textbf{is now}.
+\end{exampleblock}
+
+\begin{center}
+    \textbf{\color{um6p-dark}
+    QoS controls how data is delivered, not what the data means.}
+\end{center}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{When a Topic Exists but No Data Arrives}
+\framesubtitle{Check the communication agreement}
+
+\footnotesize
+
+\begin{block}{Inspect the Topic}
+\begin{verbatim}
+ros2 topic info /topic_name --verbose
+\end{verbatim}
+\end{block}
+
+\begin{exampleblock}{What to Check}
+    \begin{itemize}
+        \setlength{\itemsep}{0.22em}
+        \item Is there at least one publisher?
+        \item Is there at least one subscriber?
+        \item Do both use the expected message type?
+        \item Are their QoS policies compatible?
+    \end{itemize}
+\end{exampleblock}
+
+\begin{alertblock}{Diagnostic Principle}
+    Seeing the topic name does not prove that messages are being exchanged.
+
+    First verify the endpoints, message type, QoS settings,
+    and actual data flow.
+\end{alertblock}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
 
 \subsection{Services and Actions}
 
