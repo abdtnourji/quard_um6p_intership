@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1789467369 "/home/tnourji/quard_um6p_intership/docs/lectures/week_2/lec_1_week2/main.tex" "main.pdf" "main" 1789467371
+["pdflatex"] 1789468070 "/home/tnourji/quard_um6p_intership/docs/lectures/week_2/lec_1_week2/main.tex" "main.pdf" "main" 1789468072
   "/etc/texmf/web2c/texmf.cnf" 1785167350 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/tnourji/quard_um6p_intership/docs/lectures/week_2/lec_1_week2/main.tex" 1789462267 741 cc0ead0302244a04e873e23805c654e0 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -288,16 +288,16 @@
   "images/NodesTopicandService2.png" 1789467197 143257 29423faaa48de12ad389fc6738a4de67 ""
   "images/computation_graph.png" 1789465184 81448 3cd62ec2fbdb12d0c5e033f287c5cc9b ""
   "information.tex" 1789463609 597 7c1e439644cc4b47e06e4e5ea9485845 ""
-  "lectex/ros2_lec.tex" 1789467368 40809 ec82b340322ea582eb5dcdb50719310d ""
+  "lectex/ros2_lec.tex" 1789468068 42105 a9679e87032523070f741ba0bdb3b74f ""
   "logos/um6p-white-short.png" 1789462179 14109 6cca5691d92b285678b614f4d1a8461c ""
   "logos/um6p-white.png" 1789462179 10202 cb28ae8768bc32faa77a08682503ff4b ""
   "logos/vanguard-white.png" 1789462179 50594 54314f269aaff90739102a433b2ae57c ""
-  "main.aux" 1789467371 16193 7243468cd45d4458496739a5e1f02ae9 "pdflatex"
-  "main.nav" 1789467371 8686 f92e27ceb25e0a86343a98e866d08995 "pdflatex"
-  "main.out" 1789467371 1915 7de6baafd746070543f36c55ff8c991f "pdflatex"
+  "main.aux" 1789468072 16232 973fc3f6676cf0c2ac0f571d47c2c81e "pdflatex"
+  "main.nav" 1789468072 8686 13d87cb6d6154bab2164e3d5474f422b "pdflatex"
+  "main.out" 1789468072 1915 f6a7cf9b0463f83c285c4864fe351770 "pdflatex"
   "main.tex" 1789462267 741 cc0ead0302244a04e873e23805c654e0 ""
-  "main.toc" 1789467371 646 c196ebe0f8b251ec8017f3fce8b09a34 "pdflatex"
-  "main.vrb" 1789467371 728 c4807d36f51b14229f5f43a7e621e034 "pdflatex"
+  "main.toc" 1789468072 646 302ac60b680ba501ac49128dd474ce51 "pdflatex"
+  "main.vrb" 1789468072 728 c4807d36f51b14229f5f43a7e621e034 "pdflatex"
   "um6p-vanguard-beamer.sty" 1789462179 8992 991dcdde8e8b490b4097cdac832be7e6 ""
   "user-commands.tex" 1789462179 98 7af205459b68ebc77faf5ce6621232a7 ""
   (generated)

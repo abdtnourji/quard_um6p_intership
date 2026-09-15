@@ -411,49 +411,15 @@ An orbit controller, PX4 bridge, image bridge, detector, and evidence logger app
 
 \end{frame}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{frame}{What Is a Node?}
-\framesubtitle{One focused participant in the robotic software system}
-\begin{block}{Definition}
-A node is a ROS 2 participant responsible for a focused purpose. It may publish, subscribe, provide services, execute actions, use parameters, and write logs.
-\end{block}
-\pause
-\begin{exampleblock}{Specialist Analogy}
-A camera node produces images. A detector node interprets them. A mission node creates trajectory references. A logger node preserves evidence. Each specialist has a clear responsibility.
-\end{exampleblock}
-\begin{alertblock}{Design Principle}
-Avoid one giant node that performs every task. Clear responsibilities make components easier to test, replace, diagnose, and reuse.
-\end{alertblock}
+\begin{frame}{ROS 2 Demonstration}
+    \centering
+    \includegraphics[width=0.8\textwidth]{./images/NodesTopicandService1.png}
 \end{frame}
 
-
-    \begin{frame}{ROS 2 Demonstration}
-        \centering
-        \includegraphics[width=0.8\textwidth]{./images/NodesTopicandService1.png}
-    \end{frame}
-
-    \begin{frame}{ROS 2 Demonstration}
-        \centering
-        \includegraphics[width=0.8\textwidth]{./images/NodesTopicandService2.png}
-    \end{frame}
+\begin{frame}{ROS 2 Demonstration}
+    \centering
+    \includegraphics[width=0.8\textwidth]{./images/NodesTopicandService2.png}
+\end{frame}
 
 
 \begin{frame}[fragile]{Live Tutorial: Discover Nodes}
@@ -472,6 +438,102 @@ ros2 node info /teleop_turtle
 Later, use \texttt{ros2 node list} to verify that the orbit controller, bridges, and perception nodes actually started. A terminal window alone is not sufficient evidence.
 \end{alertblock}
 \end{frame}
+
+
+\begin{frame}{Reading \texttt{ros2 node info} }
+\framesubtitle{Do not read every line first; identify the node's communication roles}
+
+\footnotesize
+
+\begin{block}{The Main Question}
+    What information does the \texttt{/turtlesim} node
+    \textbf{receive}, \textbf{produce}, and \textbf{provide on request}?
+\end{block}
+
+\pause
+
+\begin{columns}[T,onlytextwidth]
+
+    \begin{column}{0.31\textwidth}
+        \begin{exampleblock}{Receives}
+            \centering
+            \textbf{Subscribers}
+
+            \vspace{0.12cm}
+
+            \texttt{/turtle1/cmd\_vel}
+
+            \vspace{0.12cm}
+
+            \scriptsize
+            The node receives movement commands as
+            \texttt{Twist} messages.
+        \end{exampleblock}
+    \end{column}
+
+    \hfill
+
+    \begin{column}{0.31\textwidth}
+        \begin{exampleblock}{Produces}
+            \centering
+            \textbf{Publishers}
+
+            \vspace{0.12cm}
+
+            \texttt{/turtle1/pose}
+
+            \texttt{/turtle1/color\_sensor}
+
+            \vspace{0.12cm}
+
+            \scriptsize
+            The node publishes its position and sensor information.
+        \end{exampleblock}
+    \end{column}
+
+    \hfill
+
+    \begin{column}{0.31\textwidth}
+        \begin{exampleblock}{Provides}
+            \centering
+            \textbf{Services and Actions}
+
+            \vspace{0.12cm}
+
+            \texttt{/spawn}
+
+            \texttt{/reset}
+
+            \texttt{/rotate\_absolute}
+
+            \vspace{0.12cm}
+
+            \scriptsize
+            Other nodes can request operations or send a goal.
+        \end{exampleblock}
+    \end{column}
+
+\end{columns}
+
+\pause
+
+\begin{center}
+    \textbf{\color{um6p-dark}
+    Receive commands
+    \(\longrightarrow\)
+    update the simulation
+    \(\longrightarrow\)
+    publish observations}
+\end{center}
+
+\begin{alertblock}{Do Not Be Overwhelmed}
+    Entries containing \texttt{parameter} and \texttt{/rosout} are normal
+    ROS~2 support interfaces. At the beginning, focus only on the interfaces
+    directly related to the turtle's motion and observations.
+\end{alertblock}
+
+\end{frame}
+
 
 \subsection{Topics, Publishers, Subscribers, and Messages}
 

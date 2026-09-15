@@ -1815,12 +1815,6 @@ INPUT ./logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
-INPUT ./logos/um6p-white-short.png
-INPUT logos/um6p-white-short.png
-INPUT ./logos/um6p-white-short.png
-INPUT ./logos/um6p-white-short.png
-INPUT logos/um6p-white-short.png
-INPUT ./logos/um6p-white-short.png
 INPUT ./images/NodesTopicandService1.png
 INPUT ./images/NodesTopicandService1.png
 INPUT ./images/NodesTopicandService1.png
@@ -1842,6 +1836,17 @@ INPUT ./main.vrb
 INPUT main.vrb
 INPUT ./main.vrb
 INPUT main.vrb
+INPUT ./logos/um6p-white-short.png
+INPUT logos/um6p-white-short.png
+INPUT ./logos/um6p-white-short.png
+INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmtt8.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmtt12.tfm
+INPUT ./logos/um6p-white-short.png
+INPUT logos/um6p-white-short.png
+INPUT ./logos/um6p-white-short.png
+INPUT ./logos/um6p-white-short.png
+INPUT logos/um6p-white-short.png
+INPUT ./logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
@@ -1865,7 +1870,6 @@ INPUT ./main.vrb
 INPUT main.vrb
 INPUT ./main.vrb
 INPUT main.vrb
-INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmtt8.tfm
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
@@ -2020,7 +2024,6 @@ INPUT ./main.vrb
 INPUT main.vrb
 INPUT ./main.vrb
 INPUT main.vrb
-INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmtt12.tfm
 INPUT ./logos/um6p-white-short.png
 INPUT logos/um6p-white-short.png
 INPUT ./logos/um6p-white-short.png
