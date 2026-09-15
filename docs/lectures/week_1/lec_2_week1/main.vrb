@@ -1,30 +1,16 @@
-\frametitle{Complete End-to-End OOP Example III}
-\framesubtitle{ROS~2 integration: framework class plus project objects}
-
-\scriptsize
+\frametitle{A Small Telemetry Publisher Pattern}
+\framesubtitle{Compute first, validate second, publish third}
 \begin{verbatim}
-class DroneMonitorNode(Node):
-    def __init__(self):
-        super().__init__("drone_monitor")
-        self.monitor = DroneMonitor("uav_1", 25.0)
-        self.subscription = self.create_subscription(
-            VehicleOdometry,
-            "/fmu/out/vehicle_odometry",
-            self.odometry_callback,
-            10,
-        )
+def publish_altitude(self, down_m):
+    altitude_m = -float(down_m)
+    if altitude_m < 0.0:
+        self.get_logger().warning("Invalid altitude")
+        return
 
-    def odometry_callback(self, msg):
-        try:
-            self.monitor.state.update_position(*msg.position)
-        except (TypeError, ValueError) as exc:
-            self.get_logger().error(
-                f"Rejected odometry: {exc}"
-            )
-            return
-
-        self.get_logger().info(
-            f"altitude={self.monitor.state.altitude_m:.2f} m, "
-            f"status={self.monitor.status()}"
-        )
+    message = Float32()
+    message.data = altitude_m
+    self.altitude_publisher.publish(message)
 \end{verbatim}
+\begin{block}{System Pattern}
+Receive input, convert representation, validate assumptions, build a typed message, publish, and log unusual conditions.
+\end{block}

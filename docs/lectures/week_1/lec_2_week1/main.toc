@@ -6,6 +6,3 @@
 \beamer@subsectionintoc {1}{5}{Python Environments and Dependencies}{29}{0}{1}
 \beamer@subsectionintoc {1}{6}{NumPy and Basic Robotics Data Processing}{34}{0}{1}
 \beamer@subsectionintoc {1}{7}{Logging, Debugging, and Integration}{40}{0}{1}
-\beamer@sectionintoc {2}{End-to-End Object-Oriented Python for Robotics}{50}{0}{2}
-\beamer@subsectionintoc {2}{1}{Object-Oriented Python for Robotics}{51}{0}{2}
-\beamer@subsectionintoc {2}{2}{References and Further Practice}{76}{0}{2}
