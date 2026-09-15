@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1789471241 "/home/tnourji/quard_um6p_intership/docs/lectures/week_2/lec_1_week2/main.tex" "main.pdf" "main" 1789471243
+["pdflatex"] 1789472769 "/home/tnourji/quard_um6p_intership/docs/lectures/week_2/lec_1_week2/main.tex" "main.pdf" "main" 1789472771
   "/etc/texmf/web2c/texmf.cnf" 1785167350 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/tnourji/quard_um6p_intership/docs/lectures/week_2/lec_1_week2/main.tex" 1789462267 741 cc0ead0302244a04e873e23805c654e0 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -274,6 +274,7 @@
   "/usr/share/texmf/fonts/type1/public/lm/lmsso8.pfb" 1254938640 106860 a773e4958b589eadcc5b01a914624508 ""
   "/usr/share/texmf/fonts/type1/public/lm/lmsso9.pfb" 1254938640 106652 ff05a0e8c2fd1774314bcad2c26aa3e8 ""
   "/usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb" 1254938640 27863 09ce3735688ffde955e72da27c95b61a ""
+  "/usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb" 1254938640 27802 5c876bb2c4040caaf035d60bd74a86bd ""
   "/usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb" 1254938640 27835 16c2fa83351d4ef8cf5aebfab8a44bc1 ""
   "/usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb" 1254938640 117319 7f8361f845845ce6d5b36cbd9f9cf377 ""
   "/usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb" 1254938640 113227 1010e11451afc2822c95dae77c390042 ""
@@ -295,16 +296,16 @@
   "images/NodesTopicandService2.png" 1789467197 143257 29423faaa48de12ad389fc6738a4de67 ""
   "images/computation_graph.png" 1789465184 81448 3cd62ec2fbdb12d0c5e033f287c5cc9b ""
   "information.tex" 1789463609 597 7c1e439644cc4b47e06e4e5ea9485845 ""
-  "lectex/ros2_lec.tex" 1789471241 56156 8b1468c31b443b21324f3e040df52bd7 ""
+  "lectex/ros2_lec.tex" 1789472765 78312 e1bc68cf728b80f09f2a47fc4ab491fe ""
   "logos/um6p-white-short.png" 1789462179 14109 6cca5691d92b285678b614f4d1a8461c ""
   "logos/um6p-white.png" 1789462179 10202 cb28ae8768bc32faa77a08682503ff4b ""
   "logos/vanguard-white.png" 1789462179 50594 54314f269aaff90739102a433b2ae57c ""
-  "main.aux" 1789471243 18555 43de06435b13020394adaa114c4d9f8e "pdflatex"
-  "main.nav" 1789471243 10064 db6110f42901b1fb3a2447ea11d03e76 "pdflatex"
-  "main.out" 1789471243 1915 e1e726a9f947858d94dcc7f729dc0e10 "pdflatex"
+  "main.aux" 1789472771 22021 82d579e3455ba3ecd3c818da8f11e28f "pdflatex"
+  "main.nav" 1789472771 12170 4a8c54840304c39ca0720ba3c5e374d6 "pdflatex"
+  "main.out" 1789472771 1915 8b623a17e0d0af0ba2724c4256f29d86 "pdflatex"
   "main.tex" 1789462267 741 cc0ead0302244a04e873e23805c654e0 ""
-  "main.toc" 1789471243 646 a4f54e60a94c62832b6aba030ca7d576 "pdflatex"
-  "main.vrb" 1789471243 728 c4807d36f51b14229f5f43a7e621e034 "pdflatex"
+  "main.toc" 1789472771 646 256df123bdf00f7b7c6ed52e8c04e04f "pdflatex"
+  "main.vrb" 1789472771 728 c4807d36f51b14229f5f43a7e621e034 "pdflatex"
   "um6p-vanguard-beamer.sty" 1789462179 8992 991dcdde8e8b490b4097cdac832be7e6 ""
   "user-commands.tex" 1789462179 98 7af205459b68ebc77faf5ce6621232a7 ""
   (generated)

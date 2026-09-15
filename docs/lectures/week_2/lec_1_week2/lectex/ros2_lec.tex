@@ -1108,7 +1108,782 @@ ros2 topic info /topic_name --verbose
 
 
 
+This version requires no Bash script and no Python code. Students only copy commands from each slide into separate terminals, observe the turtle, inspect the ROS 2 graph, and explain the results.
 
+% =============================================================================
+% TERMINAL-ONLY MINI-PROJECT
+% No Python code, no Bash script, and no package creation.
+% Students copy each command directly from the slides into the terminal.
+% =============================================================================
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Mini-Project: Control and Inspect a ROS 2 System}
+\framesubtitle{Copy, execute, observe, and explain}
+
+\footnotesize
+
+\begin{center}
+    \Large
+    \textbf{Control a simulated turtle using only ROS 2 terminal commands}
+\end{center}
+
+\vspace{0.20cm}
+
+\begin{columns}[T,onlytextwidth]
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Command}
+            Publish velocity commands from the terminal.
+        \end{block}
+    \end{column}
+    \hfill
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Observe}
+            Watch the turtle and inspect its pose.
+        \end{block}
+    \end{column}
+    \hfill
+    \begin{column}{0.30\textwidth}
+        \begin{block}{Understand}
+            Identify nodes, topics, messages, and QoS.
+        \end{block}
+    \end{column}
+\end{columns}
+
+\pause
+
+\begin{exampleblock}{Learning Method}
+For every command:
+
+\begin{enumerate}
+    \setlength{\itemsep}{0.12em}
+    \item predict what should happen;
+    \item execute the command;
+    \item observe the result;
+    \item explain the result using ROS 2 vocabulary.
+\end{enumerate}
+\end{exampleblock}
+
+\begin{alertblock}{Scope}
+No script and no Python program are required.
+Use four separate terminals and copy the commands directly.
+\end{alertblock}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{System Model}
+\framesubtitle{Three ROS 2 participants connected through decoupled topics}
+
+\footnotesize
+
+% --- TOP SECTION: The Visual Architecture (Linear Flow) ---
+\begin{center}
+    \scriptsize
+    
+    % 1. The Terminal Publisher
+    \colorbox{um6p-color-light-blue!40}{
+        \parbox[c][1.0cm][c]{2.5cm}{
+            \centering
+            \textbf{Terminal CLI}\\
+            \textit{Temporary Publisher}
+        }
+    }
+    % Arrow 1
+    \quad
+    $\xrightarrow{\text{\texttt{cmd\_vel (Twist)}}}$
+    \quad
+    % 2. The Simulator
+    \colorbox{um6p-color-dark-green!20}{
+        \parbox[c][1.0cm][c]{2.0cm}{
+            \centering
+            \textbf{Turtlesim}\\
+            \textit{Physics Engine}
+        }
+    }
+    % Arrow 2
+    \quad
+    $\xrightarrow{\text{\texttt{pose (Pose)}}}$
+    \quad
+    % 3. The Terminal Observer
+    \colorbox{um6p-color-light-blue!40}{
+        \parbox[c][1.0cm][c]{2.5cm}{
+            \centering
+            \textbf{Terminal CLI}\\
+            \textit{Temporary Observer}
+        }
+    }
+    
+\end{center}
+
+\vspace{0.4cm}
+\pause
+
+% --- BOTTOM SECTION: The Theory ---
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: The Mechanics ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{What Students Should Understand}
+            \begin{itemize}
+                \setlength{\itemsep}{0.25em}
+                \item \textbf{Actuate:} Typing \texttt{ros2 topic pub} literally creates a temporary ROS 2 node behind the scenes.
+                \item \textbf{Simulate:} Turtlesim subscribes to the velocity and physically moves the turtle.
+                \item \textbf{Observe:} Typing \texttt{ros2 topic echo} creates a subscriber to read the new pose.
+            \end{itemize}
+        \end{block}
+    \end{column}
+
+    % --- RIGHT COLUMN: The Core Principle ---
+    \begin{column}{0.48\textwidth}
+        \begin{alertblock}{The Central Idea: Decoupling}
+            The terminal doesn't know the turtle exists; it only knows the \textit{topic} exists. 
+            
+            \vspace{0.15cm}
+            Topics carry messages between participants seamlessly, eliminating the need to write one massive, monolithic program.
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 1: Start the Simulator}
+\framesubtitle{Terminal 1 creates the turtlesim node}
+
+\footnotesize
+
+\begin{block}{Copy into Terminal 1}
+\begin{verbatim}
+source /opt/ros/humble/setup.bash
+
+ros2 run turtlesim turtlesim_node
+\end{verbatim}
+\end{block}
+
+\begin{exampleblock}{Expected Observation}
+A turtlesim window opens with one turtle near the center.
+
+The terminal also displays information from the running
+\texttt{/turtlesim} node.
+\end{exampleblock}
+
+\begin{block}{Interpretation}
+\begin{itemize}
+    \setlength{\itemsep}{0.18em}
+    \item \texttt{ros2 run} starts an executable from a ROS 2 package.
+    \item \texttt{turtlesim} is the package.
+    \item \texttt{turtlesim\_node} is the executable.
+\end{itemize}
+\end{block}
+
+% \begin{alertblock}{Keep This Terminal Running}
+% Do not press \texttt{Ctrl+C} yet. The simulator must remain active
+% during the following steps.
+% \end{alertblock}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 2: Discover the ROS 2 System}
+\framesubtitle{Terminal 2 identifies the active nodes and topics}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Terminal Action ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Copy into Terminal 2}
+\begin{verbatim}
+source /opt/ros/humble/setup.bash
+ros2 node list
+ros2 topic list -t
+\end{verbatim}
+        \end{block}
+    \end{column}
+
+    % --- RIGHT COLUMN: The Observations ---
+    \begin{column}{0.48\textwidth}
+        \pause
+        \begin{exampleblock}{Expected Observations}
+            The node list should include:
+\begin{verbatim}
+/turtlesim
+\end{verbatim}
+            
+            The topic list should include:
+\begin{verbatim}
+/turtle1/cmdvel [geometrymsgs/msg/Twist]
+/turtle1/pose [turtlesim/msg/Pose]
+\end{verbatim}
+        \end{exampleblock}
+    \end{column}
+
+\end{columns}
+
+\pause
+\vspace{0.15cm}
+
+% --- BOTTOM: The Takeaway ---
+\begin{alertblock}{Explain the Result}
+    \texttt{/turtle1/cmd\_vel} carries motion commands. \\
+    \texttt{/turtle1/pose} carries the measured turtle state.
+\end{alertblock}
+
+\end{frame}
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 3: Inspect the Command Topic}
+\framesubtitle{Who is waiting for velocity commands?}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Action and Observation ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Copy into Terminal 2}
+\begin{verbatim}
+ros2 topic info /turtle1/cmd_vel --verbose
+\end{verbatim}
+        \end{block}
+
+        \begin{exampleblock}{Expected Observation Before Publishing}
+            Look for information similar to:
+\begin{verbatim}
+Type: geometry_msgs/msg/Twist
+Publisher count: 0
+Subscription count: 1
+\end{verbatim}
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: Interpretation and Prediction ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Interpretation}
+            \begin{itemize}
+                \setlength{\itemsep}{0.25em}
+                \item The topic expects a \texttt{Twist} message.
+                \item Turtlesim is subscribed and waiting for commands.
+                \item No publisher is currently sending commands.
+                \item Therefore, the turtle remains stationary.
+            \end{itemize}
+        \end{block}
+
+        \vspace{0.15cm}
+
+        \begin{alertblock}{Prediction}
+            What should happen to the publisher count when we start publishing
+            from another terminal?
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 4: Inspect the Message Structure}
+\framesubtitle{Understand the command before publishing it}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Command and Output ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Copy into Terminal 2}
+\begin{verbatim}
+ros2 interface show geometry_msgs/msg/Twist
+\end{verbatim}
+        \end{block}
+
+        \begin{exampleblock}{Important Fields}
+\begin{verbatim}
+Vector3 linear
+    float64 x
+    float64 y
+    float64 z
+
+Vector3 angular
+    float64 x
+    float64 y
+    float64 z
+\end{verbatim}
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: Interpretation and Prediction ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{\texttt{linear.x}}
+            Controls the turtle's forward or backward velocity.
+        \end{block}
+        
+        \begin{block}{\texttt{angular.z}}
+            Controls the turtle's rotational velocity.
+        \end{block}
+
+        \vspace{0.15cm}
+
+        \begin{alertblock}{Prediction}
+            Forward motion combined with continuous rotation should produce
+            an approximately circular trajectory.
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 5: Publish a Circular-Motion Command}
+\framesubtitle{Terminal 3 becomes a temporary ROS 2 publisher}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: The Terminal Action ---
+    \begin{column}{0.50\textwidth}
+        \begin{block}{Copy into Terminal 3}
+\begin{verbatim}
+source /opt/ros/humble/setup.bash
+
+ros2 topic pub --rate 10 \
+  /turtle1/cmd_vel \
+  geometry_msgs/msg/Twist \
+  "{linear: {x: 1.5}, angular: {z: 0.8}}"
+\end{verbatim}
+        \end{block}
+    \end{column}
+
+    % --- RIGHT COLUMN: Observations & Logic ---
+    \begin{column}{0.46\textwidth}
+        \begin{exampleblock}{Expected Observation}
+            The turtle should begin moving along an approximately circular path.
+
+            The terminal repeatedly publishes the same velocity command at
+            approximately \(10\) messages per second.
+        \end{exampleblock}
+
+        % \begin{block}{Why Does the Turtle Turn?}
+        %     \[
+        %     \text{forward velocity}
+        %     +
+        %     \text{angular velocity}
+        %     \longrightarrow
+        %     \text{curved motion}
+        %     \]
+        % \end{block}
+
+        \vspace{0.05cm}
+
+        \begin{alertblock}{Keep Terminal 3 Running}
+            Do not press \texttt{Ctrl+C} until the following inspection steps
+            have been completed.
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 7: Observe One Command Message}
+\framesubtitle{Inspect the information travelling through the topic}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Action and Output ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Copy into Terminal 2}
+\begin{verbatim}
+ros2 topic echo /turtle1/cmd_vel --once
+\end{verbatim}
+        \end{block}
+
+        \begin{exampleblock}{Expected Message}
+\begin{verbatim}
+linear:
+  x: 1.5
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.8
+\end{verbatim}
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: Interpretation and Rule ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Interpretation}
+            \begin{itemize}
+                \setlength{\itemsep}{0.18em}
+                \item \texttt{linear.x = 1.5}: move forward.
+                \item \texttt{angular.z = 0.8}: rotate continuously.
+                \item Unspecified fields use zero in this message.
+            \end{itemize}
+        \end{block}
+
+        \vspace{0.15cm}
+
+        \begin{alertblock}{Important Distinction}
+            The topic is the communication channel. The \texttt{Twist} message
+            is the structured information travelling through it.
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 8: Measure the Command Frequency}
+\framesubtitle{Verify how often the publisher sends messages}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Action and Observation ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Copy into Terminal 2}
+\begin{verbatim}
+ros2 topic hz /turtle1/cmd_vel
+\end{verbatim}
+        \end{block}
+
+        \begin{exampleblock}{Expected Observation}
+            The average rate should be close to:
+
+\begin{verbatim}
+average rate: 10.0
+\end{verbatim}
+
+            The exact value may vary slightly.
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: Interpretation and Action ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Interpretation}
+            A frequency of \(10\) Hz means that the publisher sends approximately
+            ten velocity messages every second.
+
+            \[
+            T = \frac{1}{f}
+              = \frac{1}{10}
+              = 0.1~\text{s}
+            \]
+        \end{block}
+
+        \vspace{0.15cm}
+
+        \begin{alertblock}{Stop the Measurement}
+            Press \texttt{Ctrl+C} in Terminal 2 to stop only the frequency
+            measurement. The publisher in Terminal 3 continues running.
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 9: Observe the Measured Turtle Pose}
+\framesubtitle{Terminal 4 becomes a subscriber to the pose topic}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Action and Output ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Copy into Terminal 4}
+\begin{verbatim}
+source /opt/ros/humble/setup.bash
+
+ros2 topic echo /turtle1/pose
+\end{verbatim}
+        \end{block}
+
+        \begin{exampleblock}{Observe the Changing Fields}
+\begin{verbatim}
+x: ...
+y: ...
+theta: ...
+linear_velocity: ...
+angular_velocity: ...
+\end{verbatim}
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: Interpretation and Rule ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Interpretation}
+            \begin{itemize}
+                \setlength{\itemsep}{0.16em}
+                \item \texttt{x} and \texttt{y}: current position;
+                \item \texttt{theta}: current orientation;
+                \item \texttt{linear\_velocity}: measured forward velocity;
+                \item \texttt{angular\_velocity}: measured rotational velocity.
+            \end{itemize}
+        \end{block}
+
+        \vspace{0.15cm}
+
+        \begin{alertblock}{Command Versus Measurement}
+            \texttt{/turtle1/cmd\_vel} carries the requested motion.
+            
+            \vspace{0.15cm}
+            \texttt{/turtle1/pose} carries the state reported by the simulator.
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 10: Inspect the Pose Topic}
+\framesubtitle{Identify the original publisher and the temporary subscriber}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Terminal Action ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{While Terminal 4 Is Still Echoing, Copy into Terminal 2}
+\begin{verbatim}
+ros2 topic info /turtle1/pose --verbose
+\end{verbatim}
+        \end{block}
+    \end{column}
+
+    % --- RIGHT COLUMN: Interpretation and Rule ---
+    \begin{column}{0.48\textwidth}
+        \begin{exampleblock}{Expected Interpretation}
+            \begin{itemize}
+                \setlength{\itemsep}{0.18em}
+                \item Turtlesim is the publisher of the pose.
+                \item The \texttt{ros2 topic echo} command is a temporary subscriber.
+                \item The message type is \texttt{turtlesim/msg/Pose}.
+                \item The verbose output displays the endpoint QoS profiles.
+            \end{itemize}
+        \end{exampleblock}
+
+        \vspace{0.15cm}
+
+        \begin{alertblock}{Important Observation}
+            The ROS 2 command-line tools are not passive text viewers.
+            Commands such as \texttt{topic echo} temporarily create real ROS 2
+            participants in the communication graph.
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 11: Inspect the QoS Profile}
+\framesubtitle{Understand the communication rules used by each endpoint}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Output and Analogy ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Use the Existing Verbose Output}
+            Look for fields such as:
+
+\begin{verbatim}
+Reliability: RELIABLE
+History: KEEP_LAST
+Depth: ...
+Durability: VOLATILE
+\end{verbatim}
+        \end{block}
+
+        \vspace{0.15cm}
+
+        \begin{exampleblock}{Mailbox Analogy}
+            QoS defines the delivery rules of the mailbox: how delivery is attempted,
+            how many messages may wait, and whether earlier messages are preserved.
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: Definitions ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Reliability and History}
+            \textbf{RELIABLE} requests dependable delivery.
+
+            \vspace{0.15cm}
+            \textbf{KEEP\_LAST} preserves only a limited number of
+            recent messages.
+        \end{block}
+        
+        \begin{block}{Depth and Durability}
+            \textbf{Depth} defines the queue size.
+
+            \vspace{0.15cm}
+            \textbf{VOLATILE} means old messages are not saved for
+            subscribers that connect later.
+        \end{block}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 12: Stop the Command Publisher}
+\framesubtitle{Observe what changes when one participant disappears}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Action 1 and Observation ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{In Terminal 3}
+            Press:
+
+\begin{verbatim}
+Ctrl+C
+\end{verbatim}
+        \end{block}
+
+        \begin{exampleblock}{Expected Observation}
+            The repeated velocity publisher stops.
+
+            \vspace{0.15cm}
+            The turtle should stop receiving new velocity commands.
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: Action 2 and Conclusion ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Then Copy into Terminal 2}
+\begin{verbatim}
+ros2 topic info /turtle1/cmd_vel --verbose
+\end{verbatim}
+        \end{block}
+
+        \vspace{0.15cm}
+
+        \begin{alertblock}{Expected Graph Change}
+            The publisher count should return to zero, while turtlesim remains
+            subscribed and ready to receive future commands.
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\begin{frame}[fragile]{Step 13: Publish One Stop Command}
+\framesubtitle{Send a single zero-velocity message}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: Action and Observation ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Copy into Terminal 3}
+\begin{verbatim}
+ros2 topic pub --once \
+  /turtle1/cmd_vel \
+  geometry_msgs/msg/Twist \
+  "{linear: {x: 0.0}, angular: {z: 0.0}}"
+\end{verbatim}
+        \end{block}
+
+        \begin{exampleblock}{Expected Observation}
+            The command publishes exactly one \texttt{Twist} message containing
+            zero forward and rotational velocity.
+        \end{exampleblock}
+    \end{column}
+
+    % --- RIGHT COLUMN: Logic and Project Connection ---
+    \begin{column}{0.48\textwidth}
+        \begin{block}{Why Use \texttt{--once}?}
+            The objective is to send one specific command and then allow the
+            temporary publisher to terminate.
+        \end{block}
+
+        \vspace{0.15cm}
+
+        \begin{alertblock}{Project Connection}
+            The same distinction appears in robotics systems: some publishers send
+            continuous setpoints, while others publish only when new information
+            is available.
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
+
+% -----------------------------------------------------------------------------
+
+
+% -----------------------------------------------------------------------------
+\begin{frame}{Mini-Project Summary}
+\framesubtitle{From a terminal command to an observable ROS 2 system}
+
+\footnotesize
+
+\begin{columns}[T,onlytextwidth]
+
+    % --- LEFT COLUMN: The Architecture Flow ---
+    \begin{column}{0.48\textwidth}
+        \begin{center}
+            \textbf{Terminal publisher}
+
+            \(\downarrow\)
+
+            \texttt{Twist} message on \texttt{/turtle1/cmd\_vel}
+
+            \(\downarrow\)
+
+            \textbf{Turtlesim subscriber and simulator}
+
+            \(\downarrow\)
+
+            \texttt{Pose} message on \texttt{/turtle1/pose}
+
+            \(\downarrow\)
+
+            \textbf{Terminal subscriber and inspection tools}
+        \end{center}
+    \end{column}
+
+    % --- RIGHT COLUMN: The Core Principle ---
+    \begin{column}{0.48\textwidth}
+        \pause
+        \vspace{1.5cm} % Pushes the block down slightly to align nicely with the vertical flow
+        \begin{alertblock}{Expected Mental Model}
+            A node performs a focused responsibility, a topic provides a named
+            communication channel, a message defines the transmitted data, and
+            QoS defines how that communication behaves.
+        \end{alertblock}
+    \end{column}
+
+\end{columns}
+
+\end{frame}
 
 
 
